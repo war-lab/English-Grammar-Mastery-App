@@ -33,7 +33,7 @@ jobs:
       - name: Build
         env:
           VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          VITE_GEMINI_API_URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
+          VITE_GEMINI_API_URL: ${{ secrets.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent' }}
         run: npm run build
 
       - name: Setup Pages
