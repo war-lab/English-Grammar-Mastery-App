@@ -30,6 +30,13 @@ export const Quiz = (topic) => {
   title.className = 'title';
   title.style.marginBottom = '2rem';
 
+  // Randomize questions and options
+  // Create a deep copy to avoid modifying the original curriculum
+  const quizData = topic.quiz.map(q => ({
+    ...q,
+    options: [...q.options].sort(() => Math.random() - 0.5)
+  })).sort(() => Math.random() - 0.5);
+
   let currentQuestion = 0;
   let score = 0;
   let selectedAnswer = null;
@@ -39,12 +46,12 @@ export const Quiz = (topic) => {
     container.innerHTML = '';
     container.appendChild(title);
 
-    if (currentQuestion >= topic.quiz.length) {
+    if (currentQuestion >= quizData.length) {
       // Quiz complete - save progress
       const progress = loadProgress();
 
-      // Add topic to completed if not already there
-      if (!progress.completedTopics.includes(topic.id)) {
+      // Add topic to completed ONLY if perfect score and not already there
+      if (score === quizData.length && !progress.completedTopics.includes(topic.id)) {
         progress.completedTopics.push(topic.id);
       }
 
@@ -58,8 +65,8 @@ export const Quiz = (topic) => {
       result.style.textAlign = 'center';
 
       const scoreText = document.createElement('h3');
-      scoreText.textContent = `Quiz Complete! Score: ${score}/${topic.quiz.length}`;
-      scoreText.style.color = score === topic.quiz.length ? 'var(--success)' : 'var(--secondary)';
+      scoreText.textContent = `Quiz Complete! Score: ${score}/${quizData.length}`;
+      scoreText.style.color = score === quizData.length ? 'var(--success)' : 'var(--secondary)';
       scoreText.style.marginBottom = '2rem';
 
       const backBtn = document.createElement('button');
@@ -73,10 +80,10 @@ export const Quiz = (topic) => {
       return;
     }
 
-    const q = topic.quiz[currentQuestion];
+    const q = quizData[currentQuestion];
 
     const questionNum = document.createElement('p');
-    questionNum.textContent = `Question ${currentQuestion + 1} of ${topic.quiz.length}`;
+    questionNum.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
     questionNum.style.color = 'var(--text-muted)';
     questionNum.style.marginBottom = '1rem';
 
@@ -159,7 +166,7 @@ export const Quiz = (topic) => {
       // Show next button
       const nextBtn = document.createElement('button');
       nextBtn.className = 'btn btn-primary';
-      nextBtn.textContent = currentQuestion < topic.quiz.length - 1 ? 'Next Question' : 'Finish Quiz';
+      nextBtn.textContent = currentQuestion < quizData.length - 1 ? 'Next Question' : 'Finish Quiz';
       nextBtn.style.marginLeft = '1rem';
       nextBtn.onclick = () => {
         selectedAnswer = null;

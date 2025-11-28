@@ -6,6 +6,7 @@ export const curriculum = [
     topics: [
       {
         id: 'be-verbs',
+        isEnabled: false,
         title: 'Be Verbs (am, is, are)',
         description: 'Learn how to use am, is, and are to describe things.',
         explanation: `
@@ -34,6 +35,7 @@ export const curriculum = [
       },
       {
         id: 'general-verbs',
+        isEnabled: false,
         title: 'General Verbs (Present Tense)',
         description: 'Learn how to use action verbs like play, eat, and study.',
         explanation: `
@@ -57,6 +59,7 @@ export const curriculum = [
       },
       {
         id: 'can',
+        isEnabled: false,
         title: 'Auxiliary Verb "Can"',
         description: 'Express ability using "can".',
         explanation: `
@@ -83,6 +86,7 @@ export const curriculum = [
   },
   {
     id: 'jhs-2',
+    isEnabled: false,
     year: 2,
     title: 'Junior High School 2nd Year',
     topics: [
@@ -113,6 +117,7 @@ export const curriculum = [
       },
       {
         id: 'future-tense',
+        isEnabled: false,
         title: 'Future Tense (will / be going to)',
         description: 'Talk about the future.',
         explanation: `
@@ -134,17 +139,26 @@ export const curriculum = [
   },
   {
     id: 'sentence-patterns',
+    isEnabled: true,
     year: 2.5,
     title: '5つの文型（Five Sentence Patterns）',
     topics: [
       {
         id: 'sentence-pattern-1-sv',
+        isEnabled: true,
         title: '第1文型 (SV) - Subject + Verb',
         description: '主語と動詞だけで完結する文型。目的語も補語もない構造です。',
         explanation: `
           <h3>第1文型（SV）とは？</h3>
           <p>第1文型は英語の文型の中で最もシンプルな形です。<strong>主語（S）と動詞（V）</strong>だけで意味が完結します。</p>
           <p>この文型では、<strong>目的語（O）も補語（C）も必要ありません</strong>。動詞が自動詞（目的語を必要としない動詞）である場合に使われます。</p>
+          
+          <div class="diagram-container">
+            <div class="diagram-box" data-label="Subject">S</div>
+            <div class="diagram-arrow">V</div>
+            <div class="diagram-box" data-label="Verb">V</div>
+            <div class="diagram-example">Birds fly.</div>
+          </div>
           
           <h3>基本構造</h3>
           <p><strong>主語 (S) + 動詞 (V)</strong></p>
@@ -232,6 +246,7 @@ export const curriculum = [
       },
       {
         id: 'sentence-pattern-2-svc',
+        isEnabled: true,
         title: '第2文型 (SVC) - Subject + Verb + Complement',
         description: '主語と補語をイコールで結ぶ文型。「S = C」の関係が成り立ちます。',
         explanation: `
@@ -240,6 +255,15 @@ export const curriculum = [
           <p>最大の特徴は、<strong>S = C</strong>の関係が成り立つことです。補語（C）は主語を説明したり、主語の状態を示します。</p>
           <p>この文型では<strong>目的語（O）は含まれません</strong>。動詞は主に「be動詞」や「〜になる」「〜に見える」などの意味を持つ動詞（不完全自動詞）が使われます。</p>
           
+          <div class="diagram-container">
+            <div class="diagram-box" data-label="Subject">S</div>
+            <div class="diagram-arrow">V</div>
+            <div class="diagram-box" data-label="Verb">V</div>
+            <div class="diagram-operator">=</div>
+            <div class="diagram-box" data-label="Complement">C</div>
+            <div class="diagram-example">She is happy. (She = happy)</div>
+          </div>
+
           <h3>基本構造</h3>
           <p><strong>主語 (S) + 動詞 (V) + 補語 (C)</strong></p>
           <p><strong>重要：S = C の関係</strong></p>
@@ -376,6 +400,7 @@ export const curriculum = [
       },
       {
         id: 'sentence-pattern-3-svo',
+        isEnabled: true,
         title: '第3文型 (SVO) - Subject + Verb + Object',
         description: '動作が目的語に及ぶ文型。VO構造の基本形です。',
         explanation: `
@@ -384,6 +409,15 @@ export const curriculum = [
           <p>この文型は<strong>「S が O を V する」</strong>という意味になり、動作が目的語（O）に及びます。これが<strong>VO構造の基本形</strong>です。</p>
           <p>第3文型では<strong>補語（C）は含まれず、S ≠ O</strong>の関係になります。動詞は他動詞（目的語を必要とする動詞）が使われます。</p>
           
+          <div class="diagram-container">
+            <div class="diagram-box" data-label="Subject">S</div>
+            <div class="diagram-arrow">V</div>
+            <div class="diagram-box" data-label="Verb">V</div>
+            <div class="diagram-operator">≠</div>
+            <div class="diagram-box" data-label="Object">O</div>
+            <div class="diagram-example">I play tennis. (I ≠ tennis)</div>
+          </div>
+
           <h3>基本構造</h3>
           <p><strong>主語 (S) + 動詞 (V) + 目的語 (O)</strong></p>
           <p><strong>重要：S ≠ O の関係（S と O は別のもの）</strong></p>
@@ -508,6 +542,7 @@ export const curriculum = [
       },
       {
         id: 'sentence-pattern-4-svoo',
+        isEnabled: true,
         title: '第4文型 (SVOO) - Subject + Verb + Object + Object',
         description: '「誰に」「何を」を表す2つの目的語を持つ文型です。',
         explanation: `
@@ -516,6 +551,17 @@ export const curriculum = [
           <p>この文型は<strong>「S が O1（人）に O2（物・事）を V する」</strong>という意味になります。</p>
           <p><strong>2つの目的語が並ぶ</strong>のが特徴で、最初の目的語（O1）は通常「人」、2番目の目的語（O2）は「物・事」を表します。</p>
           
+          <div class="diagram-container">
+            <div class="diagram-box" data-label="Subject">S</div>
+            <div class="diagram-arrow">V</div>
+            <div class="diagram-box" data-label="Verb">V</div>
+            <div class="diagram-arrow">to</div>
+            <div class="diagram-box" data-label="Object 1">O₁</div>
+            <div class="diagram-arrow"></div>
+            <div class="diagram-box" data-label="Object 2">O₂</div>
+            <div class="diagram-example">I gave him a gift.</div>
+          </div>
+
           <h3>基本構造</h3>
           <p><strong>主語 (S) + 動詞 (V) + 目的語1 (O1: 人) + 目的語2 (O2: 物・事)</strong></p>
           <p><strong>意味：「S が O1 に O2 を V する」</strong></p>
@@ -633,8 +679,8 @@ export const curriculum = [
           <h3>toとforの使い分け</h3>
           <table border="1" style="border-collapse: collapse; width: 100%;">
             <tr>
-              <th style="padding: 8px; background-color: #f0f0f0;">to を使う動詞</th>
-              <th style="padding: 8px; background-color: #f0f0f0;">for を使う動詞</th>
+              <th style="padding: 8px; background-color: #555500;">to を使う動詞</th>
+              <th style="padding: 8px; background-color: #555500;">for を使う動詞</th>
             </tr>
             <tr>
               <td style="padding: 8px;">give, lend, send, pass, hand, show, teach, tell</td>
@@ -695,6 +741,7 @@ export const curriculum = [
       },
       {
         id: 'sentence-pattern-5-svoc',
+        isEnabled: true,
         title: '第5文型 (SVOC) - Subject + Verb + Object + Complement',
         description: '目的語の状態や性質を補語で説明する文型。O = C の関係が成り立ちます。',
         explanation: `
@@ -703,6 +750,17 @@ export const curriculum = [
           <p>この文型は<strong>「S が O を C にする/C だと思う」</strong>という意味になります。</p>
           <p>最大の特徴は、<strong>O = C</strong>の関係が成り立つことです。補語（C）は目的語（O）の状態や性質を説明します。</p>
           
+          <div class="diagram-container">
+            <div class="diagram-box" data-label="Subject">S</div>
+            <div class="diagram-arrow">V</div>
+            <div class="diagram-box" data-label="Verb">V</div>
+            <div class="diagram-arrow"></div>
+            <div class="diagram-box" data-label="Object">O</div>
+            <div class="diagram-operator">=</div>
+            <div class="diagram-box" data-label="Complement">C</div>
+            <div class="diagram-example">We call him Mike. (him = Mike)</div>
+          </div>
+
           <h3>基本構造</h3>
           <p><strong>主語 (S) + 動詞 (V) + 目的語 (O) + 補語 (C)</strong></p>
           <p><strong>重要：O = C の関係が成り立つ</strong></p>
@@ -836,9 +894,9 @@ export const curriculum = [
           <h3>知覚動詞・使役動詞の補語（C）の形</h3>
           <table border="1" style="border-collapse: collapse; width: 100%;">
             <tr>
-              <th style="padding: 8px; background-color: #f0f0f0;">補語の形</th>
-              <th style="padding: 8px; background-color: #f0f0f0;">意味</th>
-              <th style="padding: 8px; background-color: #f0f0f0;">例文</th>
+              <th style="padding: 8px; background-color: #555500;">補語の形</th>
+              <th style="padding: 8px; background-color: #555500;">意味</th>
+              <th style="padding: 8px; background-color: #555500;">例文</th>
             </tr>
             <tr>
               <td style="padding: 8px;">動詞の原形</td>
@@ -913,6 +971,7 @@ export const curriculum = [
   },
   {
     id: 'jhs-3',
+    isEnabled: false,
     year: 3,
     title: 'Junior High School 3rd Year',
     topics: [

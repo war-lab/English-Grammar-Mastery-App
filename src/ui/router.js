@@ -3,13 +3,15 @@ import { Assessment } from './views/Assessment.js';
 import { Dashboard } from './views/Dashboard.js';
 import { Lesson } from './views/Lesson.js';
 import { Quiz } from './views/Quiz.js';
+import { Summary5Patterns } from './views/Summary5Patterns.js';
 
 const routes = {
   '/': Home,
   '/assessment': Assessment,
   '/dashboard': Dashboard,
   '/lesson': Lesson,
-  '/quiz': Quiz
+  '/quiz': Quiz,
+  '/summary-5-patterns': Summary5Patterns
 };
 
 let navigationState = null;
