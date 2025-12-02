@@ -147,21 +147,87 @@ export const Dashboard = () => {
 
     container.appendChild(reviewCard);
   } else {
-    // Optional: Show locked state or nothing. User requested "appear", so maybe nothing or a hint.
-    // Let's show a locked hint to motivate them.
-    const lockedCard = document.createElement('div');
-    lockedCard.className = 'glass';
-    lockedCard.style.padding = '1.5rem';
-    lockedCard.style.marginTop = '2rem';
-    lockedCard.style.textAlign = 'center';
-    lockedCard.style.opacity = '0.5';
-    lockedCard.style.filter = 'grayscale(1)';
+    // Check if unlocked via hidden feature
+    const isHiddenUnlocked = localStorage.getItem('masterReviewUnlocked') === 'true';
 
-    lockedCard.innerHTML = `
-      <h3>🔒 Master Review Locked</h3>
-      <p>Complete all 5 Sentence Pattern lessons to unlock.</p>
-    `;
-    container.appendChild(lockedCard);
+    if (isHiddenUnlocked) {
+      // Show unlocked card even if conditions not met
+      const reviewCard = document.createElement('div');
+      reviewCard.className = 'glass review-card unlocked';
+      reviewCard.style.padding = '1.5rem';
+      reviewCard.style.marginTop = '2rem';
+      reviewCard.style.cursor = 'pointer';
+      reviewCard.style.textAlign = 'center';
+      reviewCard.style.border = '2px solid var(--secondary)';
+      reviewCard.style.background = 'linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(100, 108, 255, 0.1))';
+
+      reviewCard.innerHTML = `
+        <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">🔓 5 Sentence Patterns Master Review (Unlocked)</h3>
+        <p style="color: var(--text-muted);">Hidden feature activated! Test your mastery.</p>
+      `;
+
+      reviewCard.onclick = () => navigate('/summary-5-patterns');
+
+      container.appendChild(reviewCard);
+    } else {
+      // Show locked state with hidden unlock feature
+      const lockedCard = document.createElement('div');
+      lockedCard.className = 'glass';
+      lockedCard.style.padding = '1.5rem';
+      lockedCard.style.marginTop = '2rem';
+      lockedCard.style.textAlign = 'center';
+      lockedCard.style.opacity = '0.5';
+      lockedCard.style.filter = 'grayscale(1)';
+      lockedCard.style.cursor = 'pointer';
+      lockedCard.style.transition = 'all 0.2s';
+
+      lockedCard.innerHTML = `
+        <h3>🔒 Master Review Locked</h3>
+        <p>Complete all 5 Sentence Pattern lessons to unlock.</p>
+      `;
+
+      // Hidden unlock feature
+      let clickCount = 0;
+      let clickTimer = null;
+
+      lockedCard.onclick = () => {
+        clickCount++;
+
+        // Shake animation
+        lockedCard.style.animation = 'none';
+        setTimeout(() => {
+          lockedCard.style.animation = 'shake 0.3s';
+        }, 10);
+
+        // Visual feedback - temporarily reduce opacity
+        lockedCard.style.opacity = '0.3';
+        setTimeout(() => {
+          lockedCard.style.opacity = '0.5';
+        }, 100);
+
+        // Reset counter after 1 second of inactivity
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          clickCount = 0;
+        }, 1000);
+
+        // Unlock on 5th click
+        if (clickCount >= 5) {
+          localStorage.setItem('masterReviewUnlocked', 'true');
+
+          // Unlock animation
+          lockedCard.style.transition = 'all 0.5s';
+          lockedCard.style.transform = 'scale(1.1)';
+          lockedCard.style.opacity = '0';
+
+          setTimeout(() => {
+            navigate('/summary-5-patterns');
+          }, 500);
+        }
+      };
+
+      container.appendChild(lockedCard);
+    }
   }
 
   container.appendChild(title);

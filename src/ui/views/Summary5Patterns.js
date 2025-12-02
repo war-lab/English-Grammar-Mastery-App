@@ -327,11 +327,37 @@ export const Summary5Patterns = () => {
         localStorage.setItem('summaryBestStreak', bestStreak.toString());
       }
 
-      feedbackEl.textContent = '✓ 正解！';
+      feedbackEl.innerHTML = '<div style="font-size: 1.2rem; margin-bottom: 1rem;">✓ 正解！</div>';
       feedbackEl.className = 'feedback-area correct';
 
+      // Add explanation for correct answer
+      if (currentQuiz.explanation) {
+        const explanationBox = document.createElement('div');
+        explanationBox.style.marginTop = '1rem';
+        explanationBox.style.padding = '1rem';
+        explanationBox.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
+        explanationBox.style.borderLeft = '4px solid var(--success)';
+        explanationBox.style.borderRadius = '0.5rem';
+        explanationBox.style.fontSize = '0.95rem';
+        explanationBox.style.lineHeight = '1.6';
+
+        let explanationHTML = '<strong>📝 解説:</strong><br>' + currentQuiz.explanation;
+
+        // Add Japanese translation if available
+        if (currentQuiz.japaneseTranslation) {
+          explanationHTML += '<br><br><strong>💬 日本語訳:</strong> ' + currentQuiz.japaneseTranslation;
+        }
+
+        explanationBox.innerHTML = explanationHTML;
+        feedbackEl.appendChild(explanationBox);
+      }
+
       if (streak % 3 === 0 && streak <= 27) {
-        feedbackEl.textContent += ' 🎉 LEVEL UP!';
+        const levelUpMsg = document.createElement('div');
+        levelUpMsg.textContent = '🎉 LEVEL UP!';
+        levelUpMsg.style.marginTop = '0.5rem';
+        levelUpMsg.style.fontSize = '1.1rem';
+        feedbackEl.insertBefore(levelUpMsg, feedbackEl.firstChild);
       }
 
       if (streak >= 100) {
@@ -345,18 +371,40 @@ export const Summary5Patterns = () => {
       setTimeout(() => {
         currentQuiz = null;
         render();
-      }, 1500);
+      }, 2500);
 
     } else {
-      feedbackEl.textContent = `✗ 不正解... 正解は「${currentQuiz.answer}」でした。`;
+      feedbackEl.innerHTML = `<div style="font-size: 1.2rem; margin-bottom: 1rem;">✗ 不正解... 正解は「${currentQuiz.answer}」でした。</div>`;
       feedbackEl.className = 'feedback-area wrong';
 
+      // Add explanation for wrong answer
+      if (currentQuiz.explanation) {
+        const explanationBox = document.createElement('div');
+        explanationBox.style.marginTop = '1rem';
+        explanationBox.style.padding = '1rem';
+        explanationBox.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+        explanationBox.style.borderLeft = '4px solid var(--error)';
+        explanationBox.style.borderRadius = '0.5rem';
+        explanationBox.style.fontSize = '0.95rem';
+        explanationBox.style.lineHeight = '1.6';
+
+        let explanationHTML = '<strong>📝 解説:</strong><br>' + currentQuiz.explanation;
+
+        // Add Japanese translation if available
+        if (currentQuiz.japaneseTranslation) {
+          explanationHTML += '<br><br><strong>💬 日本語訳:</strong> ' + currentQuiz.japaneseTranslation;
+        }
+
+        explanationBox.innerHTML = explanationHTML;
+        feedbackEl.appendChild(explanationBox);
+      }
+
       setTimeout(() => {
-        alert(`ゲームオーバー！\n連続正解数: ${streak}問`);
+        alert(`ゲームオーバー！\\n連続正解数: ${streak}問`);
         viewState = 'explanation';
         container.className = 'summary-container glass';
         render();
-      }, 2000);
+      }, 3000);
     }
   };
 

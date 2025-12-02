@@ -155,9 +155,53 @@ export const Quiz = (topic) => {
         score++;
         feedback.innerHTML = '✅ Correct!';
         feedback.style.color = 'var(--success)';
+
+        // Add explanation if available
+        if (q.explanation) {
+          const explanationBox = document.createElement('div');
+          explanationBox.style.marginTop = '1rem';
+          explanationBox.style.padding = '1rem';
+          explanationBox.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
+          explanationBox.style.borderLeft = '4px solid var(--success)';
+          explanationBox.style.borderRadius = '0.5rem';
+          explanationBox.style.fontSize = '0.95rem';
+          explanationBox.style.lineHeight = '1.6';
+
+          let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
+
+          // Add Japanese translation if available
+          if (q.japaneseTranslation) {
+            explanationHTML += '<br><br><strong>日本語訳:</strong> ' + q.japaneseTranslation;
+          }
+
+          explanationBox.innerHTML = explanationHTML;
+          feedback.appendChild(explanationBox);
+        }
       } else {
         feedback.innerHTML = `❌ Incorrect. The correct answer is: <strong>${q.answer}</strong>`;
         feedback.style.color = 'var(--error)';
+
+        // Add explanation if available
+        if (q.explanation) {
+          const explanationBox = document.createElement('div');
+          explanationBox.style.marginTop = '1rem';
+          explanationBox.style.padding = '1rem';
+          explanationBox.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+          explanationBox.style.borderLeft = '4px solid var(--error)';
+          explanationBox.style.borderRadius = '0.5rem';
+          explanationBox.style.fontSize = '0.95rem';
+          explanationBox.style.lineHeight = '1.6';
+
+          let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
+
+          // Add Japanese translation if available
+          if (q.japaneseTranslation) {
+            explanationHTML += '<br><br><strong>日本語訳:</strong> ' + q.japaneseTranslation;
+          }
+
+          explanationBox.innerHTML = explanationHTML;
+          feedback.appendChild(explanationBox);
+        }
       }
 
       submitBtn.disabled = true;
