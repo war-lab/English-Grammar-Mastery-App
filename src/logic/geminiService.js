@@ -26,25 +26,25 @@ export const generateAIQuestion = async (level, questionType = 'random') => {
     prompt = `Generate 1 English sentence using one of 5 patterns (SV, SVC, SVO, SVOO, SVOC).
 Level: ${level}/10. Return ONLY JSON.
 Format: {"question":"次の英文の文型を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "answer":"[Pattern(SV/SVC/SVO/SVOO/SVOC)]", "options":["SV","SVC","SVO","SVOO","SVOC"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: Natural English. Natural Japanese translation.`;
+Note: The 'sentence' MUST be in English. Natural Japanese translation.`;
   }
   else if (selectedType === 'fill-blank') {
     prompt = `Generate 1 fill-in-the-blank question using 5 patterns.
 Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete Sentence]", "blank":"[Answer Word]", "answer":"[Answer Word]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]","[Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: Distracting options. Natural Japanese.`;
+Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Word (English)]", "answer":"[Answer Word (English)]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The 'sentence' and options MUST be in English. Natural Japanese translation.`;
   }
   else if (selectedType === 'error-correction') {
     prompt = `Generate 1 error correction question related to sentence patterns.
 Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文の誤りを訂正しなさい：\\n\\n\\"[Wrong Sentence]\\"", "japaneseTranslation":"[Correct Japanese Translation]", "wrongSentence":"[Wrong Sentence]", "correctSentence":"[Correct Sentence]", "answer":"[Correct Word/Phrase]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]","[Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: Typical grammar error. Natural Japanese.`;
+Format: {"question":"次の文の誤りを訂正しなさい：\\n\\n\\"[Wrong English Sentence]\\"", "japaneseTranslation":"[Correct Japanese Translation]", "wrongSentence":"[Wrong English Sentence]", "correctSentence":"[Correct English Sentence]", "answer":"[Correct English Word/Phrase]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The sentences and options MUST be in English. Natural Japanese translation.`;
   }
   else if (selectedType === 'transformation') {
     prompt = `Generate 1 sentence pattern transformation question.
 Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文を指定された文型に書き換えなさい：\\n\\n元の文: \\"[Original Sentence]\\"\\n目標文型: [Target Pattern]", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original Sentence]", "targetPattern":"[Target Pattern]", "answer":"[Correct Sentence]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]","[Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: Target pattern must be SV/SVC/SVO/SVOO/SVOC. Natural Japanese.`;
+Format: {"question":"次の文を指定された文型に書き換えなさい：\\n\\n元の文: \\"[Original English Sentence]\\"\\n目標文型: [Target Pattern]", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original English Sentence]", "targetPattern":"[Target Pattern]", "answer":"[Correct English Sentence]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The sentences and options MUST be in English. Target pattern must be SV/SVC/SVO/SVOO/SVOC.`;
   }
 
   try {
