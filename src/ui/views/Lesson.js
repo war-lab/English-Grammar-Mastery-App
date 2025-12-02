@@ -10,8 +10,8 @@ export const Lesson = (topic) => {
   // Fallback for direct access without state (for dev/testing)
   if (!topic) {
     topic = {
-      title: 'Sample Lesson',
-      explanation: '<p>Please select a lesson from the Dashboard.</p>'
+      title: 'サンプルレッスン',
+      explanation: '<p>ダッシュボードからレッスンを選択してください。</p>'
     };
   }
 
@@ -47,7 +47,7 @@ export const Lesson = (topic) => {
 
   const quizBtn = document.createElement('button');
   quizBtn.className = 'btn btn-primary';
-  quizBtn.textContent = 'Take Quiz';
+  quizBtn.textContent = 'クイズに挑戦';
   quizBtn.style.marginTop = '2rem';
   quizBtn.onclick = () => navigate('/quiz', topic); // Pass topic data to quiz
 

@@ -6,16 +6,16 @@ export const Assessment = () => {
   container.style.padding = '2rem';
 
   const title = document.createElement('h2');
-  title.textContent = 'Proficiency Assessment';
+  title.textContent = '習熟度テスト';
   title.style.marginBottom = '1rem';
 
   const content = document.createElement('p');
-  content.textContent = 'This assessment will determine your starting level. (Implementation coming soon)';
+  content.textContent = 'あなたの開始レベルを決定します。（近日実装予定）';
   content.style.marginBottom = '2rem';
 
   const startBtn = document.createElement('button');
   startBtn.className = 'btn btn-primary';
-  startBtn.textContent = 'Start Assessment';
+  startBtn.textContent = 'テストを開始';
   startBtn.onclick = () => {
     // TODO: Implement assessment logic
     navigate('/dashboard');

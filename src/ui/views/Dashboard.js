@@ -7,7 +7,7 @@ export const Dashboard = () => {
   container.className = 'dashboard-view';
 
   const title = document.createElement('h2');
-  title.textContent = 'My Dashboard';
+  title.textContent = 'マイダッシュボード';
   title.className = 'title';
   title.style.marginBottom = '2rem';
 
@@ -32,11 +32,11 @@ export const Dashboard = () => {
     });
   });
 
-  stats.innerHTML = `<h3>Progress</h3><p>Level: ${progress.level || 'Not Assessed'}</p><p>Completed: ${completedCount} / ${totalTopics} topics</p>`;
+  stats.innerHTML = `<h3>学習進捗</h3><p>レベル: ${progress.level || '未評価'}</p><p>完了: ${completedCount} / ${totalTopics} トピック</p>`;
 
   // Lessons section
   const lessonsTitle = document.createElement('h3');
-  lessonsTitle.textContent = 'Available Lessons';
+  lessonsTitle.textContent = '利用可能なレッスン';
   lessonsTitle.style.marginBottom = '1rem';
 
   const lessonsList = document.createElement('div');
@@ -108,7 +108,7 @@ export const Dashboard = () => {
 
       const startBtn = document.createElement('button');
       startBtn.className = 'btn btn-primary';
-      startBtn.textContent = 'Start Lesson';
+      startBtn.textContent = 'レッスン開始';
       startBtn.onclick = (e) => {
         e.stopPropagation();
         navigate('/lesson', topic);

@@ -1,7 +1,9 @@
 
+
 import { generateSentencePatternQuiz } from '../../logic/quizGenerator.js';
 import { generateAIQuestion } from '../../logic/geminiService.js';
 import { createPatternDiagram } from '../components/patternDiagrams.js';
+import { createResultModal } from '../components/ResultModal.js';
 
 export const Summary5Patterns = () => {
   const container = document.createElement('div');
@@ -360,6 +362,7 @@ export const Summary5Patterns = () => {
         feedbackEl.insertBefore(levelUpMsg, feedbackEl.firstChild);
       }
 
+
       if (streak >= 100) {
         setTimeout(() => {
           viewState = 'celebration';
@@ -368,10 +371,21 @@ export const Summary5Patterns = () => {
         return;
       }
 
-      setTimeout(() => {
+      // Add Next button instead of automatic transition
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn btn-primary';
+      nextBtn.textContent = '次へ進む →';
+      nextBtn.style.marginTop = '1.5rem';
+      nextBtn.style.fontSize = '1.1rem';
+      nextBtn.style.padding = '1rem 2rem';
+      nextBtn.style.width = '100%';
+      nextBtn.style.maxWidth = '400px';
+      nextBtn.onclick = () => {
         currentQuiz = null;
         render();
-      }, 2500);
+      };
+      feedbackEl.appendChild(nextBtn);
+
 
     } else {
       feedbackEl.innerHTML = `<div style="font-size: 1.2rem; margin-bottom: 1rem;">✗ 不正解... 正解は「${currentQuiz.answer}」でした。</div>`;
@@ -395,16 +409,21 @@ export const Summary5Patterns = () => {
           explanationHTML += '<br><br><strong>💬 日本語訳:</strong> ' + currentQuiz.japaneseTranslation;
         }
 
+
         explanationBox.innerHTML = explanationHTML;
         feedbackEl.appendChild(explanationBox);
       }
 
+      // Show modal instead of alert after short delay
       setTimeout(() => {
-        alert(`ゲームオーバー！\\n連続正解数: ${streak}問`);
-        viewState = 'explanation';
-        container.className = 'summary-container glass';
-        render();
-      }, 3000);
+        const modal = createResultModal(streak, () => {
+          document.body.removeChild(modal);
+          viewState = 'explanation';
+          container.className = 'summary-container glass';
+          render();
+        });
+        document.body.appendChild(modal);
+      }, 2000);
     }
   };
 

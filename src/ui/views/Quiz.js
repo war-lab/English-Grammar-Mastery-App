@@ -11,13 +11,13 @@ export const Quiz = (topic) => {
   // Fallback for direct access
   if (!topic || !topic.quiz) {
     const message = document.createElement('p');
-    message.textContent = 'Please select a lesson first from the Dashboard.';
+    message.textContent = 'ダッシュボードからレッスンを選択してください。';
     message.style.textAlign = 'center';
     container.appendChild(message);
 
     const backBtn = document.createElement('button');
     backBtn.className = 'btn btn-primary';
-    backBtn.textContent = 'Back to Dashboard';
+    backBtn.textContent = 'ダッシュボードに戻る';
     backBtn.style.marginTop = '2rem';
     backBtn.onclick = () => navigate('/dashboard');
     container.appendChild(backBtn);
@@ -26,7 +26,7 @@ export const Quiz = (topic) => {
   }
 
   const title = document.createElement('h2');
-  title.textContent = `Quiz: ${topic.title}`;
+  title.textContent = `クイズ: ${topic.title}`;
   title.className = 'title';
   title.style.marginBottom = '2rem';
 
@@ -65,13 +65,13 @@ export const Quiz = (topic) => {
       result.style.textAlign = 'center';
 
       const scoreText = document.createElement('h3');
-      scoreText.textContent = `Quiz Complete! Score: ${score}/${quizData.length}`;
+      scoreText.textContent = `クイズ完了！ スコア: ${score}/${quizData.length}`;
       scoreText.style.color = score === quizData.length ? 'var(--success)' : 'var(--secondary)';
       scoreText.style.marginBottom = '2rem';
 
       const backBtn = document.createElement('button');
       backBtn.className = 'btn btn-primary';
-      backBtn.textContent = 'Back to Dashboard';
+      backBtn.textContent = 'ダッシュボードに戻る';
       backBtn.onclick = () => navigate('/dashboard');
 
       result.appendChild(scoreText);
@@ -83,7 +83,7 @@ export const Quiz = (topic) => {
     const q = quizData[currentQuestion];
 
     const questionNum = document.createElement('p');
-    questionNum.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+    questionNum.textContent = `問題 ${currentQuestion + 1} / ${quizData.length}`;
     questionNum.style.color = 'var(--text-muted)';
     questionNum.style.marginBottom = '1rem';
 
@@ -142,10 +142,10 @@ export const Quiz = (topic) => {
 
     const submitBtn = document.createElement('button');
     submitBtn.className = 'btn btn-primary';
-    submitBtn.textContent = 'Submit Answer';
+    submitBtn.textContent = '回答する';
     submitBtn.onclick = () => {
       if (!selectedAnswer) {
-        feedback.textContent = '⚠️ Please select an answer';
+        feedback.textContent = '⚠️ 回答を選択してください';
         feedback.style.color = 'var(--error)';
         return;
       }
@@ -210,7 +210,7 @@ export const Quiz = (topic) => {
       // Show next button
       const nextBtn = document.createElement('button');
       nextBtn.className = 'btn btn-primary';
-      nextBtn.textContent = currentQuestion < quizData.length - 1 ? 'Next Question' : 'Finish Quiz';
+      nextBtn.textContent = currentQuestion < quizData.length - 1 ? '次の問題へ' : 'クイズを終了';
       nextBtn.style.marginLeft = '1rem';
       nextBtn.onclick = () => {
         selectedAnswer = null;
