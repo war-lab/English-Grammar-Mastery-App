@@ -8,6 +8,11 @@ export const interjection = {
     <h3>間投詞 (Interjection) とは？</h3>
     <p>間投詞は、驚き、喜び、悲しみなどの<strong>感情</strong>や、<strong>呼びかけ</strong>、<strong>挨拶</strong>などを表す言葉です。文の他の要素とは独立して使われます。</p>
     
+    <div class="diagram-container">
+      <div style="font-size: 3rem;">😲</div>
+      <div style="font-size: 2rem; font-weight: bold; margin-left: 1rem;">Wow!</div>
+    </div>
+
     <h3>主な間投詞</h3>
     <ul>
       <li>Oh (あっ、おや)</li>

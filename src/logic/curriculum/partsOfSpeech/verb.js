@@ -8,6 +8,12 @@ export const verb = {
     <h3>動詞 (Verb) とは？</h3>
     <p>動詞は、主語の<strong>動作</strong>や<strong>状態</strong>を表す言葉です。英語の文には必ず動詞が必要です。</p>
     
+    <div class="diagram-container">
+      <div class="diagram-box" data-label="Action">🏃</div>
+      <div class="diagram-arrow">vs</div>
+      <div class="diagram-box" data-label="State">🧘</div>
+    </div>
+
     <h3>動詞の種類</h3>
     <ul>
       <li><strong>be動詞</strong>: 状態や存在を表す (am, is, are, was, were)。「〜です」「〜にいる」</li>

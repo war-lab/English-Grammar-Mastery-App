@@ -8,6 +8,12 @@ export const conjunction = {
     <h3>接続詞 (Conjunction) とは？</h3>
     <p>接続詞は、言葉と言葉、または文と文を<strong>つなぐ（接続する）</strong>言葉です。</p>
     
+    <div class="diagram-container">
+      <div class="diagram-box" data-label="A">A</div>
+      <div class="diagram-operator" style="font-size: 1rem;">+ and +</div>
+      <div class="diagram-box" data-label="B">B</div>
+    </div>
+
     <h3>主な接続詞</h3>
     <ul>
       <li>and (〜と、そして)</li>

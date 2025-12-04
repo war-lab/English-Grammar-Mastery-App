@@ -8,6 +8,16 @@ export const preposition = {
     <h3>前置詞 (Preposition) とは？</h3>
     <p>前置詞は、名詞（または代名詞）の前に置いて、他の言葉との関係（場所、時、方向など）を表します。</p>
     
+    <div class="diagram-container">
+      <div style="position: relative; width: 100px; height: 100px; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+        Box
+        <div style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem;">📦</div>
+        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); color: var(--secondary);">under</div>
+        <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); color: var(--secondary);">on</div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--secondary); font-weight: bold;">in</div>
+      </div>
+    </div>
+
     <h3>主な前置詞</h3>
     <ul>
       <li><strong>場所</strong>: in (中に), on (上に), at (地点に), under (下に)</li>

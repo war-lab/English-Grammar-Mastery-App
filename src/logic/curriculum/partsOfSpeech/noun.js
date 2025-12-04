@@ -9,6 +9,13 @@ export const noun = {
     <p>名詞は、<strong>人、物、場所、考え（概念）</strong>などの名前を表す言葉です。</p>
     <p>文の中で<strong>主語 (S)</strong>、<strong>目的語 (O)</strong>、<strong>補語 (C)</strong> になることができます。</p>
     
+    <div class="diagram-container">
+      <div class="diagram-box" data-label="Person">👨‍🎓</div>
+      <div class="diagram-box" data-label="Thing">🍎</div>
+      <div class="diagram-box" data-label="Place">🏫</div>
+      <div class="diagram-box" data-label="Idea">💡</div>
+    </div>
+
     <h3>名詞の種類</h3>
     <ul>
       <li><strong>可算名詞 (Countable Nouns)</strong>: 数えられる名詞（例: apple, dog, book）。単数形と複数形があります。</li>

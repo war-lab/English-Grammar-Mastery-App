@@ -8,6 +8,12 @@ export const pronoun = {
     <h3>代名詞 (Pronoun) とは？</h3>
     <p>代名詞は、一度出てきた名詞の繰り返しを避けるために、<strong>名詞の代わり</strong>に使われる言葉です。</p>
     
+    <div class="diagram-container">
+      <div class="diagram-box" data-label="Noun">Tom</div>
+      <div class="diagram-arrow">代わり</div>
+      <div class="diagram-box" data-label="Pronoun" style="background-color: #8b5cf6;">He</div>
+    </div>
+
     <h3>主な代名詞</h3>
     <ul>
       <li><strong>人称代名詞</strong>: I, you, he, she, it, we, they</li>

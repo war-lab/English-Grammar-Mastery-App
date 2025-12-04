@@ -8,6 +8,12 @@ export const adjective = {
     <h3>形容詞 (Adjective) とは？</h3>
     <p>形容詞は、<strong>名詞の状態や性質を詳しく説明（修飾）</strong>する言葉です。</p>
     
+    <div class="diagram-container">
+      <div class="diagram-box" data-label="Adjective" style="background-color: var(--secondary);">Adj</div>
+      <div class="diagram-arrow">修飾</div>
+      <div class="diagram-box" data-label="Noun">Noun</div>
+    </div>
+
     <h3>使い方の2パターン</h3>
     <ul>
       <li><strong>名詞の前に置く</strong>: a <strong>red</strong> apple (赤いりんご)</li>
