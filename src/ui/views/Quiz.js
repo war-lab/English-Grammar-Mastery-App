@@ -1,4 +1,4 @@
-import { navigate } from '../router.js';
+import { navigate } from '../navigation.js';
 import { loadProgress, saveProgress } from '../../logic/storage.js';
 
 export const Quiz = (topic) => {

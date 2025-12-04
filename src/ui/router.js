@@ -1,36 +1,36 @@
 import { Home } from './views/Home.js';
-import { Assessment } from './views/Assessment.js';
-import { Dashboard } from './views/Dashboard.js';
 import { Lesson } from './views/Lesson.js';
 import { Quiz } from './views/Quiz.js';
 import { Summary5Patterns } from './views/Summary5Patterns.js';
+import { PartsOfSpeech } from './views/PartsOfSpeech.js';
+import { CategorySelection } from './views/CategorySelection.js';
+import { getNavigationState } from './navigation.js';
 
 const routes = {
   '/': Home,
-  '/assessment': Assessment,
-  '/dashboard': Dashboard,
   '/lesson': Lesson,
   '/quiz': Quiz,
-  '/summary-5-patterns': Summary5Patterns
-};
-
-let navigationState = null;
-
-export const navigate = (path, state = null) => {
-  navigationState = state;
-  window.location.hash = path;
+  '/summary-5-patterns': Summary5Patterns,
+  '/parts-of-speech': PartsOfSpeech
 };
 
 export const initRouter = () => {
   const render = () => {
-    const path = window.location.hash.slice(1) || '/';
-    const View = routes[path] || Home;
+    const hash = window.location.hash || '/';
     const app = document.getElementById('app');
     app.innerHTML = '';
 
-    // Pass state to the view and clear it
-    app.appendChild(View(navigationState));
-    navigationState = null;
+    // Handle dynamic routes (e.g., /category/sentence-patterns)
+    if (hash.startsWith('#/category/')) {
+      const categoryId = hash.replace('#/category/', '');
+      app.appendChild(CategorySelection(categoryId));
+      return;
+    }
+
+    const path = hash.replace('#', '');
+    const View = routes[path] || Home;
+    const state = getNavigationState();
+    app.appendChild(View(state));
   };
 
   window.addEventListener('hashchange', render);

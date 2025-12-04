@@ -1,29 +1,63 @@
-import { navigate } from '../router.js';
+import { navigate } from '../navigation.js';
+import { getProgress } from '../../logic/storage.js';
 
 export const Home = () => {
   const container = document.createElement('div');
-  container.className = 'home-view';
-  container.style.textAlign = 'center';
-  container.style.padding = '4rem 0';
+  container.className = 'home-container';
 
-  const title = document.createElement('h1');
-  title.className = 'title';
-  title.textContent = 'English Grammar Mastery';
+  // Calculate total progress (mock logic for now, can be refined)
+  const sentencePatternStreak = parseInt(localStorage.getItem('summaryBestStreak') || '0', 10);
+  const posStreak = parseInt(localStorage.getItem('posBestStreak') || '0', 10);
 
-  const subtitle = document.createElement('p');
-  subtitle.textContent = '中学英文法を体系的に学習しよう';
-  subtitle.style.fontSize = '1.2rem';
-  subtitle.style.color = 'var(--text-muted)';
-  subtitle.style.marginBottom = '3rem';
+  // Arbitrary completion target for visual feedback
+  const targetStreak = 30;
+  const sentencePatternProgress = Math.min(100, Math.round((sentencePatternStreak / targetStreak) * 100));
+  const posProgress = Math.min(100, Math.round((posStreak / targetStreak) * 100));
 
-  const startBtn = document.createElement('button');
-  startBtn.className = 'btn btn-primary';
-  startBtn.textContent = '学習を始める';
-  startBtn.onclick = () => navigate('/assessment');
+  container.innerHTML = `
+    <div class="hero-section">
+      <h1>English Grammar Mastery</h1>
+      <p>Master English grammar through systematic lessons and infinite quizzes.</p>
+    </div>
 
-  container.appendChild(title);
-  container.appendChild(subtitle);
-  container.appendChild(startBtn);
+    <div class="course-selection">
+      <h2>Select a Course</h2>
+      <div class="course-grid">
+        <!-- 5 Sentence Patterns -->
+        <div class="course-card" id="course-patterns">
+          <div class="course-icon">🏗️</div>
+          <h3>5 Sentence Patterns</h3>
+          <p>Master SV, SVC, SVO, SVOO, SVOC structures.</p>
+          <div class="progress-bar-container">
+            <div class="progress-bar" style="width: ${sentencePatternProgress}%"></div>
+          </div>
+          <span class="progress-text">${sentencePatternProgress}% Mastery</span>
+        </div>
+
+        <!-- Parts of Speech -->
+        <div class="course-card" id="course-pos">
+          <div class="course-icon">✨</div>
+          <h3>Parts of Speech</h3>
+          <p>Learn Nouns, Verbs, Adjectives, and more.</p>
+          <div class="progress-bar-container">
+            <div class="progress-bar" style="width: ${posProgress}%"></div>
+          </div>
+          <span class="progress-text">${posProgress}% Mastery</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Event Listeners
+  setTimeout(() => {
+    document.getElementById('course-patterns').addEventListener('click', () => {
+      navigate('/category/sentence-patterns');
+    });
+
+    document.getElementById('course-pos').addEventListener('click', () => {
+      navigate('/category/parts-of-speech');
+    });
+  }, 0);
 
   return container;
 };

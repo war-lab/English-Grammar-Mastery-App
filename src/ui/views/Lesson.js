@@ -1,4 +1,4 @@
-import { navigate } from '../router.js';
+import { navigate } from '../navigation.js';
 
 export const Lesson = (topic) => {
   const container = document.createElement('div');
