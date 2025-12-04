@@ -5,46 +5,66 @@ import configData from '../config.json';
 const GEMINI_API_URL = import.meta.env.VITE_GEMINI_API_URL || configData.geminiApiUrl;
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || configData.apiKey;
 
-export const generateAIQuestion = async (level, questionType = 'random') => {
+export const generateAIQuestion = async (level, context) => {
   // Check if API key is configured
   if (!GEMINI_API_KEY || GEMINI_API_KEY === '' || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
     throw new Error('API_KEY_NOT_CONFIGURED');
   }
 
-  const patterns = ['SV', 'SVC', 'SVO', 'SVOO', 'SVOC'];
-
-  // Determine question type
-  const types = ['pattern-id', 'fill-blank', 'error-correction', 'transformation'];
-  const selectedType = questionType === 'random'
-    ? types[Math.floor(Math.random() * types.length)]
-    : questionType;
-
-  // Build prompt based on question type
   let prompt = '';
+  let selectedType = 'random';
 
-  if (selectedType === 'pattern-id') {
-    prompt = `Generate 1 English sentence using one of 5 patterns (SV, SVC, SVO, SVOO, SVOC).
+  // Logic for Sentence Patterns
+  if (context.includes('sentence patterns')) {
+    const types = ['pattern-id', 'fill-blank', 'error-correction', 'transformation'];
+    selectedType = types[Math.floor(Math.random() * types.length)];
+
+    if (selectedType === 'pattern-id') {
+      prompt = `Generate 1 English sentence using one of 5 patterns (SV, SVC, SVO, SVOO, SVOC).
 Level: ${level}/10. Return ONLY JSON.
 Format: {"question":"次の英文の文型を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "answer":"[Pattern(SV/SVC/SVO/SVOO/SVOC)]", "options":["SV","SVC","SVO","SVOO","SVOC"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
 Note: The 'sentence' MUST be in English. Natural Japanese translation.`;
-  }
-  else if (selectedType === 'fill-blank') {
-    prompt = `Generate 1 fill-in-the-blank question using 5 patterns.
+    }
+    else if (selectedType === 'fill-blank') {
+      prompt = `Generate 1 fill-in-the-blank question using 5 patterns.
 Level: ${level}/10. Return ONLY JSON.
 Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Word (English)]", "answer":"[Answer Word (English)]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
 Note: The 'sentence' and options MUST be in English. Natural Japanese translation.`;
-  }
-  else if (selectedType === 'error-correction') {
-    prompt = `Generate 1 error correction question related to sentence patterns.
+    }
+    else if (selectedType === 'error-correction') {
+      prompt = `Generate 1 error correction question related to sentence patterns.
 Level: ${level}/10. Return ONLY JSON.
 Format: {"question":"次の文の誤りを訂正しなさい：\\n\\n\\"[Wrong English Sentence]\\"", "japaneseTranslation":"[Correct Japanese Translation]", "wrongSentence":"[Wrong English Sentence]", "correctSentence":"[Correct English Sentence]", "answer":"[Correct English Word/Phrase]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
 Note: The sentences and options MUST be in English. Natural Japanese translation.`;
-  }
-  else if (selectedType === 'transformation') {
-    prompt = `Generate 1 sentence pattern transformation question.
+    }
+    else if (selectedType === 'transformation') {
+      prompt = `Generate 1 sentence pattern transformation question.
 Level: ${level}/10. Return ONLY JSON.
 Format: {"question":"次の文を指定された文型に書き換えなさい：\\n\\n元の文: \\"[Original English Sentence]\\"\\n目標文型: [Target Pattern]", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original English Sentence]", "targetPattern":"[Target Pattern]", "answer":"[Correct English Sentence]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
 Note: The sentences and options MUST be in English. Target pattern must be SV/SVC/SVO/SVOO/SVOC.`;
+    }
+  }
+  // Logic for Parts of Speech
+  else if (context.includes('parts of speech')) {
+    const types = ['identify-pos', 'fill-blank-pos'];
+    selectedType = types[Math.floor(Math.random() * types.length)];
+
+    if (selectedType === 'identify-pos') {
+      prompt = `Generate 1 question to identify the part of speech of a specific word in a sentence.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の [Target Word] の品詞を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "targetWord":"[Target Word]", "answer":"[Part of Speech (Noun/Verb/Adjective/Adverb/Preposition/Pronoun/Conjunction/Interjection)]", "options":["Noun","Verb","Adjective","Adverb","Preposition","Pronoun","Conjunction","Interjection"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The sentence must be natural English.`;
+    }
+    else if (selectedType === 'fill-blank-pos') {
+      prompt = `Generate 1 fill-in-the-blank question focusing on parts of speech usage.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Word]", "answer":"[Answer Word]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: Focus on choosing the correct word form (e.g. noun vs adjective).`;
+    }
+  }
+  else {
+    // Fallback or default
+    prompt = `Generate 1 simple English grammar question. Level: ${level}/10. Return ONLY JSON. Format: {"question":"...", "options":["..."], "answer":"...", "explanation":"..."}`;
   }
 
   try {
