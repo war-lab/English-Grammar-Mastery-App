@@ -1,6 +1,6 @@
 
 
-import { generateSentencePatternQuiz } from '../../logic/quizGenerator.js';
+import { generateSentencePatternQuiz } from '../../logic/curriculum/sentencePatterns/quizGenerator.js';
 import { createPatternDiagram } from '../components/patternDiagrams.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 

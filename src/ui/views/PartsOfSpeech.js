@@ -1,5 +1,5 @@
 
-import { generatePOSQuiz } from '../../logic/posQuizGenerator.js';
+import { generatePOSQuiz } from '../../logic/curriculum/partsOfSpeech/quizGenerator.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
