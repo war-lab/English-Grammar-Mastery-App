@@ -13,6 +13,14 @@ export const loadProgress = () => {
   };
 };
 
+export const getProgress = (topicId) => {
+  const progress = loadProgress();
+  return {
+    completed: progress.completedTopics.includes(topicId),
+    score: progress.scores[topicId] || 0
+  };
+};
+
 export const clearProgress = () => {
   localStorage.removeItem(STORAGE_KEY);
 };

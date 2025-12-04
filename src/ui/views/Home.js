@@ -1,5 +1,4 @@
 import { navigate } from '../navigation.js';
-import { getProgress } from '../../logic/storage.js';
 
 export const Home = () => {
   const container = document.createElement('div');
