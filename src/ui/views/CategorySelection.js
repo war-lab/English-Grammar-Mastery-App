@@ -80,6 +80,11 @@ export const CategorySelection = (categoryId) => {
       statusContainer.appendChild(scoreDisplay);
     }
 
+    // Button container for centering
+    const btnContainer = document.createElement('div');
+    btnContainer.style.textAlign = 'center';
+    btnContainer.style.marginTop = '0.5rem';
+
     const startBtn = document.createElement('button');
     startBtn.className = 'btn btn-primary';
     startBtn.textContent = 'レッスン開始';
@@ -88,20 +93,22 @@ export const CategorySelection = (categoryId) => {
       navigate('/lesson', topic);
     };
 
+    btnContainer.appendChild(startBtn);
+
     card.appendChild(topicTitle);
     card.appendChild(topicDesc);
     card.appendChild(statusContainer);
-    card.appendChild(startBtn);
+    card.appendChild(btnContainer);
 
-    // Hover effect
+    // Hover effect - glow instead of movement
     card.onmouseenter = () => {
-      card.style.transform = 'translateY(-4px)';
-      card.style.boxShadow = '0 10px 20px rgba(0,0,0,0.3)';
+      card.style.boxShadow = '0 0 20px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.2)';
+      card.style.background = 'rgba(30, 41, 59, 0.85)';
     };
 
     card.onmouseleave = () => {
-      card.style.transform = 'translateY(0)';
-      card.style.boxShadow = 'none';
+      card.style.boxShadow = '';
+      card.style.background = '';
     };
 
     topicsGrid.appendChild(card);
