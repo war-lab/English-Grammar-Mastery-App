@@ -257,9 +257,14 @@ export const MyLearningPage = () => {
     storageKey: 'localStorageKey',
     renderExplanationContent: () => '<div>解説HTML</div>',
     generateQuiz: (level) => generateMyQuiz(level),
-    aiPromptContext: 'AIへのコンテキスト指示'
+    aiPromptContext: 'context string' // 'sentence patterns' または 'parts of speech' を含む文字列
   });
 };
+
+**AIコンテキスト**:
+`aiPromptContext` には、AIが生成する問題の種類を決定するためのキーワードを含めます。
+- `'sentence patterns'`: 文型問題（判定、穴埋め、訂正、変換）
+- `'parts of speech'`: 品詞問題（判定、穴埋め）
 ```
 
 ---
