@@ -172,6 +172,9 @@ export const Quiz = (topic) => {
           explanationBox.style.borderRadius = '0.5rem';
           explanationBox.style.fontSize = '0.95rem';
           explanationBox.style.lineHeight = '1.6';
+          explanationBox.style.maxWidth = '100%';
+          explanationBox.style.wordBreak = 'break-word';
+          explanationBox.style.whiteSpace = 'normal';
 
           let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
 
@@ -197,6 +200,9 @@ export const Quiz = (topic) => {
           explanationBox.style.borderRadius = '0.5rem';
           explanationBox.style.fontSize = '0.95rem';
           explanationBox.style.lineHeight = '1.6';
+          explanationBox.style.maxWidth = '100%';
+          explanationBox.style.wordBreak = 'break-word';
+          explanationBox.style.whiteSpace = 'normal';
 
           let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
 
