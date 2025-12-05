@@ -16,11 +16,37 @@ import { createResultModal } from './ResultModal.js';
  * @param {Array} config.topics - List of topics to check for completion (optional).
  */
 export const LearningPageTemplate = (config) => {
+  const wrapper = document.createElement('div');
+  wrapper.style.maxWidth = '1000px';
+  wrapper.style.margin = '2rem auto';
+  wrapper.style.position = 'relative';
+
+  // Back Button (Outside the glass container)
+  const backBtn = document.createElement('a');
+  backBtn.href = config.backLink || '#/dashboard';
+  backBtn.className = 'back-link btn';
+  backBtn.innerHTML = '<span style="font-size: 1.2rem;">←</span> 戻る';
+  backBtn.style.display = 'inline-flex';
+  backBtn.style.alignItems = 'center';
+  backBtn.style.gap = '0.5rem';
+  backBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+  backBtn.style.padding = '0.5rem 1.5rem';
+  backBtn.style.borderRadius = '2rem';
+  backBtn.style.fontSize = '1rem';
+  backBtn.style.color = 'var(--text-muted)';
+  backBtn.style.textDecoration = 'none';
+  backBtn.style.marginBottom = '1rem';
+  backBtn.style.transition = 'all 0.2s';
+
+  wrapper.appendChild(backBtn);
+
   const container = document.createElement('div');
   container.className = 'summary-container glass';
   container.style.padding = '2rem';
-  container.style.maxWidth = '1000px';
-  container.style.margin = '2rem auto';
+  // container.style.maxWidth = '1000px'; // Moved to wrapper
+  // container.style.margin = '2rem auto'; // Moved to wrapper
+
+  wrapper.appendChild(container);
 
   // State
   let viewState = 'explanation';
@@ -50,10 +76,6 @@ export const LearningPageTemplate = (config) => {
         <h1 class="fancy-title">${config.title}</h1>
         <p class="fancy-subtitle">${config.subtitle}</p>
       </div>
-      </div>
-      <a href="${config.backLink || '#/dashboard'}" class="back-link btn" style="position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.1); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.9rem; color: var(--text-muted); text-decoration: none; transition: all 0.2s;">
-        <span style="font-size: 1.2rem;">←</span> 戻る
-      </a>
     `;
     header.style.position = 'relative';
     header.style.marginBottom = '3rem';
@@ -424,5 +446,4 @@ export const LearningPageTemplate = (config) => {
   };
 
   render();
-  return container;
-};
+  return wrapper; // Return the wrapper instead of container
