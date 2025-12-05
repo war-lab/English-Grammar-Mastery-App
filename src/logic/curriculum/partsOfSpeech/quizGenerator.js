@@ -51,6 +51,35 @@ export const generatePOSQuiz = (level = 1) => {
         Verb: ['run', 'jump', 'sing', 'dance', 'laugh'],
         Conjunction: ['and', 'but', 'or', 'so']
       }
+    },
+    // New Templates for Phase 5
+    {
+      structure: '{Article} {Noun} {Verb} {Preposition} {Article} {Noun}.',
+      words: {
+        Article: ['The', 'A'],
+        Noun: ['cat', 'dog', 'bird', 'book', 'pen'],
+        Verb: ['is', 'sits', 'stands', 'lies'],
+        Preposition: ['on', 'in', 'under', 'near', 'beside']
+      }
+    },
+    {
+      structure: '{Pronoun} {Verb} {Adverb} {Conjunction} {Pronoun} {Verb} {Adjective}.',
+      words: {
+        Pronoun: ['He', 'She', 'They', 'We'],
+        Verb: ['works', 'studies', 'plays', 'eats'],
+        Adverb: ['hard', 'well', 'fast', 'slowly'],
+        Conjunction: ['but', 'and'],
+        Adjective: ['tired', 'happy', 'hungry', 'thirsty']
+      }
+    },
+    {
+      structure: '{Article} {Adjective} {Noun} {Verb} {Adjective}.',
+      words: {
+        Article: ['The', 'This', 'That'],
+        Adjective: ['big', 'small', 'red', 'blue'],
+        Noun: ['flower', 'sky', 'car', 'house'],
+        Verb: ['looks', 'smells', 'feels', 'seems'],
+      }
     }
   ];
 

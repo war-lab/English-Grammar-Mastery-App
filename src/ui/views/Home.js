@@ -92,13 +92,36 @@ function createCourseCard({ id, image, title, description, streakKey, topics, on
   const progress = getCategoryProgress(topics);
   const streak = parseInt(localStorage.getItem(streakKey) || '0', 10);
 
+  // Button Container
+  const actionsEl = document.createElement('div');
+  actionsEl.className = 'card-actions';
+  actionsEl.style.width = '100%';
+  actionsEl.style.display = 'flex';
+  actionsEl.style.flexDirection = 'column';
+  actionsEl.style.alignItems = 'center';
+  actionsEl.style.gap = '1rem';
+
+  // Challenge Button (Visible if all completed)
+  // Request: Place Challenge Button ABOVE Streak
+  if (progress.allCompleted) {
+    const challengeBtn = document.createElement('button');
+    challengeBtn.className = 'btn btn-challenge';
+    challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
+    challengeBtn.onclick = (e) => {
+      e.stopPropagation();
+      onChallengeClick();
+    };
+    actionsEl.appendChild(challengeBtn);
+  }
+
+  // Status Badge
   const statusBadge = document.createElement('div');
   statusBadge.className = 'status-badge';
   statusBadge.style.background = 'rgba(0, 0, 0, 0.3)';
   statusBadge.style.padding = '0.5rem 1rem';
   statusBadge.style.borderRadius = '2rem';
   statusBadge.style.display = 'inline-block';
-  statusBadge.style.marginBottom = '1.5rem';
+  statusBadge.style.marginBottom = '0.5rem'; // Reduced margin
 
   if (progress.allCompleted) {
     statusBadge.innerHTML = `
@@ -115,31 +138,8 @@ function createCourseCard({ id, image, title, description, streakKey, topics, on
     statusBadge.style.border = '1px solid var(--secondary)';
   }
 
-  card.appendChild(iconEl);
-  card.appendChild(titleEl);
-  card.appendChild(descEl);
-  card.appendChild(statusBadge);
-
-  // Button Container
-  const actionsEl = document.createElement('div');
-  actionsEl.className = 'card-actions';
-  actionsEl.style.width = '100%';
-  actionsEl.style.display = 'flex';
-  actionsEl.style.flexDirection = 'column';
-  actionsEl.style.alignItems = 'center';
-  actionsEl.style.gap = '1rem';
-
-  // Challenge Button (Visible if all completed)
-  if (progress.allCompleted) {
-    const challengeBtn = document.createElement('button');
-    challengeBtn.className = 'btn btn-challenge';
-    challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
-    challengeBtn.onclick = (e) => {
-      e.stopPropagation();
-      onChallengeClick();
-    };
-    actionsEl.appendChild(challengeBtn);
-  }
+  // Add status badge to actions container instead of card body
+  actionsEl.appendChild(statusBadge);
 
   const startBtn = document.createElement('button');
   startBtn.className = 'btn btn-unified'; // Unified button class
@@ -150,6 +150,10 @@ function createCourseCard({ id, image, title, description, streakKey, topics, on
   };
   actionsEl.appendChild(startBtn);
 
+  card.appendChild(iconEl);
+  card.appendChild(titleEl);
+  card.appendChild(descEl);
+  // card.appendChild(statusBadge); // Moved to actionsEl
   card.appendChild(actionsEl);
 
   // Hover effect handled by CSS .topic-card-refined:hover
