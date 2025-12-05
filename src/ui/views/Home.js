@@ -1,4 +1,6 @@
 import { navigate } from '../navigation.js';
+import { curriculum } from '../../logic/curriculum.js';
+import { getCategoryProgress } from '../../logic/storage.js';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -8,61 +10,47 @@ export const Home = () => {
   const header = document.createElement('div');
   header.className = 'home-header';
   header.innerHTML = `
-    <h1 class="title">English Grammar Mastery</h1>
-    <p class="subtitle">体系的な学習とAI問題で英文法をマスターしよう</p>
+    <h1 class="title fancy-title" style="font-size: 3rem;">English Grammar Mastery</h1>
+    <p class="subtitle fancy-subtitle">体系的な学習とAI問題で英文法をマスターしよう</p>
   `;
   container.appendChild(header);
 
-  // Stats section
-  const sentencePatternStreak = parseInt(localStorage.getItem('summaryBestStreak') || '0', 10);
-  const posStreak = parseInt(localStorage.getItem('posBestStreak') || '0', 10);
-
-  const stats = document.createElement('div');
-  stats.className = 'glass stats-section';
-  stats.innerHTML = `
-    <h3>学習進捗</h3>
-    <div class="stats-grid">
-      <div class="stat-item">
-        <span class="stat-label">文型連続</span>
-        <span class="stat-value">${sentencePatternStreak}問</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">品詞連続</span>
-        <span class="stat-value">${posStreak}問</span>
-      </div>
-    </div>
-  `;
-  container.appendChild(stats);
+  // Stats section removed or integrated into cards? User didn't explicitly ask to remove it, but "Top screen card design refined" might imply focusing on course cards.
+  // I'll keep it simple and focus on course cards as requested.
 
   // Course section title
   const courseTitleEl = document.createElement('h2');
+  courseTitleEl.className = 'section-title';
   courseTitleEl.textContent = '学習コース';
-  courseTitleEl.style.marginTop = '2rem';
-  courseTitleEl.style.marginBottom = '1rem';
   container.appendChild(courseTitleEl);
 
   // Course grid
   const courseGrid = document.createElement('div');
   courseGrid.className = 'course-grid';
+  courseGrid.style.gap = '2rem'; // Margin between cards
 
   // 5 Sentence Patterns Card
+  const patternsData = curriculum.find(c => c.id === 'sentence-patterns');
   const patternsCard = createCourseCard({
     id: 'course-patterns',
     icon: '🏗️',
     title: '5 Sentence Patterns',
     description: '英語の基本5文型（SV, SVC, SVO, SVOO, SVOC）をマスターしよう',
-    streak: sentencePatternStreak,
+    streakKey: 'summaryBestStreak',
+    topics: patternsData?.topics || [],
     onClick: () => navigate('/category/sentence-patterns')
   });
   courseGrid.appendChild(patternsCard);
 
   // Parts of Speech Card
+  const posData = curriculum.find(c => c.id === 'parts-of-speech');
   const posCard = createCourseCard({
     id: 'course-pos',
     icon: '✨',
     title: 'Parts of Speech',
     description: '8大品詞（名詞、動詞、形容詞など）を完全理解',
-    streak: posStreak,
+    streakKey: 'posBestStreak',
+    topics: posData?.topics || [],
     onClick: () => navigate('/category/parts-of-speech')
   });
   courseGrid.appendChild(posCard);
@@ -72,36 +60,58 @@ export const Home = () => {
   return container;
 };
 
-function createCourseCard({ id, icon, title, description, streak, onClick }) {
+function createCourseCard({ id, icon, title, description, streakKey, topics, onClick }) {
   const card = document.createElement('div');
-  card.className = 'glass course-card';
+  card.className = 'glass topic-card-refined'; // Refined class
   card.id = id;
 
   const iconEl = document.createElement('div');
   iconEl.className = 'course-icon';
   iconEl.textContent = icon;
+  iconEl.style.fontSize = '3rem';
+  iconEl.style.marginBottom = '1rem';
 
   const titleEl = document.createElement('h3');
   titleEl.textContent = title;
-  titleEl.style.color = 'var(--primary)';
+  titleEl.className = 'card-title';
+  titleEl.style.fontSize = '1.5rem';
   titleEl.style.marginBottom = '0.5rem';
 
   const descEl = document.createElement('p');
   descEl.textContent = description;
-  descEl.style.color = 'var(--text-muted)';
-  descEl.style.fontSize = '0.95rem';
-  descEl.style.marginBottom = '1rem';
+  descEl.className = 'card-desc';
+  descEl.style.marginBottom = '1.5rem';
 
-  const streakBadge = document.createElement('div');
-  streakBadge.className = 'streak-badge';
-  streakBadge.innerHTML = `
-    <span class="streak-icon">🔥</span>
-    <span class="streak-value">${streak}問連続</span>
-  `;
+  // Progress Logic
+  const progress = getCategoryProgress(topics);
+  const streak = parseInt(localStorage.getItem(streakKey) || '0', 10);
+
+  const statusBadge = document.createElement('div');
+  statusBadge.className = 'status-badge';
+  statusBadge.style.background = 'rgba(0, 0, 0, 0.3)';
+  statusBadge.style.padding = '0.5rem 1rem';
+  statusBadge.style.borderRadius = '2rem';
+  statusBadge.style.display = 'inline-block';
+  statusBadge.style.marginBottom = '1.5rem';
+
+  if (progress.allCompleted) {
+    statusBadge.innerHTML = `
+      <span style="color: #fbbf24; margin-right: 0.5rem;">🔥</span>
+      <span style="font-weight: bold;">${streak}問連続正解</span>
+    `;
+    statusBadge.style.border = '1px solid #fbbf24';
+  } else {
+    const percentage = Math.round((progress.completed / progress.total) * 100);
+    statusBadge.innerHTML = `
+      <span style="color: var(--secondary); margin-right: 0.5rem;">📊</span>
+      <span>進捗: <strong>${progress.completed}/${progress.total}</strong> (${percentage}%)</span>
+    `;
+    statusBadge.style.border = '1px solid var(--secondary)';
+  }
 
   const startBtn = document.createElement('button');
-  startBtn.className = 'btn btn-primary';
-  startBtn.textContent = 'レッスン開始';
+  startBtn.className = 'btn btn-unified'; // Unified button class
+  startBtn.innerHTML = 'レッスンを開始 <span style="margin-left: 0.5rem;">→</span>';
   startBtn.onclick = (e) => {
     e.stopPropagation();
     onClick();
@@ -110,19 +120,11 @@ function createCourseCard({ id, icon, title, description, streak, onClick }) {
   card.appendChild(iconEl);
   card.appendChild(titleEl);
   card.appendChild(descEl);
-  card.appendChild(streakBadge);
+  card.appendChild(statusBadge);
+  card.appendChild(document.createElement('br')); // Line break for button
   card.appendChild(startBtn);
 
-  // Hover effect
-  card.onmouseenter = () => {
-    card.style.transform = 'translateY(-8px)';
-    card.style.boxShadow = '0 10px 30px rgba(99, 102, 241, 0.3)';
-  };
-
-  card.onmouseleave = () => {
-    card.style.transform = 'translateY(0)';
-    card.style.boxShadow = 'none';
-  };
+  // Hover effect handled by CSS .topic-card-refined:hover
 
   card.onclick = onClick;
 

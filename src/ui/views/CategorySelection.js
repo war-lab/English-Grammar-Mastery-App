@@ -39,28 +39,24 @@ export const CategorySelection = (categoryId) => {
     if (!topic.isEnabled) return; // Skip disabled topics
 
     const card = document.createElement('div');
-    card.className = 'glass topic-card';
+    card.className = 'glass topic-card-refined'; // Refined class
 
     const progress = getProgress(topic.id);
     const isCompleted = progress.completed;
 
     const topicTitle = document.createElement('h3');
     topicTitle.textContent = topic.title;
+    topicTitle.className = 'card-title';
     topicTitle.style.marginBottom = '0.5rem';
-    topicTitle.style.color = 'var(--primary)';
 
     const topicDesc = document.createElement('p');
     topicDesc.textContent = topic.description;
-    topicDesc.style.color = 'var(--text-muted)';
-    topicDesc.style.fontSize = '0.95rem';
+    topicDesc.className = 'card-desc';
     topicDesc.style.marginBottom = '1rem';
 
     // Status section
     const statusContainer = document.createElement('div');
-    statusContainer.style.display = 'flex';
-    statusContainer.style.justifyContent = 'space-between';
-    statusContainer.style.alignItems = 'center';
-    statusContainer.style.marginBottom = '1rem';
+    statusContainer.style.marginBottom = '1.5rem';
 
     const totalCount = topic.quiz?.length || 0;
     const clearedCount = progress.score || 0;
@@ -68,26 +64,34 @@ export const CategorySelection = (categoryId) => {
 
     // Progress display
     const progressDisplay = document.createElement('div');
-    progressDisplay.style.fontSize = '0.9rem';
-    progressDisplay.style.color = 'var(--text-muted)';
-    progressDisplay.innerHTML = `📊 未クリア: <span style="color: var(--error); font-weight: bold;">${unclearedCount}</span> / クリア: <span style="color: var(--success); font-weight: bold;">${clearedCount}</span>`;
-    statusContainer.appendChild(progressDisplay);
+    progressDisplay.className = 'status-badge';
+    progressDisplay.style.background = 'rgba(0, 0, 0, 0.3)';
+    progressDisplay.style.padding = '0.5rem 1rem';
+    progressDisplay.style.borderRadius = '2rem';
+    progressDisplay.style.display = 'inline-block';
+    progressDisplay.style.border = '1px solid var(--text-muted)';
 
     if (isCompleted) {
-      const badge = document.createElement('span');
-      badge.textContent = '✓ Completed';
-      badge.className = 'completed-badge';
-      statusContainer.appendChild(badge);
+      progressDisplay.innerHTML = `
+        <span style="color: var(--success); margin-right: 0.5rem;">✓</span>
+        <span style="font-weight: bold;">COMPLETED</span>
+      `;
+      progressDisplay.style.border = '1px solid var(--success)';
+      progressDisplay.style.color = 'var(--success)';
+    } else {
+      progressDisplay.innerHTML = `
+        <span style="color: var(--text-muted);">📊 未クリア: <span style="color: var(--error); font-weight: bold;">${unclearedCount}</span> / クリア: <span style="color: var(--success); font-weight: bold;">${clearedCount}</span></span>
+      `;
     }
+    statusContainer.appendChild(progressDisplay);
 
-    // Button container for centering
+    // Button container
     const btnContainer = document.createElement('div');
     btnContainer.style.textAlign = 'center';
-    btnContainer.style.marginTop = '0.5rem';
 
     const startBtn = document.createElement('button');
-    startBtn.className = 'btn btn-primary';
-    startBtn.textContent = 'レッスン開始';
+    startBtn.className = 'btn btn-unified'; // Unified button class
+    startBtn.innerHTML = 'レッスンを開始 <span style="margin-left: 0.5rem;">→</span>';
     startBtn.onclick = (e) => {
       e.stopPropagation();
       navigate('/lesson', topic);
@@ -100,16 +104,7 @@ export const CategorySelection = (categoryId) => {
     card.appendChild(statusContainer);
     card.appendChild(btnContainer);
 
-    // Hover effect - glow instead of movement
-    card.onmouseenter = () => {
-      card.style.boxShadow = '0 0 20px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.2)';
-      card.style.background = 'rgba(30, 41, 59, 0.85)';
-    };
-
-    card.onmouseleave = () => {
-      card.style.boxShadow = '';
-      card.style.background = '';
-    };
+    // Hover effect handled by CSS .topic-card-refined:hover
 
     topicsGrid.appendChild(card);
   });
