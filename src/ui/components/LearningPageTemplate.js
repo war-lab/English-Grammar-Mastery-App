@@ -46,12 +46,14 @@ export const LearningPageTemplate = (config) => {
   const renderExplanation = () => {
     const header = document.createElement('header');
     header.innerHTML = `
-      <div>
-        <h1>${config.title}</h1>
-        <p style="color: var(--text-muted);">${config.subtitle}</p>
+      <div style="text-align: center; width: 100%;">
+        <h1 class="fancy-title">${config.title}</h1>
+        <p class="fancy-subtitle">${config.subtitle}</p>
       </div>
-      <a href="${config.backLink || '#/dashboard'}" class="back-link btn">← 戻る</a>
+      <a href="${config.backLink || '#/dashboard'}" class="back-link btn" style="position: absolute; left: 2rem; top: 2rem;">← 戻る</a>
     `;
+    header.style.position = 'relative';
+    header.style.marginBottom = '3rem';
     container.appendChild(header);
 
     const statsDiv = document.createElement('div');

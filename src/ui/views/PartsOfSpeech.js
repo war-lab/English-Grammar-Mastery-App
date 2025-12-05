@@ -8,7 +8,7 @@ export const PartsOfSpeech = () => {
 
   const renderExplanationContent = () => {
     let html = `
-      <h2 style="text-align: center; margin-bottom: 2rem; color: var(--secondary);">📚 品詞の完全解説</h2>
+      <h2 class="section-title">📚 品詞の完全解説</h2>
       <p style="text-align: center; margin-bottom: 3rem;">英語の8大品詞を理解しよう！</p>
     `;
 

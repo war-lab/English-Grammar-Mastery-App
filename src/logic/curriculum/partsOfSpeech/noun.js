@@ -5,28 +5,60 @@ export const noun = {
   title: '名詞 (Noun)',
   description: '人、物、場所、概念などの名前を表す言葉です。',
   explanation: `
-    <h3>名詞 (Noun) とは？</h3>
-    <p>名詞は、<strong>人、物、場所、考え（概念）</strong>などの名前を表す言葉です。</p>
-    <p>文の中で<strong>主語 (S)</strong>、<strong>目的語 (O)</strong>、<strong>補語 (C)</strong> になることができます。</p>
-    
-    <div class="diagram-container">
-      <div class="diagram-box" data-label="Person">👨‍🎓</div>
-      <div class="diagram-box" data-label="Thing">🍎</div>
-      <div class="diagram-box" data-label="Place">🏫</div>
-      <div class="diagram-box" data-label="Idea">💡</div>
+    <div class="explanation-section">
+      <p>名詞は、<strong>人、物、場所、考え（概念）</strong>などの名前を表す言葉です。</p>
+      <p>文の中で<strong>主語 (S)</strong>、<strong>目的語 (O)</strong>、<strong>補語 (C)</strong> になることができます。</p>
+      
+      <div class="diagram-container">
+        <div class="diagram-box" data-label="Person">👨‍🎓</div>
+        <div class="diagram-box" data-label="Thing">🍎</div>
+        <div class="diagram-box" data-label="Place">🏫</div>
+        <div class="diagram-box" data-label="Idea">💡</div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">名詞の重要な分類</h3>
+
+      <div class="concept-box">
+        <h4>🍎 可算名詞 (Countable Nouns)</h4>
+        <p>数えられる名詞。1つ、2つと数えることができ、単数形と複数形があります。</p>
+        <div class="example-grid">
+          <div class="example-item">one apple 🍎</div>
+          <div class="example-item">two apples 🍎🍎</div>
+          <div class="example-item">many dogs 🐕🐕🐕</div>
+        </div>
+        <div class="grammar-point">
+          <strong>Point:</strong> 単数のときは "a" や "an" をつけます。<br>
+          例: a cat, an apple
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>💧 不可算名詞 (Uncountable Nouns)</h4>
+        <p>数えられない名詞。形が決まっていないものや、概念などは数えられません。</p>
+        <div class="example-grid">
+          <div class="example-item">water 💧 (× a water)</div>
+          <div class="example-item">music 🎵 (× two musics)</div>
+          <div class="example-item">money 💰 (× many moneys)</div>
+        </div>
+        <div class="grammar-point">
+          <strong>Point:</strong> 常に単数扱いで、"a/an" はつきません。<br>
+          量を表すときは "a cup of water" のように単位を使います。
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>🏛️ 固有名詞 (Proper Nouns)</h4>
+        <p>特定の人、場所、組織などの名前。世界に一つしかないもの。</p>
+        <div class="example-grid">
+          <div class="example-item">Tokyo 🗼</div>
+          <div class="example-item">Mount Fuji 🗻</div>
+          <div class="example-item">Sunday 📅</div>
+        </div>
+        <div class="grammar-point">
+          <strong>Point:</strong> 文のどこにあっても、最初の文字は大文字にします。
+        </div>
+      </div>
     </div>
-
-    <h3>名詞の種類</h3>
-    <ul>
-      <li><strong>可算名詞 (Countable Nouns)</strong>: 数えられる名詞（例: apple, dog, book）。単数形と複数形があります。</li>
-      <li><strong>不可算名詞 (Uncountable Nouns)</strong>: 数えられない名詞（例: water, music, happiness）。常に単数扱いです。</li>
-      <li><strong>固有名詞 (Proper Nouns)</strong>: 特定の人や場所の名前（例: Tokyo, John）。常に大文字で始めます。</li>
-    </ul>
-
-    <h3>例文</h3>
-    <p><em>The <strong>cat</strong> is sleeping.</em> (猫は眠っている) - 主語</p>
-    <p><em>I like <strong>music</strong>.</em> (私は音楽が好きだ) - 目的語</p>
-    <p><em>He is a <strong>teacher</strong>.</em> (彼は先生です) - 補語</p>
   `,
   examples: ['apple', 'Tokyo', 'happiness', 'water', 'student'],
   quiz: [

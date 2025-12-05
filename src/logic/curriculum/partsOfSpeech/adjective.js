@@ -5,24 +5,60 @@ export const adjective = {
   title: '形容詞 (Adjective)',
   description: '名詞を修飾（説明）する言葉です。',
   explanation: `
-    <h3>形容詞 (Adjective) とは？</h3>
-    <p>形容詞は、<strong>名詞の状態や性質を詳しく説明（修飾）</strong>する言葉です。</p>
-    
-    <div class="diagram-container">
-      <div class="diagram-box" data-label="Adjective" style="background-color: var(--secondary);">Adj</div>
-      <div class="diagram-arrow">修飾</div>
-      <div class="diagram-box" data-label="Noun">Noun</div>
+    <div class="explanation-section">
+      <p>形容詞は、<strong>名詞の状態や性質を詳しく説明（修飾）</strong>する言葉です。「どんな〜」を表します。</p>
+      
+      <div class="diagram-container">
+        <div class="diagram-box" data-label="Adjective" style="background-color: var(--secondary);">Adj</div>
+        <div class="diagram-arrow">修飾</div>
+        <div class="diagram-box" data-label="Noun">Noun</div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">形容詞の2つのポジション</h3>
+
+      <div class="concept-box">
+        <h4>1. 名詞の前に置く (限定用法)</h4>
+        <p>名詞にくっついて、直接説明します。</p>
+        <div class="example-grid">
+          <div class="example-item">a <strong>red</strong> apple 🍎<br>(赤いりんご)</div>
+          <div class="example-item">a <strong>tall</strong> tree 🌲<br>(高い木)</div>
+          <div class="example-item">a <strong>happy</strong> dog 🐕<br>(幸せな犬)</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>2. be動詞の後ろに置く (叙述用法)</h4>
+        <p>主語がどんな状態かを説明します（補語になる）。</p>
+        <div class="example-grid">
+          <div class="example-item">The apple is <strong>red</strong>.<br>(そのりんごは赤い)</div>
+          <div class="example-item">The tree is <strong>tall</strong>.<br>(その木は高い)</div>
+          <div class="example-item">The dog looks <strong>happy</strong>.<br>(その犬は幸せそうだ)</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">比較の表現</h3>
+      
+      <div class="concept-box">
+        <div style="display: flex; justify-content: space-around; align-items: flex-end; text-align: center; gap: 1rem;">
+          <div>
+            <div style="font-size: 2rem;">🐻</div>
+            <div style="font-weight: bold;">Big</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">原級</div>
+          </div>
+          <div>
+            <div style="font-size: 3rem;">🐻</div>
+            <div style="font-weight: bold; color: var(--primary);">Bigger</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">比較級 (-er)</div>
+          </div>
+          <div>
+            <div style="font-size: 4rem;">🐻</div>
+            <div style="font-weight: bold; color: var(--secondary);">Biggest</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">最上級 (-est)</div>
+          </div>
+        </div>
+        <p style="margin-top: 1rem; text-align: center;">「より〜」「一番〜」と言いたいときは形が変わります。</p>
+      </div>
     </div>
-
-    <h3>使い方の2パターン</h3>
-    <ul>
-      <li><strong>名詞の前に置く</strong>: a <strong>red</strong> apple (赤いりんご)</li>
-      <li><strong>補語 (C) になる</strong>: The flower is <strong>beautiful</strong>. (その花は美しい)</li>
-    </ul>
-
-    <h3>例文</h3>
-    <p><em>This is a <strong>good</strong> book.</em> (これは良い本です)</p>
-    <p><em>He looks <strong>tired</strong>.</em> (彼は疲れているようだ)</p>
   `,
   examples: ['big', 'red', 'happy', 'beautiful', 'tall'],
   quiz: [

@@ -8,7 +8,7 @@ import { curriculum } from '../../logic/curriculum.js';
 export const Summary5Patterns = () => {
   const renderExplanationContent = () => {
     return `
-      <h2 style="text-align: center; margin-bottom: 2rem; color: var(--secondary);">📚 5つの文型の完全解説</h2>
+      <h2 class="section-title">📚 5つの文型の完全解説</h2>
       
       <div class="pattern-explanation-card">
         <h3>第1文型 (SV) - Subject + Verb</h3>

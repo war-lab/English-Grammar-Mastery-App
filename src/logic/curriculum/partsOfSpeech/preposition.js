@@ -5,29 +5,49 @@ export const preposition = {
   title: '前置詞 (Preposition)',
   description: '名詞の前に置いて、場所や時などの関係を表す言葉です。',
   explanation: `
-    <h3>前置詞 (Preposition) とは？</h3>
-    <p>前置詞は、名詞（または代名詞）の前に置いて、他の言葉との関係（場所、時、方向など）を表します。</p>
-    
-    <div class="diagram-container">
-      <div style="position: relative; width: 100px; height: 100px; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
-        Box
-        <div style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem;">📦</div>
-        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); color: var(--secondary);">under</div>
-        <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); color: var(--secondary);">on</div>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--secondary); font-weight: bold;">in</div>
+    <div class="explanation-section">
+      <p>前置詞は、名詞（または代名詞）の前に置いて、他の言葉との関係（場所、時、方向など）を表します。</p>
+      
+      <div class="diagram-container">
+        <div style="position: relative; width: 120px; height: 120px; border: 2px solid rgba(255,255,255,0.2); border-radius: 1rem; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05);">
+          <div style="font-size: 3rem;">📦</div>
+          <div style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); color: var(--secondary); font-weight: bold;">under</div>
+          <div style="position: absolute; top: -25px; left: 50%; transform: translateX(-50%); color: var(--secondary); font-weight: bold;">on</div>
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--primary); font-weight: bold; text-shadow: 0 0 5px black;">in</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">前置詞の3つのイメージ</h3>
+
+      <div class="concept-box">
+        <h4>1. 場所 (Place)</h4>
+        <p>「どこに」あるかを表します。</p>
+        <div class="example-grid">
+          <div class="example-item"><strong>in</strong> the box 📦<br>(箱の中に)</div>
+          <div class="example-item"><strong>on</strong> the desk 🪑<br>(机の上に)</div>
+          <div class="example-item"><strong>at</strong> the station 🚉<br>(駅という地点に)</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>2. 時 (Time)</h4>
+        <p>「いつ」を表します。</p>
+        <div class="example-grid">
+          <div class="example-item"><strong>at</strong> 8:00 🕗<br>(8時に - 点)</div>
+          <div class="example-item"><strong>on</strong> Sunday 📅<br>(日曜日に - 日)</div>
+          <div class="example-item"><strong>in</strong> 2023 🗓️<br>(2023年に - 期間)</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>3. 方向 (Direction)</h4>
+        <p>「どこへ」向かうかを表します。</p>
+        <div class="example-grid">
+          <div class="example-item">go <strong>to</strong> school 🏫<br>(学校へ - 到達点)</div>
+          <div class="example-item">leave <strong>for</strong> Tokyo 🗼<br>(東京へ向けて - 方向)</div>
+        </div>
       </div>
     </div>
-
-    <h3>主な前置詞</h3>
-    <ul>
-      <li><strong>場所</strong>: in (中に), on (上に), at (地点に), under (下に)</li>
-      <li><strong>時</strong>: in (〜に), on (〜に), at (〜に), before (前に), after (後に)</li>
-      <li><strong>方向</strong>: to (〜へ), from (〜から)</li>
-    </ul>
-
-    <h3>例文</h3>
-    <p><em>The book is <strong>on</strong> the desk.</em> (本は机の<strong>上に</strong>ある)</p>
-    <p><em>I go to school <strong>at</strong> 8:00.</em> (私は8時<strong>に</strong>学校へ行く)</p>
   `,
   examples: ['in', 'on', 'at', 'to', 'for', 'with'],
   quiz: [
