@@ -34,6 +34,7 @@ export const PartsOfSpeech = () => {
     renderExplanationContent,
     generateQuiz: (level) => generatePOSQuiz(level),
     aiPromptContext: 'English parts of speech (Noun, Verb, Adjective, Adverb, Preposition, Pronoun, Conjunction, Interjection)',
-    backLink: '#/'
+    backLink: '#/',
+    topics: posData.topics
   });
 };

@@ -1,4 +1,5 @@
 
+import { getCategoryProgress } from '../../logic/storage.js';
 import { generateAIQuestion } from '../../logic/geminiService.js';
 import { createResultModal } from './ResultModal.js';
 
@@ -12,6 +13,7 @@ import { createResultModal } from './ResultModal.js';
  * @param {Function} config.generateQuiz - Function(level) returning a quiz object { question, options, answer, explanation, japaneseTranslation }.
  * @param {string} config.aiPromptContext - Context string for AI question generation (e.g., "English sentence patterns").
  * @param {string} config.backLink - Path to go back to (default: #/dashboard).
+ * @param {Array} config.topics - List of topics to check for completion (optional).
  */
 export const LearningPageTemplate = (config) => {
   const container = document.createElement('div');
@@ -65,7 +67,17 @@ export const LearningPageTemplate = (config) => {
     explanationSection.innerHTML = config.renderExplanationContent();
     container.appendChild(explanationSection);
 
-    // Challenge Buttons
+    // Check progress if topics are provided
+    let isLocked = false;
+    let remainingLessons = 0;
+
+    if (config.topics) {
+      const progress = getCategoryProgress(config.topics);
+      isLocked = !progress.allCompleted;
+      remainingLessons = progress.remaining;
+    }
+
+    // Challenge Buttons or Lock Message
     const actionsDiv = document.createElement('div');
     actionsDiv.style.textAlign = 'center';
     actionsDiv.style.marginTop = '3rem';
@@ -74,48 +86,60 @@ export const LearningPageTemplate = (config) => {
     actionsDiv.style.gap = '1.5rem';
     actionsDiv.style.flexWrap = 'wrap';
 
-    const normalBtn = document.createElement('button');
-    normalBtn.className = 'btn btn-primary';
-    normalBtn.innerHTML = '📝 通常チャレンジ<br><span style="font-size: 0.8em;">レベル1から挑戦</span>';
-    normalBtn.style.fontSize = '1.2rem';
-    normalBtn.style.padding = '1.5rem 2.5rem';
-    normalBtn.style.minWidth = '200px';
-    normalBtn.onclick = () => {
-      viewState = 'quiz';
-      streak = 0;
-      level = 1;
-      isAIMode = false;
-      render();
-    };
-
-    const aiBtn = document.createElement('button');
-    aiBtn.className = 'btn btn-ai';
-    if (aiUnavailable) {
-      aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">現在使用できません</span>';
-      aiBtn.style.opacity = '0.5';
-      aiBtn.style.cursor = 'not-allowed';
-      aiBtn.disabled = true;
+    if (isLocked) {
+      actionsDiv.innerHTML = `
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 1rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; max-width: 600px;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+          <h3 style="color: var(--text-muted); margin-bottom: 1rem;">100問クイズはロックされています</h3>
+          <p style="font-size: 1.1rem;">レッスンを全てクリアして挑戦権を獲得しよう！</p>
+          <p style="margin-top: 1rem; color: var(--secondary); font-weight: bold;">残り ${remainingLessons} レッスン</p>
+        </div>
+      `;
     } else {
-      aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">AIが問題生成！</span>';
-    }
-    aiBtn.style.fontSize = '1.2rem';
-    aiBtn.style.padding = '1.5rem 2.5rem';
-    aiBtn.style.minWidth = '200px';
-    aiBtn.style.background = 'linear-gradient(135deg, #00ff00, #00aa00)';
-    aiBtn.style.border = '2px solid #00ff00';
-    aiBtn.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.3)';
-    aiBtn.onclick = () => {
-      if (!aiUnavailable) {
+      const normalBtn = document.createElement('button');
+      normalBtn.className = 'btn btn-primary';
+      normalBtn.innerHTML = '📝 通常チャレンジ<br><span style="font-size: 0.8em;">レベル1から挑戦</span>';
+      normalBtn.style.fontSize = '1.2rem';
+      normalBtn.style.padding = '1.5rem 2.5rem';
+      normalBtn.style.minWidth = '200px';
+      normalBtn.onclick = () => {
         viewState = 'quiz';
         streak = 0;
         level = 1;
-        isAIMode = true;
+        isAIMode = false;
         render();
-      }
-    };
+      };
 
-    actionsDiv.appendChild(normalBtn);
-    actionsDiv.appendChild(aiBtn);
+      const aiBtn = document.createElement('button');
+      aiBtn.className = 'btn btn-ai';
+      if (aiUnavailable) {
+        aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">現在使用できません</span>';
+        aiBtn.style.opacity = '0.5';
+        aiBtn.style.cursor = 'not-allowed';
+        aiBtn.disabled = true;
+      } else {
+        aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">AIが問題生成！</span>';
+      }
+      aiBtn.style.fontSize = '1.2rem';
+      aiBtn.style.padding = '1.5rem 2.5rem';
+      aiBtn.style.minWidth = '200px';
+      aiBtn.style.background = 'linear-gradient(135deg, #00ff00, #00aa00)';
+      aiBtn.style.border = '2px solid #00ff00';
+      aiBtn.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.3)';
+      aiBtn.onclick = () => {
+        if (!aiUnavailable) {
+          viewState = 'quiz';
+          streak = 0;
+          level = 1;
+          isAIMode = true;
+          render();
+        }
+      };
+
+      actionsDiv.appendChild(normalBtn);
+      actionsDiv.appendChild(aiBtn);
+    }
+
     container.appendChild(actionsDiv);
 
     // Reset Button

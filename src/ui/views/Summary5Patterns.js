@@ -3,6 +3,7 @@
 import { generateSentencePatternQuiz } from '../../logic/curriculum/sentencePatterns/quizGenerator.js';
 import { createPatternDiagram } from '../components/patternDiagrams.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
+import { curriculum } from '../../logic/curriculum.js';
 
 export const Summary5Patterns = () => {
   const renderExplanationContent = () => {
@@ -78,6 +79,7 @@ export const Summary5Patterns = () => {
     renderExplanationContent,
     generateQuiz: (level) => generateSentencePatternQuiz(level, false),
     aiPromptContext: 'English sentence patterns (SV, SVC, SVO, SVOO, SVOC)',
-    backLink: '#/'
+    backLink: '#/',
+    topics: curriculum.find(c => c.id === 'sentence-patterns')?.topics || []
   });
 };

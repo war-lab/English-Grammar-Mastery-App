@@ -62,22 +62,22 @@ export const CategorySelection = (categoryId) => {
     statusContainer.style.alignItems = 'center';
     statusContainer.style.marginBottom = '1rem';
 
+    const totalCount = topic.quiz?.length || 0;
+    const clearedCount = progress.score || 0;
+    const unclearedCount = Math.max(0, totalCount - clearedCount);
+
+    // Progress display
+    const progressDisplay = document.createElement('div');
+    progressDisplay.style.fontSize = '0.9rem';
+    progressDisplay.style.color = 'var(--text-muted)';
+    progressDisplay.innerHTML = `📊 未クリア: <span style="color: var(--error); font-weight: bold;">${unclearedCount}</span> / クリア: <span style="color: var(--success); font-weight: bold;">${clearedCount}</span>`;
+    statusContainer.appendChild(progressDisplay);
+
     if (isCompleted) {
       const badge = document.createElement('span');
       badge.textContent = '✓ Completed';
       badge.className = 'completed-badge';
       statusContainer.appendChild(badge);
-    } else {
-      const spacer = document.createElement('span');
-      statusContainer.appendChild(spacer);
-    }
-
-    if (progress.score > 0) {
-      const scoreDisplay = document.createElement('span');
-      scoreDisplay.textContent = `Best: ${progress.score}/${topic.quiz?.length || '?'}`;
-      scoreDisplay.style.color = 'var(--text-muted)';
-      scoreDisplay.style.fontSize = '0.9rem';
-      statusContainer.appendChild(scoreDisplay);
     }
 
     // Button container for centering
