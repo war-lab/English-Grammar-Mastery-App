@@ -17,8 +17,17 @@ export const Summary5Patterns = () => {
           ${createPatternDiagram('SV')}
         </div>
         <div class="pattern-notes">
-          <p><strong>特徴：</strong> 動詞は自動詞（目的語を必要としない）</p>
-          <p><strong>よく使う動詞：</strong> run, walk, sleep, smile, exist, happen</p>
+          <p><strong>特徴：</strong> 動詞は自動詞（目的語を必要としない）。修飾語（M）がつくことが多いです。</p>
+          <div class="example-box">
+            <p class="example-sentence">Birds fly.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> Birds <span class="tag v-tag">V</span> fly</p>
+            <p class="example-translation">鳥は飛ぶ。</p>
+          </div>
+          <div class="example-box">
+            <p class="example-sentence">He runs fast.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> He <span class="tag v-tag">V</span> runs <span class="tag m-tag">(M)</span> fast</p>
+            <p class="example-translation">彼は速く走る。（fastは副詞で修飾語）</p>
+          </div>
         </div>
       </div>
 
@@ -29,8 +38,17 @@ export const Summary5Patterns = () => {
           ${createPatternDiagram('SVC')}
         </div>
         <div class="pattern-notes">
-          <p><strong>特徴：</strong> 主語の状態や性質を説明する</p>
-          <p><strong>よく使う動詞：</strong> be, become, look, seem, feel, taste, smell</p>
+          <p><strong>特徴：</strong> 主語の状態や性質を説明します。</p>
+          <div class="example-box">
+            <p class="example-sentence">I am happy.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> I <span class="tag v-tag">V</span> am <span class="tag c-tag">C</span> happy</p>
+            <p class="example-translation">私は幸せです。（I = happy）</p>
+          </div>
+          <div class="example-box">
+            <p class="example-sentence">She looks tired.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> She <span class="tag v-tag">V</span> looks <span class="tag c-tag">C</span> tired</p>
+            <p class="example-translation">彼女は疲れているように見える。（She = tired）</p>
+          </div>
         </div>
       </div>
 
@@ -41,8 +59,17 @@ export const Summary5Patterns = () => {
           ${createPatternDiagram('SVO')}
         </div>
         <div class="pattern-notes">
-          <p><strong>特徴：</strong> 動詞は他動詞（目的語を必要とする）</p>
-          <p><strong>よく使う動詞：</strong> have, make, buy, eat, drink, watch, study</p>
+          <p><strong>特徴：</strong> 動詞は他動詞（目的語を必要とする）。</p>
+          <div class="example-box">
+            <p class="example-sentence">I play tennis.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> I <span class="tag v-tag">V</span> play <span class="tag o-tag">O</span> tennis</p>
+            <p class="example-translation">私はテニスをします。（I ≠ tennis）</p>
+          </div>
+          <div class="example-box">
+            <p class="example-sentence">He bought a book.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> He <span class="tag v-tag">V</span> bought <span class="tag o-tag">O</span> a book</p>
+            <p class="example-translation">彼は本を買った。</p>
+          </div>
         </div>
       </div>
 
@@ -53,8 +80,17 @@ export const Summary5Patterns = () => {
           ${createPatternDiagram('SVOO')}
         </div>
         <div class="pattern-notes">
-          <p><strong>特徴：</strong>目的語が2つ（間接目的語 + 直接目的語）</p>
-          <p><strong>よく使う動詞：</strong> give, show, teach, tell, buy, make, send</p>
+          <p><strong>特徴：</strong> 目的語が2つ（間接目的語 + 直接目的語）。</p>
+          <div class="example-box">
+            <p class="example-sentence">He gave me a present.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> He <span class="tag v-tag">V</span> gave <span class="tag o-tag">O1</span> me <span class="tag o-tag">O2</span> a present</p>
+            <p class="example-translation">彼は私にプレゼントをくれた。</p>
+          </div>
+          <div class="example-box">
+            <p class="example-sentence">She showed us the photo.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> She <span class="tag v-tag">V</span> showed <span class="tag o-tag">O1</span> us <span class="tag o-tag">O2</span> the photo</p>
+            <p class="example-translation">彼女は私たちにその写真を見せた。</p>
+          </div>
         </div>
       </div>
 
@@ -65,8 +101,17 @@ export const Summary5Patterns = () => {
           ${createPatternDiagram('SVOC')}
         </div>
         <div class="pattern-notes">
-          <p><strong>特徴：</strong> 目的語の状態や名前を説明する</p>
-          <p><strong>よく使う動詞：</strong> call, name, make, keep, find, leave</p>
+          <p><strong>特徴：</strong> 目的語の状態や名前を説明します。</p>
+          <div class="example-box">
+            <p class="example-sentence">We call him Tom.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> We <span class="tag v-tag">V</span> call <span class="tag o-tag">O</span> him <span class="tag c-tag">C</span> Tom</p>
+            <p class="example-translation">私たちは彼をトムと呼ぶ。（him = Tom）</p>
+          </div>
+          <div class="example-box">
+            <p class="example-sentence">The news made me happy.</p>
+            <p class="example-breakdown"><span class="tag s-tag">S</span> The news <span class="tag v-tag">V</span> made <span class="tag o-tag">O</span> me <span class="tag c-tag">C</span> happy</p>
+            <p class="example-translation">その知らせは私を幸せにした。（me = happy）</p>
+          </div>
         </div>
       </div>
     `;

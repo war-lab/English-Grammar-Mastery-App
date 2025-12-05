@@ -341,3 +341,46 @@ button {
 .btn-unified:active {
   transform: scale(0.98);
 }
+
+/* 5 Sentence Patterns Styles */
+.example-box {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-left: 4px solid var(--primary);
+}
+
+.example-sentence {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.example-breakdown {
+  font-family: monospace;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.example-translation {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-right: 0.3rem;
+  color: white;
+}
+
+.s-tag { background-color: #ef4444; } /* Red */
+.v-tag { background-color: #3b82f6; } /* Blue */
+.o-tag { background-color: #10b981; } /* Green */
+.c-tag { background-color: #f59e0b; } /* Yellow */
+.m-tag { background-color: #6b7280; } /* Gray */
