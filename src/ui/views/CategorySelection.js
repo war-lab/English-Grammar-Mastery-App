@@ -85,9 +85,13 @@ export const CategorySelection = (categoryId) => {
     topicDesc.className = 'card-desc';
     topicDesc.style.marginBottom = '1rem';
 
-    // Status section
+    // Status section - Fixed height for consistent positioning
     const statusContainer = document.createElement('div');
     statusContainer.style.marginBottom = '1.5rem';
+    statusContainer.style.minHeight = '3rem'; // Fixed minimum height
+    statusContainer.style.display = 'flex';
+    statusContainer.style.alignItems = 'center';
+    statusContainer.style.justifyContent = 'center';
 
     const totalCount = topic.quiz?.length || 0;
     const clearedCount = progress.score || 0;

@@ -71,11 +71,9 @@ function createCourseCard({ id, image, title, description, streakKey, topics, on
   iconEl.src = image;
   iconEl.alt = title;
   iconEl.className = 'course-icon-img'; // New class for image
-  iconEl.style.width = '120px';
-  iconEl.style.height = '120px';
+  iconEl.style.height = '20vh';
   iconEl.style.objectFit = 'contain';
   iconEl.style.marginBottom = '1.5rem';
-  iconEl.style.filter = 'drop-shadow(0 10px 15px rgba(0,0,0,0.3))';
 
   const titleEl = document.createElement('h3');
   titleEl.textContent = title;

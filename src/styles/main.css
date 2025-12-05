@@ -439,11 +439,11 @@ button {
 
 /* Course Icon Image */
 .course-icon-img {
-  transition: transform 0.3s ease;
+  /* No transition, no animation */
 }
 
 .topic-card-refined:hover .course-icon-img {
-  transform: scale(1.1) rotate(5deg);
+  /* No transform on hover */
 }
 
 /* Grid Layouts */

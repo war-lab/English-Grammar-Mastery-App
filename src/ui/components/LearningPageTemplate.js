@@ -447,3 +447,4 @@ export const LearningPageTemplate = (config) => {
 
   render();
   return wrapper; // Return the wrapper instead of container
+};
