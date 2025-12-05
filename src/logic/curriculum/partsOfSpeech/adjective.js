@@ -27,7 +27,7 @@ export const adjective = {
       </div>
 
       <div class="concept-box">
-        <h4>2. be動詞の後ろに置く (叙述用法)</h4>
+       <h4>2. be動詞の後ろに置く (叙述用法)</h4>
         <p>主語がどんな状態かを説明します（補語になる）。</p>
         <div class="example-grid">
           <div class="example-item">The apple is <strong>red</strong>.<br>(そのりんごは赤い)</div>
@@ -62,15 +62,65 @@ export const adjective = {
   `,
   examples: ['big', 'red', 'happy', 'beautiful', 'tall'],
   quiz: [
-    { question: '次のうち、形容詞はどれですか？', options: ['run', 'book', 'happy', 'very'], answer: 'happy' },
-    { question: '「美しい花」を英語にすると？', options: ['flower beautiful', 'beautiful flower', 'beauty flower', 'flower beauty'], answer: 'beautiful flower' },
-    { question: '「大きい」の比較級（より大きい）は？', options: ['more big', 'biger', 'bigger', 'biggest'], answer: 'bigger' },
-    { question: '「興味深い本」は "an ( ? ) book"', options: ['interest', 'interested', 'interesting', 'interestingly'], answer: 'interesting' },
-    { question: '「彼は背が高い」を英語にすると？', options: ['He is high.', 'He is tall.', 'He is big.', 'He is height.'], answer: 'He is tall.' },
-    { question: '最上級（一番〜）を作る時につける語尾は？', options: ['-er', '-est', '-ing', '-ed'], answer: '-est' },
-    { question: '「忙しい」を意味する形容詞は？', options: ['busy', 'business', 'busily', 'bus'], answer: 'busy' },
-    { question: '「私の父は有名です」 "My father is ( ? )."', options: ['fame', 'famous', 'famously', 'famed'], answer: 'famous' },
-    { question: '色の名前（red, blueなど）は何詞？', options: ['名詞', '動詞', '形容詞', '副詞'], answer: '形容詞' },
-    { question: '「わくわくしている」人の気持ちを表すのは？', options: ['exciting', 'excited', 'excite', 'excitement'], answer: 'excited' }
+    {
+      question: '次のうち、形容詞はどれですか？',
+      options: ['run', 'book', 'happy', 'very'],
+      answer: 'happy',
+      explanation: '「happy（幸せな）」は状態を表す形容詞です。run（走る）は動詞、book（本）は名詞、very（とても）は副詞です。'
+    },
+    {
+      question: '「美しい花」を英語にすると？',
+      options: ['flower beautiful', 'beautiful flower', 'beauty flower', 'flower beauty'],
+      answer: 'beautiful flower',
+      explanation: '英語では形容詞は名詞の前に置きます。「beautiful（美しい）+ flower（花）」の順です。日本語とは語順が逆です。'
+    },
+    {
+      question: '「大きい」の比較級（より大きい）は？',
+      options: ['more big', 'biger', 'bigger', 'biggest'],
+      answer: 'bigger',
+      explanation: '短い形容詞の比較級は「-er」をつけて作ります。「big（大きい）」は最後の子音字を重ねて「bigger」になります。biggest（最上級）、biger（スペルミス）は誤りです。'
+    },
+    {
+      question: '「興味深い本」は "an ( ? ) book"',
+      options: ['interest', 'interested', 'interesting', 'interestingly'],
+      answer: 'interesting',
+      explanation: '「interesting（興味深い）」は物を修飾する形容詞です。interest（興味）は名詞、interested（興味を持っている）は人の気持ちを表す形容詞、interestingly（興味深いことに）は副詞です。'
+    },
+    {
+      question: '「彼は背が高い」を英語にすると？',
+      options: ['He is high.', 'He is tall.', 'He is big.', 'He is height.'],
+      answer: 'He is tall.',
+      explanation: '人の背の高さは「tall」を使います。high（高い）は建物などに使い、big（大きい）は体格、height（高さ）は名詞です。'
+    },
+    {
+      question: '最上級（一番〜）を作る時につける語尾は？',
+      options: ['-er', '-est', '-ing', '-ed'],
+      answer: '-est',
+      explanation: '最上級は「-est」をつけて作ります（例：tallest, biggest）。-er（比較級）、-ing（現在分詞）、-ed（過去形/過去分詞）は最上級ではありません。'
+    },
+    {
+      question: '「忙しい」を意味する形容詞は？',
+      options: ['busy', 'business', 'busily', 'bus'],
+      answer: 'busy',
+      explanation: '「busy」は「忙しい」という状態を表す形容詞です。business（仕事）は名詞、busily（忙しく）は副詞、bus（バス）は名詞です。'
+    },
+    {
+      question: '「私の父は有名です」 "My father is ( ? )."',
+      options: ['fame', 'famous', 'famously', 'famed'],
+      answer: 'famous',
+      explanation: '「famous（有名な）」は状態を表す形容詞です。fame（名声）は名詞、famously（有名に）は副詞、famed（名高い）も形容詞ですがfamousの方が一般的です。'
+    },
+    {
+      question: '色の名前（red, blueなど）は何詞？',
+      options: ['名詞', '動詞', '形容詞', '副詞'],
+      answer: '形容詞',
+      explanation: '色の名前（red, blue, greenなど）は名詞を修飾するため形容詞です。「a red car（赤い車）」のように使います。'
+    },
+    {
+      question: '「わくわくしている」人の気持ちを表すのは？',
+      options: ['exciting', 'excited', 'excite', 'excitement'],
+      answer: 'excited',
+      explanation: '人の気持ちは「-ed形」で表します。「excited（わくわくしている）」が正解です。exciting（わくわくさせる）は物を表し、excite（わくわくさせる）は動詞、excitement（興奮）は名詞です。'
+    }
   ]
 };

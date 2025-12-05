@@ -53,15 +53,65 @@ export const interjection = {
   `,
   examples: ['Oh', 'Wow', 'Hi', 'Ouch', 'Yes'],
   quiz: [
-    { question: '次のうち、間投詞はどれですか？', options: ['run', 'Wow', 'big', 'in'], answer: 'Wow' },
-    { question: '痛いときに使う言葉は？', options: ['Hello', 'Ouch', 'Yes', 'Good'], answer: 'Ouch' },
-    { question: '挨拶の言葉はどれですか？', options: ['Hi', 'Yes', 'Oh', 'Really'], answer: 'Hi' },
-    { question: '驚いたときに使う言葉は？', options: ['Yes', 'No', 'Wow', 'OK'], answer: 'Wow' },
-    { question: '同意するときに使う言葉は？', options: ['No', 'Yeah', 'Ouch', 'Hey'], answer: 'Yeah' },
-    { question: '「まあ！」と驚きや落胆を表す言葉は？', options: ['Oh', 'Yes', 'Hi', 'OK'], answer: 'Oh' },
-    { question: '呼びかけるときに使う言葉は？', options: ['Hey', 'Ouch', 'Yes', 'No'], answer: 'Hey' },
-    { question: '「うーん」と考え込むときの言葉は？', options: ['Hmm', 'Wow', 'Hi', 'Yes'], answer: 'Hmm' },
-    { question: '失敗したときに「しまった！」と言う言葉は？', options: ['Oops', 'Yes', 'Hi', 'Good'], answer: 'Oops' },
-    { question: '「わかった」と承諾する言葉は？', options: ['OK', 'No', 'Ouch', 'Wow'], answer: 'OK' }
+    {
+      question: '次のうち、間投詞はどれですか？',
+      options: ['run', 'Wow', 'big', 'in'],
+      answer: 'Wow',
+      explanation: '「Wow！（わあ！）」は驚きの感情を表す間投詞です。run（走る）は動詞、big（大きい）は形容詞、in（～の中に）は前置詞です。'
+    },
+    {
+      question: '痛いときに使う言葉は？',
+      options: ['Hello', 'Ouch', 'Yes', 'Good'],
+      answer: 'Ouch',
+      explanation: '「Ouch！（痛っ！）」は痛みを感じたときに使う間投詞です。Hello（こんにちは）、Yes（はい）、Good（良い）とは意味が異なります。'
+    },
+    {
+      question: '挨拶の言葉はどれですか？',
+      options: ['Hi', 'Yes', 'Oh', 'Really'],
+      answer: 'Hi',
+      explanation: '「Hi！（やあ！）」は挨拶の間投詞です。Yes（はい）、Oh（おや）、Really（本当に）とは役割が異なります。'
+    },
+    {
+      question: '驚いたときに使う言葉は？',
+      options: ['Yes', 'No', 'Wow', 'OK'],
+      answer: 'Wow',
+      explanation: '「Wow！（わあ！）」は驚きや感動を表す間投詞です。Yes（はい）、No（いいえ）、OK（わかった）とは意味が異なります。'
+    },
+    {
+      question: '同意するときに使う言葉は？',
+      options: ['No', 'Yeah', 'Ouch', 'Hey'],
+      answer: 'Yeah',
+      explanation: '「Yeah（うん）」は同意や肯定を表す間投詞で、Yesのカジュアルな形です。No（いいえ）、Ouch（痛っ）、Hey（ねえ）とは意味が異なります。'
+    },
+    {
+      question: '「まあ！」と驚きや落胆を表す言葉は？',
+      options: ['Oh', 'Yes', 'Hi', 'OK'],
+      answer: 'Oh',
+      explanation: '「Oh！（おや！まあ！）」は驚きや落胆など様々な感情を表す万能な間投詞です。Yes（はい）、Hi（やあ）、OK（わかった）とは役割が異なります。'
+    },
+    {
+      question: '呼びかけるときに使う言葉は？',
+      options: ['Hey', 'Ouch', 'Yes', 'No'],
+      answer: 'Hey',
+      explanation: '「Hey！（ねえ！）」は人を呼びかけるときに使う間投詞です。Ouch（痛っ）、Yes（はい）、No（いいえ）とは役割が異なります。'
+    },
+    {
+      question: '「うーん」と考え込むときの言葉は？',
+      options: ['Hmm', 'Wow', 'Hi', 'Yes'],
+      answer: 'Hmm',
+      explanation: '「Hmm（うーん）」は考え込むときや迷っているときに使う間投詞です。Wow（わあ）、Hi（やあ）、Yes（はい）とは意味が異なります。'
+    },
+    {
+      question: '失敗したときに「しまった！」と言う言葉は？',
+      options: ['Oops', 'Yes', 'Hi', 'Good'],
+      answer: 'Oops',
+      explanation: '「Oops！（おっと！しまった！）」は失敗やミスをしたときに使う間投詞です。Yes（はい）、Hi（やあ）、Good（良い）とは意味が異なります。'
+    },
+    {
+      question: '「わかった」と承諾する言葉は？',
+      options: ['OK', 'No', 'Ouch', 'Wow'],
+      answer: 'OK',
+      explanation: '「OK（わかった）」は承諾や了解を表す間投詞です。No（いいえ）、Ouch（痛っ）、Wow（わあ）とは意味が異なります。'
+    }
   ]
 };

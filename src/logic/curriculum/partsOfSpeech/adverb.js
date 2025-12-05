@@ -59,15 +59,65 @@ export const adverb = {
   `,
   examples: ['very', 'fast', 'slowly', 'here', 'yesterday'],
   quiz: [
-    { question: '次のうち、副詞はどれですか？', options: ['dog', 'run', 'very', 'good'], answer: 'very' },
-    { question: '"She speaks slowly." の副詞はどれ？', options: ['She', 'speaks', 'slowly', 'なし'], answer: 'slowly' },
-    { question: '「いつも」を意味する頻度の副詞は？', options: ['sometimes', 'never', 'always', 'often'], answer: 'always' },
-    { question: '「速く走る」 "run ( ? )"', options: ['fast', 'fastly', 'fastness', 'faster'], answer: 'fast' },
-    { question: '「上手に歌う」 "sing ( ? )"', options: ['good', 'well', 'nice', 'great'], answer: 'well' },
-    { question: '「昨日」を表す副詞は？', options: ['tomorrow', 'today', 'yesterday', 'now'], answer: 'yesterday' },
-    { question: '「とても」という意味の副詞は？', options: ['many', 'much', 'very', 'lot'], answer: 'very' },
-    { question: '形容詞 "happy" を副詞にすると？', options: ['happily', 'happyly', 'happiness', 'happier'], answer: 'happily' },
-    { question: '「時々」を意味する副詞は？', options: ['always', 'usually', 'sometimes', 'never'], answer: 'sometimes' },
-    { question: '副詞が修飾できないものは？', options: ['動詞', '形容詞', '名詞', '副詞'], answer: '名詞' }
+    {
+      question: '次のうち、副詞はどれですか？',
+      options: ['dog', 'run', 'very', 'good'],
+      answer: 'very',
+      explanation: '「very（とても）」は程度を表す副詞です。dog（犬）は名詞、run（走る）は動詞、good（良い）は形容詞です。'
+    },
+    {
+      question: '"She speaks slowly." の副詞はどれ？',
+      options: ['She', 'speaks', 'slowly', 'なし'],
+      answer: 'slowly',
+      explanation: '「slowly（ゆっくり）」は動詞speaks（話す）を修飾する副詞で、「どのように話すか」を説明します。She（代名詞）、speaks（動詞）は副詞ではありません。'
+    },
+    {
+      question: '「いつも」を意味する頻度の副詞は？',
+      options: ['sometimes', 'never', 'always', 'often'],
+      answer: 'always',
+      explanation: '「always」は「いつも」という意味の頻度副詞です。sometimes（時々）、never（決して～ない）、often（しばしば）も頻度副詞ですが意味が違います。'
+    },
+    {
+      question: '「速く走る」 "run ( ? )"',
+      options: ['fast', 'fastly', 'fastness', 'faster'],
+      answer: 'fast',
+      explanation: '「fast」は形容詞と副詞の両方で使えます。「run fast（速く走る）」で副詞として働きます。fastly（誤り）、fastness（速さ・名詞）、faster（比較級）は副詞の原形ではありません。'
+    },
+    {
+      question: '「上手に歌う」 "sing ( ? )"',
+      options: ['good', 'well', 'nice', 'great'],
+      answer: 'well',
+      explanation: '「well（上手に）」は副詞で、動詞を修飾します。good、nice、greatは形容詞で副詞としては使えません。'
+    },
+    {
+      question: '「昨日」を表す副詞は？',
+      options: ['tomorrow', 'today', 'yesterday', 'now'],
+      answer: 'yesterday',
+      explanation: '「yesterday（昨日）」は時を表す副詞です。tomorrow（明日）、today（今日）、now（今）も時を表しますが意味が違います。'
+    },
+    {
+      question: '「とても」という意味の副詞は？',
+      options: ['many', 'much', 'very', 'lot'],
+      answer: 'very',
+      explanation: '「very（とても）」は程度を表す副詞で、形容詞や副詞を修飾します。many（たくさんの）とmuch（多くの）は形容詞または代名詞、lotは名詞です。'
+    },
+    {
+      question: '形容詞 "happy" を副詞にすると？',
+      options: ['happily', 'happyly', 'happiness', 'happier'],
+      answer: 'happily',
+      explanation: '形容詞を副詞にするには通常「-ly」をつけます。happy（幸せな）→ happily（幸せに）。yで終わる形容詞はyをiに変えて-lyをつけます。happiness（名詞）、happier（比較級）は副詞ではありません。'
+    },
+    {
+      question: '「時々」を意味する副詞は？',
+      options: ['always', 'usually', 'sometimes', 'never'],
+      answer: 'sometimes',
+      explanation: '「sometimes」は「時々」という意味の頻度副詞です。always（いつも）、usually（普段）、never（決して～ない）も頻度副詞ですが意味が違います。'
+    },
+    {
+      question: '副詞が修飾できないものは？',
+      options: ['動詞', '形容詞', '名詞', '副詞'],
+      answer: '名詞',
+      explanation: '副詞は動詞、形容詞、他の副詞を修飾できますが、名詞は修飾できません。名詞を修飾するのは形容詞の役割です。'
+    }
   ]
 };

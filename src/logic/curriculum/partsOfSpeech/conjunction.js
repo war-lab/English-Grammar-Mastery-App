@@ -54,15 +54,65 @@ export const conjunction = {
   `,
   examples: ['and', 'but', 'or', 'so', 'because'],
   quiz: [
-    { question: '次のうち、接続詞はどれですか？', options: ['in', 'and', 'the', 'happy'], answer: 'and' },
-    { question: '「私はりんごが好きだが、バナナは嫌いだ」の「が」にあたる英語は？', options: ['and', 'so', 'but', 'or'], answer: 'but' },
-    { question: '「コーヒーか紅茶」 "coffee ( ? ) tea"', options: ['and', 'but', 'or', 'so'], answer: 'or' },
-    { question: '「雨が降っていたので、家にいた」 "It was raining, ( ? ) I stayed home."', options: ['because', 'but', 'so', 'or'], answer: 'so' },
-    { question: '「もし〜なら」を表す接続詞は？', options: ['when', 'if', 'because', 'so'], answer: 'if' },
-    { question: '「〜するとき」を表す接続詞は？', options: ['where', 'who', 'when', 'which'], answer: 'when' },
-    { question: '「〜だから」理由を表す接続詞は？', options: ['so', 'because', 'but', 'and'], answer: 'because' },
-    { question: '「〜よりも」比較を表す接続詞は？', options: ['then', 'than', 'that', 'this'], answer: 'than' },
-    { question: '「〜ということを知っている」 "I know ( ? ) he is kind."', options: ['what', 'that', 'if', 'so'], answer: 'that' },
-    { question: '「〜する前に」を表す接続詞は？', options: ['after', 'before', 'when', 'while'], answer: 'before' }
+    {
+      question: '次のうち、接続詞はどれですか？',
+      options: ['in', 'and', 'the', 'happy'],
+      answer: 'and',
+      explanation: '「and（そして）」は言葉や文をつなぐ接続詞です。in（～の中に）は前置詞、the（その）は冠詞、happy（幸せな）は形容詞です。'
+    },
+    {
+      question: '「私はりんごが好きだが、バナナは嫌いだ」の「が」にあたる英語は？',
+      options: ['and', 'so', 'but', 'or'],
+      answer: 'but',
+      explanation: '「but（しかし）」は逆接の接続詞で、前の内容と反対のことを言うときに使います。and（そして）、so（だから）、or（または）とは意味が異なります。'
+    },
+    {
+      question: '「コーヒーか紅茶」 "coffee ( ? ) tea"',
+      options: ['and', 'but', 'or', 'so'],
+      answer: 'or',
+      explanation: '「or（または）」は選択の接続詞で、どちらか一方を選ぶときに使います。and（そして）、but（しかし）、so（だから）とは意味が異なります。'
+    },
+    {
+      question: '「雨が降っていたので、家にいた」 "It was raining, ( ? ) I stayed home."',
+      options: ['because', 'but', 'so', 'or'],
+      answer: 'so',
+      explanation: '「so（だから）」は結果を表す接続詞で、理由→結果の順で使います。because（なぜなら）は結果→理由の順、but（しかし）、or（または）とは意味が異なります。'
+    },
+    {
+      question: '「もし〜なら」を表す接続詞は？',
+      options: ['when', 'if', 'because', 'so'],
+      answer: 'if',
+      explanation: '「if（もし～なら）」は条件を表す接続詞です。when（～するとき）、because（なぜなら）、so（だから）とは意味が異なります。'
+    },
+    {
+      question: '「〜するとき」を表す接続詞は？',
+      options: ['where', 'who', 'when', 'which'],
+      answer: 'when',
+      explanation: '「when（～するとき）」は時を表す接続詞です。where（どこで）、who（誰が）、which（どちらが）とは意味が異なります。'
+    },
+    {
+      question: '「〜だから」理由を表す接続詞は？',
+      options: ['so', 'because', 'but', 'and'],
+      answer: 'because',
+      explanation: '「because（なぜなら）」は理由を表す接続詞で、結果→理由の順で使います。so（だから）は理由→結果の順、but（しかし）、and（そして）とは意味が異なります。'
+    },
+    {
+      question: '「〜よりも」比較を表す接続詞は？',
+      options: ['then', 'than', 'that', 'this'],
+      answer: 'than',
+      explanation: '「than（～よりも）」は比較の接続詞で、比較級と一緒に使います（例：taller than）。then（そのとき）、that（あれ）、this（これ）とは意味が異なります。'
+    },
+    {
+      question: '「〜ということを知っている」 "I know ( ? ) he is kind."',
+      options: ['what', 'that', 'if', 'so'],
+      answer: 'that',
+      explanation: '「that」は名詞節を導く接続詞で、「～ということ」という意味です。what（何）、if（もし）、so（だから）とは役割が異なります。'
+    },
+    {
+      question: '「〜する前に」を表す接続詞は？',
+      options: ['after', 'before', 'when', 'while'],
+      answer: 'before',
+      explanation: '「before（～する前に）」は時の順序を表す接続詞です。after（～した後に）は逆の意味、when（～するとき）、while（～している間）とは異なります。'
+    }
   ]
 };
