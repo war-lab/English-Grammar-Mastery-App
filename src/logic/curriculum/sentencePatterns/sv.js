@@ -72,22 +72,26 @@ export const sv = {
     {
       question: '次の文で第1文型 (SV) はどれですか？',
       options: ['I am happy.', 'She runs fast.', 'He plays tennis.', 'We are students.'],
-      answer: 'She runs fast.'
+      answer: 'She runs fast.',
+      explanation: '「She runs fast」は主語(She)と動詞(runs)だけで完結しており、fastは副詞(修飾語)です。他の選択肢は第2文型(SVC)または第3文型(SVO)です。'
     },
     {
       question: '第1文型の文を完成させてください：Birds ___ in the sky.',
       options: ['are', 'fly', 'beautiful', 'like'],
-      answer: 'fly'
+      answer: 'fly',
+      explanation: '「fly（飛ぶ）」は自動詞で、目的語を必要としません。「in the sky」は場所を表す修飾語句なので、S+Vの第1文型になります。'
     },
     {
       question: '「太陽が輝いている」を第1文型で表すと？',
       options: ['The sun is bright.', 'The sun shines.', 'The sun has light.', 'The sun makes light.'],
-      answer: 'The sun shines.'
+      answer: 'The sun shines.',
+      explanation: '「shines（輝く）」は自動詞で第1文型です。「is bright」は第2文型(SVC)、「has light」「makes light」は第3文型(SVO)です。'
     },
     {
       question: '次のうち、第1文型で使える自動詞はどれですか？',
       options: ['make', 'have', 'exist', 'give'],
-      answer: 'exist'
+      answer: 'exist',
+      explanation: '「exist（存在する）」は自動詞で目的語を取りません。make、have、giveはすべて他動詞で目的語を必要とします。'
     }
   ]
 };

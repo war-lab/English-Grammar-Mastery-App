@@ -87,32 +87,38 @@ export const svoc = {
     {
       question: '次の文で第5文型 (SVOC) はどれですか？',
       options: ['I gave him a book.', 'She made me happy.', 'He bought a car.', 'They are students.'],
-      answer: 'She made me happy.'
+      answer: 'She made me happy.',
+      explanation: '「She made me happy」は主語(She)、動詞(made)、目的語(me)、補語(happy)から構成され、「me = happy」というO = Cの関係が成り立つ第5文型です。'
     },
     {
       question: '第5文型の文を完成させてください：Please keep the door ___.',
       options: ['open', 'opens', 'opening', 'to open'],
-      answer: 'open'
+      answer: 'open',
+      explanation: '第5文型では「S + V + O + C」の形です。「keep the door open（ドアを開けておく）」で、the doorが目的語、openが補語で、「the door = open（ドアは開いている）」という関係が成り立ちます。'
     },
     {
       question: '「私たちは彼をトムと呼ぶ」を英語で表すと？',
       options: ['We call Tom him.', 'We call him Tom.', 'We call to him Tom.', 'We call for him Tom.'],
-      answer: 'We call him Tom.'
+      answer: 'We call him Tom.',
+      explanation: '第5文型では「S + V + O + C」の順序で、前置詞は不要です。「We call him Tom」で、himが目的語、Tomが補語で、「him = Tom」の関係が成り立ちます。'
     },
     {
       question: '次のうち、O = C の関係が成り立つのはどれですか？',
       options: ['He made me lunch.', 'She calls me Ken.', 'I bought him a pen.', 'They showed us photos.'],
-      answer: 'She calls me Ken.'
+      answer: 'She calls me Ken.',
+      explanation: '「She calls me Ken」では「me = Ken（私はケン）」というO = Cの関係が成り立ちます。他の選択肢は第4文型で、目的語が2つありますがイコール関係はありません。'
     },
     {
       question: '「その知らせは彼女を悲しませた」を英語で表すと？',
       options: ['The news made her sad.', 'The news made sad her.', 'The news made to her sad.', 'The news made for her sad.'],
-      answer: 'The news made her sad.'
+      answer: 'The news made her sad.',
+      explanation: '第5文型では「S + V + O + C」の順序です。「The news made her sad」で、herが目的語、sadが補語で、「her = sad（彼女は悲しい）」という関係が成り立ちます。'
     },
     {
       question: '次のうち、第5文型で使える動詞はどれですか？',
       options: ['keep', 'give', 'buy', 'send'],
-      answer: 'keep'
+      answer: 'keep',
+      explanation: '「keep（保つ、～の状態にしておく）」は第5文型で使われる動詞で、「keep + O + C」の形で使います。give、buy、sendは第4文型で使われる授与動詞です。'
     }
   ]
 };

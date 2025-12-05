@@ -112,32 +112,38 @@ export const svo = {
     {
       question: '次の文で第3文型 (SVO) はどれですか？',
       options: ['I am a student.', 'She looks happy.', 'He plays soccer.', 'They are tired.'],
-      answer: 'He plays soccer.'
+      answer: 'He plays soccer.',
+      explanation: '「He plays soccer」は主語(He)と動詞(plays)と目的語(soccer)から構成される第3文型です。他の選択肢は第2文型(SVC)です。'
     },
     {
       question: '第3文型の文を完成させてください：I ___ pizza.',
       options: ['am', 'like', 'happy', 'tired'],
-      answer: 'like'
+      answer: 'like',
+      explanation: '「like」は他動詞で目的語（pizza）を取ります。「I like pizza（私はピザが好きです）」という第3文型の文になります。'
     },
     {
       question: '「彼女は毎日英語を勉強する」を英語で表すと？',
       options: ['She is English every day.', 'She becomes English every day.', 'She studies English every day.', 'She seems English every day.'],
-      answer: 'She studies English every day.'
+      answer: 'She studies English every day.',
+      explanation: '「study」は他動詞で目的語（English）を取ります。「She studies English（彼女は英語を勉強する）」という第3文型の文です。'
     },
     {
       question: '次のうち、S ≠ O の関係なのはどれですか？',
       options: ['He is a doctor.', 'She seems kind.', 'I read books.', 'They are students.'],
-      answer: 'I read books.'
+      answer: 'I read books.',
+      explanation: '第3文型では主語と目的語は別のものです（S ≠ O）。「I read books」では「I（私）」と「books（本）」は異なるものです。他の選択肢は第2文型でS = Cの関係です。'
     },
     {
       question: '「私たちは音楽を楽しむ」を英語で表すと？',
       options: ['We are music.', 'We enjoy music.', 'We become music.', 'We seem music.'],
-      answer: 'We enjoy music.'
+      answer: 'We enjoy music.',
+      explanation: '「enjoy」は他動詞で目的語（music）を取ります。「We enjoy music（私たちは音楽を楽しむ）」という第3文型の文です。'
     },
     {
       question: '次のうち、第3文型で使える他動詞はどれですか？',
       options: ['go', 'become', 'write', 'seem'],
-      answer: 'write'
+      answer: 'write',
+      explanation: '「write（書く）」は他動詞で目的語を必要とします。go（行く）は自動詞、become（～になる）とseem（～のようだ）は第2文型で使われる連絡動詞です。'
     }
   ]
 };

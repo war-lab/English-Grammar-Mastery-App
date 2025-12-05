@@ -85,27 +85,32 @@ export const svc = {
     {
       question: '次の文で S = C の関係が成り立つのはどれですか？',
       options: ['I play tennis.', 'She is kind.', 'He reads books.', 'They go home.'],
-      answer: 'She is kind.'
+      answer: 'She is kind.',
+      explanation: '「She is kind」は「She = kind（彼女は優しい）」というイコール関係が成り立つ第2文型です。他の選択肢はすべて第1文型または第3文型です。'
     },
     {
       question: '第2文型の文を完成させてください：The flower ___ beautiful.',
       options: ['has', 'makes', 'is', 'does'],
-      answer: 'is'
+      answer: 'is',
+      explanation: '第2文型ではbe動詞やその他の連絡動詞が使われます。「The flower is beautiful（その花は美しい）」で「flower = beautiful」という関係が成り立ちます。'
     },
     {
       question: '「彼は疲れているように見える」を英語で表すと？',
       options: ['He sees tired.', 'He looks tired.', 'He watches tired.', 'He is look tired.'],
-      answer: 'He looks tired.'
+      answer: 'He looks tired.',
+      explanation: '「look + 形容詞」で「～のように見える」という意味になります。lookは第2文型で使われる連絡動詞で、tiredは補語（C）です。'
     },
     {
       question: '次のうち、第2文型で使われる動詞はどれですか？',
       options: ['eat', 'become', 'have', 'play'],
-      answer: 'become'
+      answer: 'become',
+      explanation: '「become（～になる）」は第2文型で使われる連絡動詞です。eat、have、playは目的語を必要とする他動詞です。'
     },
     {
       question: '「この料理は美味しい味がする」を英語で表すと？',
       options: ['This dish has delicious.', 'This dish tastes delicious.', 'This dish makes delicious.', 'This dish eats delicious.'],
-      answer: 'This dish tastes delicious.'
+      answer: 'This dish tastes delicious.',
+      explanation: '「taste + 形容詞」で「～の味がする」という意味になります。tasteは第2文型で使われる連絡動詞で、deliciousは補語（C）です。'
     }
   ]
 };

@@ -102,32 +102,38 @@ export const svoo = {
     {
       question: '次の文で第4文型 (SVOO) はどれですか？',
       options: ['I like music.', 'She gave me a gift.', 'He is kind.', 'They study hard.'],
-      answer: 'She gave me a gift.'
+      answer: 'She gave me a gift.',
+      explanation: '「She gave me a gift」は主語(She)、動詞(gave)、間接目的語(me)、直接目的語(a gift)から構成される第4文型です。他の選択肢は第1、第2、第3文型です。'
     },
     {
       question: '「私は彼に本をあげた」を英語で表すと？',
       options: ['I gave a book him.', 'I gave him a book.', 'I gave to him a book.', 'I gave a book to he.'],
-      answer: 'I gave him a book.'
+      answer: 'I gave him a book.',
+      explanation: '第4文型では「S + V + O1(人) + O2(もの)」の順序です。「I gave him a book」で、himが間接目的語、a bookが直接目的語です。'
     },
     {
       question: '第4文型を第3文型に書き換えたとき、"She made me a cake." はどうなりますか？',
       options: ['She made a cake to me.', 'She made a cake for me.', 'She made a cake with me.', 'She made a cake by me.'],
-      answer: 'She made a cake for me.'
+      answer: 'She made a cake for me.',
+      explanation: 'make、buy、cookなどの動詞では、第3文型に書き換えるときは「for」を使います。「She made a cake for me（彼女は私のためにケーキを作った）」となります。'
     },
     {
       question: '次のうち、第4文型で使える授与動詞はどれですか？',
       options: ['go', 'become', 'teach', 'run'],
-      answer: 'teach'
+      answer: 'teach',
+      explanation: '「teach（教える）」は第4文型で使われる授与動詞で、「teach + 人 + もの」の形で使います。goとrunは自動詞、becomeは第2文型で使われる連絡動詞です。'
     },
     {
       question: ' "He sent a letter to Mary." を第4文型に書き換えると？',
       options: ['He sent Mary a letter.', 'He sent to Mary a letter.', 'He sent a letter Mary.', 'He sent for Mary a letter.'],
-      answer: 'He sent Mary a letter.'
+      answer: 'He sent Mary a letter.',
+      explanation: '第3文型「He sent a letter to Mary」を第4文型に書き換えると「He sent Mary a letter」となります。toを取り、間接目的語(Mary)を直接目的語(a letter)の前に置きます。'
     },
     {
       question: '「母は私に新しいドレスを買ってくれた」を英語で表すと？',
       options: ['My mother bought to me a new dress.', 'My mother bought me a new dress.', 'My mother bought for me a new dress.', 'My mother bought a new dress me.'],
-      answer: 'My mother bought me a new dress.'
+      answer: 'My mother bought me a new dress.',
+      explanation: '第4文型では「S + V + O1(人) + O2(もの)」の順序で、前置詞は不要です。「My mother bought me a new dress」が正しい第4文型の形です。'
     },
     {
       question: '次のうち、書き換えるときに "to" を使う動詞はどれですか？',
