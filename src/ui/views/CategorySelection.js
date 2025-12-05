@@ -71,6 +71,8 @@ export const CategorySelection = (categoryId) => {
 
     const card = document.createElement('div');
     card.className = 'glass topic-card-refined'; // Refined class
+    card.style.display = 'flex';
+    card.style.flexDirection = 'column';
 
     const progress = getProgress(topic.id);
     const isCompleted = progress.completed;
@@ -85,9 +87,15 @@ export const CategorySelection = (categoryId) => {
     topicDesc.className = 'card-desc';
     topicDesc.style.marginBottom = '1rem';
 
+    // Bottom section container (status + button)
+    const bottomSection = document.createElement('div');
+    bottomSection.style.marginTop = 'auto'; // Push to bottom
+    bottomSection.style.display = 'flex';
+    bottomSection.style.flexDirection = 'column';
+    bottomSection.style.gap = '1rem';
+
     // Status section - Fixed height for consistent positioning
     const statusContainer = document.createElement('div');
-    statusContainer.style.marginBottom = '1.5rem';
     statusContainer.style.minHeight = '3rem'; // Fixed minimum height
     statusContainer.style.display = 'flex';
     statusContainer.style.alignItems = 'center';
@@ -136,10 +144,13 @@ export const CategorySelection = (categoryId) => {
 
     btnContainer.appendChild(startBtn);
 
+    // Assemble bottom section
+    bottomSection.appendChild(statusContainer);
+    bottomSection.appendChild(btnContainer);
+
     card.appendChild(topicTitle);
     card.appendChild(topicDesc);
-    card.appendChild(statusContainer);
-    card.appendChild(btnContainer);
+    card.appendChild(bottomSection);
 
     // Hover effect handled by CSS .topic-card-refined:hover
 
