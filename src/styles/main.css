@@ -168,6 +168,7 @@ button {
     transform: translateX(-10px) rotate(-1deg);
   }
 }
+
 /* Topic Card Styles */
 .topic-card {
   padding: 1.5rem;
@@ -189,6 +190,7 @@ button {
   font-size: 2.5rem;
   font-weight: 800;
   background: linear-gradient(135deg, #fff 0%, #a5f3fc 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 30px rgba(165, 243, 252, 0.3);
@@ -379,17 +381,38 @@ button {
   color: white;
 }
 
-.s-tag { background-color: #ef4444; } /* Red */
-.v-tag { background-color: #3b82f6; } /* Blue */
-.o-tag { background-color: #10b981; } /* Green */
-.c-tag { background-color: #f59e0b; } /* Yellow */
-.m-tag { background-color: #6b7280; } /* Gray */
+.s-tag {
+  background-color: #ef4444;
+}
+
+/* Red */
+.v-tag {
+  background-color: #3b82f6;
+}
+
+/* Blue */
+.o-tag {
+  background-color: #10b981;
+}
+
+/* Green */
+.c-tag {
+  background-color: #f59e0b;
+}
+
+/* Yellow */
+.m-tag {
+  background-color: #6b7280;
+}
+
+/* Gray */
 
 /* Phase 3 Styles */
 
 /* Remove move up animation, keep glow */
 .topic-card-refined:hover {
-  transform: none; /* Override translateY */
+  transform: none;
+  /* Override translateY */
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.2);
   background: rgba(30, 41, 59, 0.9);
   border-color: rgba(99, 102, 241, 0.5);
@@ -421,4 +444,13 @@ button {
 
 .topic-card-refined:hover .course-icon-img {
   transform: scale(1.1) rotate(5deg);
+}
+
+/* Grid Layouts */
+.course-grid,
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }

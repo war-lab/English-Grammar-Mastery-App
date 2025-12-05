@@ -10,8 +10,8 @@ const routes = {
   '/': Home,
   '/lesson': Lesson,
   '/quiz': Quiz,
-  '/summary-5-patterns': Summary5Patterns,
-  '/parts-of-speech': PartsOfSpeech
+  '/summary/5-sentence-patterns': Summary5Patterns,
+  '/summary/parts-of-speech': PartsOfSpeech
 };
 
 export const initRouter = () => {

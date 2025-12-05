@@ -33,13 +33,13 @@ export const Home = () => {
   const patternsData = curriculum.find(c => c.id === 'sentence-patterns');
   const patternsCard = createCourseCard({
     id: 'course-patterns',
-    image: './assets/images/icon-patterns.png', // Use generated image
+    image: '/images/icon-patterns.png', // Updated path
     title: '5 Sentence Patterns',
     description: '英語の基本5文型（SV, SVC, SVO, SVOO, SVOC）をマスターしよう',
     streakKey: 'summaryBestStreak',
     topics: patternsData?.topics || [],
     onClick: () => navigate('/category/sentence-patterns'),
-    onChallengeClick: () => navigate('/summary/5-sentence-patterns') // Link to explanation/quiz page
+    onChallengeClick: () => navigate('/summary/5-sentence-patterns')
   });
   courseGrid.appendChild(patternsCard);
 
@@ -47,13 +47,13 @@ export const Home = () => {
   const posData = curriculum.find(c => c.id === 'parts-of-speech');
   const posCard = createCourseCard({
     id: 'course-pos',
-    image: './assets/images/icon-pos.png', // Use generated image
+    image: '/images/icon-pos.png', // Updated path
     title: 'Parts of Speech',
     description: '8大品詞（名詞、動詞、形容詞など）を完全理解',
     streakKey: 'posBestStreak',
     topics: posData?.topics || [],
     onClick: () => navigate('/category/parts-of-speech'),
-    onChallengeClick: () => navigate('/summary/parts-of-speech') // Link to explanation/quiz page
+    onChallengeClick: () => navigate('/summary/parts-of-speech')
   });
   courseGrid.appendChild(posCard);
 
