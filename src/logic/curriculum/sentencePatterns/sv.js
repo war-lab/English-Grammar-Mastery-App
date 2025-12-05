@@ -5,70 +5,61 @@ export const sv = {
   title: '第1文型 (SV) - Subject + Verb',
   description: '主語と動詞だけで完結する文型。目的語も補語もない構造です。',
   explanation: `
-    <h3>第1文型（SV）とは？</h3>
-    <p>第1文型は英語の文型の中で最もシンプルな形です。<strong>主語（S）と動詞（V）</strong>だけで意味が完結します。</p>
-    <p>この文型では、<strong>目的語（O）も補語（C）も必要ありません</strong>。動詞が自動詞（目的語を必要としない動詞）である場合に使われます。</p>
-    
-    <div class="diagram-container">
-      <div class="diagram-box" data-label="Subject">S</div>
-      <div class="diagram-arrow">V</div>
-      <div class="diagram-box" data-label="Verb">V</div>
-      <div class="diagram-example">Birds fly.</div>
+    <div class="explanation-section">
+      <h3 class="section-title">第1文型（SV）とは？</h3>
+      <p>第1文型は英語の文型の中で最もシンプルな形です。<strong>主語（S）と動詞（V）</strong>だけで意味が完結します。</p>
+      <p>この文型では、<strong>目的語（O）も補語（C）も必要ありません</strong>。動詞が自動詞（目的語を必要としない動詞）である場合に使われます。</p>
+      
+      <div class="diagram-container">
+        <div class="diagram-box" data-label="Subject">S</div>
+        <div class="diagram-arrow">V</div>
+        <div class="diagram-box" data-label="Verb">V</div>
+        <div class="diagram-example">Birds fly.</div>
+      </div>
+      
+      <div class="concept-box">
+        <h4>基本構造</h4>
+        <p><strong>主語 (S) + 動詞 (V)</strong></p>
+        <p>多くの場合、場所や時間を表す修飾語句（M）が付きますが、文型の本質的な要素ではありません。</p>
+      </div>
+      
+      <h3 class="section-title">詳細な例文と解説</h3>
+      
+      <div class="example-box">
+        <p class="example-sentence">The sun rises.</p>
+        <p class="example-breakdown"><span class="tag s-tag">S</span> The sun <span class="tag v-tag">V</span> rises</p>
+        <p class="example-translation">太陽が昇る。</p>
+        <p class="example-note">「昇る」という動作に目的語は必要ありません。</p>
+      </div>
+
+      <div class="example-box">
+        <p class="example-sentence">She smiled.</p>
+        <p class="example-breakdown"><span class="tag s-tag">S</span> She <span class="tag v-tag">V</span> smiled</p>
+        <p class="example-translation">彼女は微笑んだ。</p>
+        <p class="example-note">「微笑む」は自動詞で、目的語を取りません。</p>
+      </div>
+
+      <div class="example-box">
+        <p class="example-sentence">I go to school every day.</p>
+        <p class="example-breakdown"><span class="tag s-tag">S</span> I <span class="tag v-tag">V</span> go <span class="tag m-tag">(M)</span> to school <span class="tag m-tag">(M)</span> every day</p>
+        <p class="example-translation">私は毎日学校へ行く。</p>
+        <p class="example-note">「to school」は場所を表す修飾語句（M）で、文型の要素ではありません。</p>
+      </div>
+
+      <div class="example-box">
+        <p class="example-sentence">Birds fly in the sky.</p>
+        <p class="example-breakdown"><span class="tag s-tag">S</span> Birds <span class="tag v-tag">V</span> fly <span class="tag m-tag">(M)</span> in the sky</p>
+        <p class="example-translation">鳥が空を飛ぶ。</p>
+      </div>
+
+      <h3 class="section-title">覚えておくべきポイント</h3>
+      <ul class="check-list">
+        <li>✓ 動詞の後に「何を」「どうなる」が<strong>不要</strong></li>
+        <li>✓ 自動詞のみが使われる</li>
+        <li>✓ 場所・時間などの修飾語があっても文型は変わらない</li>
+        <li>✓ VOは含まれない</li>
+      </ul>
     </div>
-    
-    <h3>基本構造</h3>
-    <p><strong>主語 (S) + 動詞 (V)</strong></p>
-    <p>多くの場合、場所や時間を表す修飾語句（M）が付きますが、文型の本質的な要素ではありません。</p>
-    
-    <h3>第1文型で使われる主な動詞</h3>
-    <ul>
-      <li><strong>移動を表す動詞</strong>：go（行く）、come（来る）、run（走る）、walk（歩く）、arrive（到着する）</li>
-      <li><strong>存在を表す動詞</strong>：exist（存在する）、live（住む）、stay（滞在する）</li>
-      <li><strong>状態を表す動詞</strong>：sleep（眠る）、sit（座る）、stand（立つ）、lie（横たわる）</li>
-      <li><strong>自然現象</strong>：rain（雨が降る）、snow（雪が降る）、shine（輝く）</li>
-    </ul>
-
-    <h3>詳細な例文と解説</h3>
-    <p><em>The sun rises.</em></p>
-    <ul>
-      <li>S = The sun（太陽が）</li>
-      <li>V = rises（昇る）</li>
-      <li>意味：太陽が昇る。</li>
-      <li>解説：「昇る」という動作に目的語は必要ありません。</li>
-    </ul>
-
-    <p><em>She smiled.</em></p>
-    <ul>
-      <li>S = She（彼女が）</li>
-      <li>V = smiled（微笑んだ）</li>
-      <li>意味：彼女は微笑んだ。</li>
-      <li>解説：「微笑む」は自動詞で、目的語を取りません。</li>
-    </ul>
-
-    <p><em>I go to school every day.</em></p>
-    <ul>
-      <li>S = I（私は）</li>
-      <li>V = go（行く）</li>
-      <li>M = to school（学校へ）every day（毎日）</li>
-      <li>意味：私は毎日学校へ行く。</li>
-      <li>解説：「to school」は場所を表す修飾語句（M）で、文型の要素ではありません。</li>
-    </ul>
-
-    <p><em>Birds fly in the sky.</em></p>
-    <ul>
-      <li>S = Birds（鳥が）</li>
-      <li>V = fly（飛ぶ）</li>
-      <li>M = in the sky（空を）</li>
-      <li>意味：鳥が空を飛ぶ。</li>
-    </ul>
-
-    <h3>覚えておくべきポイント</h3>
-    <ul>
-      <li>✓ 動詞の後に「何を」「どうなる」が<strong>不要</strong></li>
-      <li>✓ 自動詞のみが使われる</li>
-      <li>✓ 場所・時間などの修飾語があっても文型は変わらない</li>
-      <li>✓ VOは含まれない</li>
-    </ul>
   `,
   examples: [
     'The baby cried.',

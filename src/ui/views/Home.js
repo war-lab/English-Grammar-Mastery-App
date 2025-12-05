@@ -33,12 +33,13 @@ export const Home = () => {
   const patternsData = curriculum.find(c => c.id === 'sentence-patterns');
   const patternsCard = createCourseCard({
     id: 'course-patterns',
-    icon: '🏗️',
+    image: './assets/images/icon-patterns.png', // Use generated image
     title: '5 Sentence Patterns',
     description: '英語の基本5文型（SV, SVC, SVO, SVOO, SVOC）をマスターしよう',
     streakKey: 'summaryBestStreak',
     topics: patternsData?.topics || [],
-    onClick: () => navigate('/category/sentence-patterns')
+    onClick: () => navigate('/category/sentence-patterns'),
+    onChallengeClick: () => navigate('/summary/5-sentence-patterns') // Link to explanation/quiz page
   });
   courseGrid.appendChild(patternsCard);
 
@@ -46,12 +47,13 @@ export const Home = () => {
   const posData = curriculum.find(c => c.id === 'parts-of-speech');
   const posCard = createCourseCard({
     id: 'course-pos',
-    icon: '✨',
+    image: './assets/images/icon-pos.png', // Use generated image
     title: 'Parts of Speech',
     description: '8大品詞（名詞、動詞、形容詞など）を完全理解',
     streakKey: 'posBestStreak',
     topics: posData?.topics || [],
-    onClick: () => navigate('/category/parts-of-speech')
+    onClick: () => navigate('/category/parts-of-speech'),
+    onChallengeClick: () => navigate('/summary/parts-of-speech') // Link to explanation/quiz page
   });
   courseGrid.appendChild(posCard);
 
@@ -60,16 +62,20 @@ export const Home = () => {
   return container;
 };
 
-function createCourseCard({ id, icon, title, description, streakKey, topics, onClick }) {
+function createCourseCard({ id, image, title, description, streakKey, topics, onClick, onChallengeClick }) {
   const card = document.createElement('div');
   card.className = 'glass topic-card-refined'; // Refined class
   card.id = id;
 
-  const iconEl = document.createElement('div');
-  iconEl.className = 'course-icon';
-  iconEl.textContent = icon;
-  iconEl.style.fontSize = '3rem';
-  iconEl.style.marginBottom = '1rem';
+  const iconEl = document.createElement('img');
+  iconEl.src = image;
+  iconEl.alt = title;
+  iconEl.className = 'course-icon-img'; // New class for image
+  iconEl.style.width = '120px';
+  iconEl.style.height = '120px';
+  iconEl.style.objectFit = 'contain';
+  iconEl.style.marginBottom = '1.5rem';
+  iconEl.style.filter = 'drop-shadow(0 10px 15px rgba(0,0,0,0.3))';
 
   const titleEl = document.createElement('h3');
   titleEl.textContent = title;
@@ -109,6 +115,25 @@ function createCourseCard({ id, icon, title, description, streakKey, topics, onC
     statusBadge.style.border = '1px solid var(--secondary)';
   }
 
+  card.appendChild(iconEl);
+  card.appendChild(titleEl);
+  card.appendChild(descEl);
+  card.appendChild(statusBadge);
+
+  // Challenge Button (Visible if all completed)
+  if (progress.allCompleted) {
+    const challengeBtn = document.createElement('button');
+    challengeBtn.className = 'btn btn-challenge';
+    challengeBtn.innerHTML = '🏆 100問クイズに挑戦';
+    challengeBtn.style.marginBottom = '1rem';
+    challengeBtn.onclick = (e) => {
+      e.stopPropagation();
+      onChallengeClick();
+    };
+    card.appendChild(document.createElement('br'));
+    card.appendChild(challengeBtn);
+  }
+
   const startBtn = document.createElement('button');
   startBtn.className = 'btn btn-unified'; // Unified button class
   startBtn.innerHTML = 'レッスンを開始 <span style="margin-left: 0.5rem;">→</span>';
@@ -117,10 +142,6 @@ function createCourseCard({ id, icon, title, description, streakKey, topics, onC
     onClick();
   };
 
-  card.appendChild(iconEl);
-  card.appendChild(titleEl);
-  card.appendChild(descEl);
-  card.appendChild(statusBadge);
   card.appendChild(document.createElement('br')); // Line break for button
   card.appendChild(startBtn);
 
