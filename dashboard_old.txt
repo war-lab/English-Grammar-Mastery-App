@@ -1,4 +1,4 @@
-import { navigate } from '../router.js';
+﻿import { navigate } from '../router.js';
 import { curriculum } from '../../logic/curriculum.js';
 import { loadProgress } from '../../logic/storage.js';
 
@@ -7,7 +7,7 @@ export const Dashboard = () => {
   container.className = 'dashboard-view';
 
   const title = document.createElement('h2');
-  title.textContent = 'マイダッシュボード';
+  title.textContent = '繝槭う繝繝・す繝･繝懊・繝・;
   title.className = 'title';
   title.style.marginBottom = '2rem';
 
@@ -32,11 +32,11 @@ export const Dashboard = () => {
     });
   });
 
-  stats.innerHTML = `<h3>学習進捗</h3><p>レベル: ${progress.level || '未評価'}</p><p>完了: ${completedCount} / ${totalTopics} トピック</p>`;
+  stats.innerHTML = `<h3>蟄ｦ鄙帝ｲ謐・/h3><p>繝ｬ繝吶Ν: ${progress.level || '譛ｪ隧穂ｾ｡'}</p><p>螳御ｺ・ ${completedCount} / ${totalTopics} 繝医ヴ繝・け</p>`;
 
   // Lessons section
   const lessonsTitle = document.createElement('h3');
-  lessonsTitle.textContent = '利用可能なレッスン';
+  lessonsTitle.textContent = '蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ繝ｬ繝・せ繝ｳ';
   lessonsTitle.style.marginBottom = '1rem';
 
   const lessonsList = document.createElement('div');
@@ -87,7 +87,7 @@ export const Dashboard = () => {
 
       if (isCompleted) {
         const badge = document.createElement('span');
-        badge.textContent = '✓ Completed';
+        badge.textContent = '笨・Completed';
         badge.style.color = 'var(--success)';
         badge.style.fontWeight = 'bold';
         badge.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
@@ -108,7 +108,7 @@ export const Dashboard = () => {
 
       const startBtn = document.createElement('button');
       startBtn.className = 'btn btn-primary';
-      startBtn.textContent = 'レッスン開始';
+      startBtn.textContent = '繝ｬ繝・せ繝ｳ髢句ｧ・;
       startBtn.onclick = (e) => {
         e.stopPropagation();
         navigate('/lesson', topic);
@@ -139,7 +139,7 @@ export const Dashboard = () => {
     reviewCard.style.background = 'linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(100, 108, 255, 0.1))';
 
     reviewCard.innerHTML = `
-      <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">🏆 5 Sentence Patterns Master Review</h3>
+      <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">醇 5 Sentence Patterns Master Review</h3>
       <p style="color: var(--text-muted);">You've unlocked the ultimate challenge! Test your mastery.</p>
     `;
 
@@ -162,7 +162,7 @@ export const Dashboard = () => {
       reviewCard.style.background = 'linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(100, 108, 255, 0.1))';
 
       reviewCard.innerHTML = `
-        <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">🔓 5 Sentence Patterns Master Review (Unlocked)</h3>
+        <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">箔 5 Sentence Patterns Master Review (Unlocked)</h3>
         <p style="color: var(--text-muted);">Hidden feature activated! Test your mastery.</p>
       `;
 
@@ -182,7 +182,7 @@ export const Dashboard = () => {
       lockedCard.style.transition = 'all 0.2s';
 
       lockedCard.innerHTML = `
-        <h3>🔒 Master Review Locked</h3>
+        <h3>白 Master Review Locked</h3>
         <p>Complete all 5 Sentence Pattern lessons to unlock.</p>
       `;
 

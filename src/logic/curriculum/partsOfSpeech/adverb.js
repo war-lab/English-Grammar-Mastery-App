@@ -1,0 +1,123 @@
+
+export const adverb = {
+  id: 'pos-adverb',
+  isEnabled: true,
+  title: '副詞 (Adverb)',
+  description: '動詞、形容詞、他の副詞を修飾する言葉です。',
+  explanation: `
+    <div class="explanation-section">
+      <p>副詞は、<strong>名詞以外</strong>（動詞、形容詞、他の副詞、文全体）を詳しく説明（修飾）する言葉です。</p>
+      <p>「いつ」「どこで」「どのように」「どのくらい」といった情報を加えます。</p>
+      
+      <div class="diagram-container">
+        <div class="diagram-box" data-label="Adverb" style="background-color: #f59e0b;">Adv</div>
+        <div class="diagram-arrow">修飾</div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="diagram-box" data-label="Verb" style="width: 50px; height: 50px; font-size: 0.8rem;">Verb</div>
+          <div class="diagram-box" data-label="Adj" style="width: 50px; height: 50px; font-size: 0.8rem; background-color: var(--secondary);">Adj</div>
+          <div class="diagram-box" data-label="Adv" style="width: 50px; height: 50px; font-size: 0.8rem; background-color: #f59e0b;">Adv</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">副詞の4つの役割</h3>
+
+      <div class="concept-box">
+        <h4>1. 動詞を修飾する (How?)</h4>
+        <p>「どのように」動作するかを説明します。</p>
+        <div class="example-grid">
+          <div class="example-item">He runs <strong>fast</strong>. 🏃💨<br>(彼は速く走る)</div>
+          <div class="example-item">She speaks <strong>slowly</strong>. 🐢<br>(彼女はゆっくり話す)</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>2. 形容詞を修飾する (How much?)</h4>
+        <p>「どのくらい」の状態かを説明します。</p>
+        <div class="example-grid">
+          <div class="example-item">It is <strong>very</strong> hot. ☀️🔥<br>(とても暑い)</div>
+          <div class="example-item">She is <strong>really</strong> kind. 😊<br>(彼女は本当に親切だ)</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>3. 他の副詞を修飾する</h4>
+        <p>副詞の程度をさらに強めます。</p>
+        <div class="example-grid">
+          <div class="example-item">He runs <strong>very</strong> fast. 🏃💨💨<br>(彼はとても速く走る)</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>4. 時や場所を表す (When? Where?)</h4>
+        <p>文全体に情報を追加します。</p>
+        <div class="example-grid">
+          <div class="example-item">I met him <strong>yesterday</strong>. 📅<br>(昨日彼に会った)</div>
+          <div class="example-item">Come <strong>here</strong>. 👇<br>(ここに来て)</div>
+        </div>
+      </div>
+    </div>
+  `,
+  examples: ['very', 'fast', 'slowly', 'here', 'yesterday'],
+  quiz: [
+    {
+      question: '次のうち、副詞はどれですか？',
+      options: ['dog', 'run', 'very', 'good'],
+      answer: 'very',
+      explanation: '「very（とても）」は程度を表す副詞です。dog（犬）は名詞、run（走る）は動詞、good（良い）は形容詞です。'
+    },
+    {
+      question: '"She speaks slowly." の副詞はどれ？',
+      options: ['She', 'speaks', 'slowly', 'なし'],
+      answer: 'slowly',
+      explanation: '「slowly（ゆっくり）」は動詞speaks（話す）を修飾する副詞で、「どのように話すか」を説明します。She（代名詞）、speaks（動詞）は副詞ではありません。'
+    },
+    {
+      question: '「いつも」を意味する頻度の副詞は？',
+      options: ['sometimes', 'never', 'always', 'often'],
+      answer: 'always',
+      explanation: '「always」は「いつも」という意味の頻度副詞です。sometimes（時々）、never（決して～ない）、often（しばしば）も頻度副詞ですが意味が違います。'
+    },
+    {
+      question: '「速く走る」 "run ( ? )"',
+      options: ['fast', 'fastly', 'fastness', 'faster'],
+      answer: 'fast',
+      explanation: '「fast」は形容詞と副詞の両方で使えます。「run fast（速く走る）」で副詞として働きます。fastly（誤り）、fastness（速さ・名詞）、faster（比較級）は副詞の原形ではありません。'
+    },
+    {
+      question: '「上手に歌う」 "sing ( ? )"',
+      options: ['good', 'well', 'nice', 'great'],
+      answer: 'well',
+      explanation: '「well（上手に）」は副詞で、動詞を修飾します。good、nice、greatは形容詞で副詞としては使えません。'
+    },
+    {
+      question: '「昨日」を表す副詞は？',
+      options: ['tomorrow', 'today', 'yesterday', 'now'],
+      answer: 'yesterday',
+      explanation: '「yesterday（昨日）」は時を表す副詞です。tomorrow（明日）、today（今日）、now（今）も時を表しますが意味が違います。'
+    },
+    {
+      question: '「とても」という意味の副詞は？',
+      options: ['many', 'much', 'very', 'lot'],
+      answer: 'very',
+      explanation: '「very（とても）」は程度を表す副詞で、形容詞や副詞を修飾します。many（たくさんの）とmuch（多くの）は形容詞または代名詞、lotは名詞です。'
+    },
+    {
+      question: '形容詞 "happy" を副詞にすると？',
+      options: ['happily', 'happyly', 'happiness', 'happier'],
+      answer: 'happily',
+      explanation: '形容詞を副詞にするには通常「-ly」をつけます。happy（幸せな）→ happily（幸せに）。yで終わる形容詞はyをiに変えて-lyをつけます。happiness（名詞）、happier（比較級）は副詞ではありません。'
+    },
+    {
+      question: '「時々」を意味する副詞は？',
+      options: ['always', 'usually', 'sometimes', 'never'],
+      answer: 'sometimes',
+      explanation: '「sometimes」は「時々」という意味の頻度副詞です。always（いつも）、usually（普段）、never（決して～ない）も頻度副詞ですが意味が違います。'
+    },
+    {
+      question: '副詞が修飾できないものは？',
+      options: ['動詞', '形容詞', '名詞', '副詞'],
+      answer: '名詞',
+      explanation: '副詞は動詞、形容詞、他の副詞を修飾できますが、名詞は修飾できません。名詞を修飾するのは形容詞の役割です。'
+    }
+  ]
+};

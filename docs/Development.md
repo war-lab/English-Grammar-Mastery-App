@@ -32,20 +32,26 @@ English-Grammar-Mastery-App/
 │   └── config.json             # 公開用設定ファイル
 ├── src/
 │   ├── logic/                  # ビジネスロジック層
-│   │   ├── curriculum.js       # レッスンデータ定義
+│   │   ├── curriculum/         # カリキュラムデータ（分割管理）
+│   │   │   ├── sentencePatterns/ # 文型データ (sv.js, svc.js...)
+│   │   │   ├── partsOfSpeech/    # 品詞データ (noun.js, verb.js...)
+│   │   │   └── index.js          # データ集約
+│   │   ├── curriculum.js       # カリキュラムエクスポート（互換性維持）
 │   │   ├── geminiService.js    # AI API統合
 │   │   ├── quizGenerator.js    # クイズ生成ロジック
+│   │   ├── posQuizGenerator.js # 品詞クイズ生成
 │   │   ├── proficiency.js      # レベル判定（未使用）
 │   │   └── storage.js          # LocalStorage管理
 │   ├── ui/
 │   │   ├── components/         # 再利用可能UIコンポーネント
-│   │   │   └── patternDiagrams.js # SVGダイアグラム
+│   │   │   ├── patternDiagrams.js # SVGダイアグラム
+│   │   │   └── LearningPageTemplate.js # 学習ページテンプレート
 │   │   ├── views/              # ページビュー
-│   │   │   ├── Home.js
-│   │   │   ├── Dashboard.js
+│   │   │   ├── Home.js         # コース選択（進捗表示）
+│   │   │   ├── CategorySelection.js # カテゴリ別レッスン選択
 │   │   │   ├── Lesson.js
 │   │   │   ├── Quiz.js
-│   │   │   ├── Assessment.js
+│   │   │   ├── PartsOfSpeech.js
 │   │   │   └── Summary5Patterns.js
 │   │   └── router.js           # ルーティング
 │   ├── styles/
@@ -233,6 +239,54 @@ export const ViewName = (state) => {
   return container;
 };
 ```
+
+### 6. Templates (テンプレート)
+
+**ファイル**: `src/ui/components/LearningPageTemplate.js`
+
+学習モジュール（5文型、品詞など）の一貫性を保つための再利用可能なテンプレートです。
+
+**使用方法**:
+```javascript
+import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
+
+export const MyLearningPage = () => {
+  return LearningPageTemplate({
+    title: 'ページタイトル',
+    subtitle: 'サブタイトル',
+    storageKey: 'localStorageKey',
+    renderExplanationContent: () => '<div>解説HTML</div>',
+    generateQuiz: (level) => generateMyQuiz(level),
+    aiPromptContext: 'context string' // 'sentence patterns' または 'parts of speech' を含む文字列
+  });
+};
+
+**AIコンテキスト**:
+`aiPromptContext` には、AIが生成する問題の種類を決定するためのキーワードを含めます。
+- `'sentence patterns'`: 文型問題（判定、穴埋め、訂正、変換）
+- `'parts of speech'`: 品詞問題（判定、穴埋め）
+```
+
+---
+
+## 🤖 AI開発ガイドライン (Rules for AI)
+
+後続のAIエージェントが開発を行う際は、以下のルールを遵守してください。
+
+### 1. 新機能の実装ルール
+- **学習モジュールの追加**: 新しい学習コンテンツ（例：時制、助動詞）を追加する場合は、必ず `LearningPageTemplate` を使用すること。独自にUIを構築せず、テンプレートの仕様に従うこと。
+- **データ駆動**: 学習コンテンツのデータは `src/logic/curriculum.js` に定義し、ハードコードしないこと。
+
+### 2. コード品質と構造
+- **関心の分離**: 
+  - UIロジックは `src/ui/` に配置
+  - ビジネスロジック（クイズ生成など）は `src/logic/` に配置
+  - データは `src/logic/curriculum.js` に配置
+- **コンポーネント再利用**: 既存のコンポーネント（ボタン、カード、モーダルなど）を再利用し、重複コードを作らないこと。
+
+### 3. ドキュメント更新
+- 機能を追加・変更した場合は、必ず `README.md` と `docs/Development.md` を更新すること。
+- 特に新しいファイルを作成した場合は、プロジェクト構造図を更新すること。
 
 ---
 

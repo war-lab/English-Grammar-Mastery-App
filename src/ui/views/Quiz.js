@@ -1,4 +1,4 @@
-import { navigate } from '../router.js';
+import { navigate } from '../navigation.js';
 import { loadProgress, saveProgress } from '../../logic/storage.js';
 
 export const Quiz = (topic) => {
@@ -17,9 +17,10 @@ export const Quiz = (topic) => {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'btn btn-primary';
-    backBtn.textContent = 'ダッシュボードに戻る';
+    backBtn.textContent = 'レッスン選択に戻る';
     backBtn.style.marginTop = '2rem';
-    backBtn.onclick = () => navigate('/dashboard');
+    backBtn.onclick = () => navigate('/dashboard'); // Fallback to dashboard if no topic
+    container.appendChild(backBtn);
     container.appendChild(backBtn);
 
     return container;
@@ -71,8 +72,13 @@ export const Quiz = (topic) => {
 
       const backBtn = document.createElement('button');
       backBtn.className = 'btn btn-primary';
-      backBtn.textContent = 'ダッシュボードに戻る';
-      backBtn.onclick = () => navigate('/dashboard');
+      backBtn.textContent = 'レッスン選択に戻る';
+      backBtn.onclick = () => {
+        // Determine category based on topic ID
+        if (topic.id.startsWith('pattern-')) navigate('/category/sentence-patterns');
+        else if (topic.id.startsWith('pos-')) navigate('/category/parts-of-speech');
+        else navigate('/dashboard');
+      };
 
       result.appendChild(scoreText);
       result.appendChild(backBtn);
@@ -166,6 +172,9 @@ export const Quiz = (topic) => {
           explanationBox.style.borderRadius = '0.5rem';
           explanationBox.style.fontSize = '0.95rem';
           explanationBox.style.lineHeight = '1.6';
+          explanationBox.style.maxWidth = '100%';
+          explanationBox.style.wordBreak = 'break-word';
+          explanationBox.style.whiteSpace = 'normal';
 
           let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
 
@@ -191,6 +200,9 @@ export const Quiz = (topic) => {
           explanationBox.style.borderRadius = '0.5rem';
           explanationBox.style.fontSize = '0.95rem';
           explanationBox.style.lineHeight = '1.6';
+          explanationBox.style.maxWidth = '100%';
+          explanationBox.style.wordBreak = 'break-word';
+          explanationBox.style.whiteSpace = 'normal';
 
           let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
 
