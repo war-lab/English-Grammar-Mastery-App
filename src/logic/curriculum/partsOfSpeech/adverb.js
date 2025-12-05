@@ -60,6 +60,14 @@ export const adverb = {
   examples: ['very', 'fast', 'slowly', 'here', 'yesterday'],
   quiz: [
     { question: '次のうち、副詞はどれですか？', options: ['dog', 'run', 'very', 'good'], answer: 'very' },
-    { question: '"She speaks slowly." の副詞はどれ？', options: ['She', 'speaks', 'slowly', 'なし'], answer: 'slowly' }
+    { question: '"She speaks slowly." の副詞はどれ？', options: ['She', 'speaks', 'slowly', 'なし'], answer: 'slowly' },
+    { question: '「いつも」を意味する頻度の副詞は？', options: ['sometimes', 'never', 'always', 'often'], answer: 'always' },
+    { question: '「速く走る」 "run ( ? )"', options: ['fast', 'fastly', 'fastness', 'faster'], answer: 'fast' },
+    { question: '「上手に歌う」 "sing ( ? )"', options: ['good', 'well', 'nice', 'great'], answer: 'well' },
+    { question: '「昨日」を表す副詞は？', options: ['tomorrow', 'today', 'yesterday', 'now'], answer: 'yesterday' },
+    { question: '「とても」という意味の副詞は？', options: ['many', 'much', 'very', 'lot'], answer: 'very' },
+    { question: '形容詞 "happy" を副詞にすると？', options: ['happily', 'happyly', 'happiness', 'happier'], answer: 'happily' },
+    { question: '「時々」を意味する副詞は？', options: ['always', 'usually', 'sometimes', 'never'], answer: 'sometimes' },
+    { question: '副詞が修飾できないものは？', options: ['動詞', '形容詞', '名詞', '副詞'], answer: '名詞' }
   ]
 };

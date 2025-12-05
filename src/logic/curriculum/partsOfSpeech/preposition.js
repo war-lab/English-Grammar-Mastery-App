@@ -52,6 +52,14 @@ export const preposition = {
   examples: ['in', 'on', 'at', 'to', 'for', 'with'],
   quiz: [
     { question: '次のうち、前置詞はどれですか？', options: ['apple', 'run', 'in', 'big'], answer: 'in' },
-    { question: '「机の下に」を英語で言うと？', options: ['on the desk', 'under the desk', 'in the desk', 'at the desk'], answer: 'under the desk' }
+    { question: '「机の下に」を英語で言うと？', options: ['on the desk', 'under the desk', 'in the desk', 'at the desk'], answer: 'under the desk' },
+    { question: '「8時に」 " ( ? ) 8:00"', options: ['on', 'in', 'at', 'to'], answer: 'at' },
+    { question: '「東京に住んでいます」 "I live ( ? ) Tokyo."', options: ['at', 'on', 'in', 'to'], answer: 'in' },
+    { question: '「学校へ行く」 "go ( ? ) school"', options: ['at', 'for', 'to', 'on'], answer: 'to' },
+    { question: '「日曜日」の前につく前置詞は？', options: ['in', 'at', 'on', 'with'], answer: 'on' },
+    { question: '「友達と一緒に」 " ( ? ) my friend"', options: ['by', 'with', 'for', 'to'], answer: 'with' },
+    { question: '「箱の中に」 " ( ? ) the box"', options: ['on', 'at', 'in', 'under'], answer: 'in' },
+    { question: '「あなたへのプレゼント」 "a present ( ? ) you"', options: ['to', 'for', 'of', 'by'], answer: 'for' },
+    { question: '「壁にかかっている」 " ( ? ) the wall"', options: ['in', 'at', 'on', 'to'], answer: 'on' }
   ]
 };

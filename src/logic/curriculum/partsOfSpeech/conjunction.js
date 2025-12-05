@@ -55,6 +55,14 @@ export const conjunction = {
   examples: ['and', 'but', 'or', 'so', 'because'],
   quiz: [
     { question: '次のうち、接続詞はどれですか？', options: ['in', 'and', 'the', 'happy'], answer: 'and' },
-    { question: '「私はりんごが好きだが、バナナは嫌いだ」の「が」にあたる英語は？', options: ['and', 'so', 'but', 'or'], answer: 'but' }
+    { question: '「私はりんごが好きだが、バナナは嫌いだ」の「が」にあたる英語は？', options: ['and', 'so', 'but', 'or'], answer: 'but' },
+    { question: '「コーヒーか紅茶」 "coffee ( ? ) tea"', options: ['and', 'but', 'or', 'so'], answer: 'or' },
+    { question: '「雨が降っていたので、家にいた」 "It was raining, ( ? ) I stayed home."', options: ['because', 'but', 'so', 'or'], answer: 'so' },
+    { question: '「もし〜なら」を表す接続詞は？', options: ['when', 'if', 'because', 'so'], answer: 'if' },
+    { question: '「〜するとき」を表す接続詞は？', options: ['where', 'who', 'when', 'which'], answer: 'when' },
+    { question: '「〜だから」理由を表す接続詞は？', options: ['so', 'because', 'but', 'and'], answer: 'because' },
+    { question: '「〜よりも」比較を表す接続詞は？', options: ['then', 'than', 'that', 'this'], answer: 'than' },
+    { question: '「〜ということを知っている」 "I know ( ? ) he is kind."', options: ['what', 'that', 'if', 'so'], answer: 'that' },
+    { question: '「〜する前に」を表す接続詞は？', options: ['after', 'before', 'when', 'while'], answer: 'before' }
   ]
 };

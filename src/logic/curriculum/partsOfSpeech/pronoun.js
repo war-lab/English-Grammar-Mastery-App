@@ -77,6 +77,14 @@ export const pronoun = {
   examples: ['I', 'you', 'he', 'she', 'it', 'this'],
   quiz: [
     { question: '次のうち、代名詞はどれですか？', options: ['Tom', 'he', 'boy', 'student'], answer: 'he' },
-    { question: '"This is a pen." の代名詞は？', options: ['This', 'is', 'a', 'pen'], answer: 'This' }
+    { question: '"This is a pen." の代名詞は？', options: ['This', 'is', 'a', 'pen'], answer: 'This' },
+    { question: '「私の」を表す代名詞（所有格）は？', options: ['I', 'me', 'my', 'mine'], answer: 'my' },
+    { question: '「彼を」知っていますか？ "Do you know ( ? )?"', options: ['he', 'his', 'him', 'he\'s'], answer: 'him' },
+    { question: '「彼女のもの」を表す代名詞は？', options: ['she', 'her', 'hers', 'she\'s'], answer: 'hers' },
+    { question: '「それ」を表す代名詞は？', options: ['that', 'it', 'this', 'what'], answer: 'it' },
+    { question: '「私たち」は学生です。" ( ? ) are students."', options: ['We', 'Us', 'Our', 'Ours'], answer: 'We' },
+    { question: '「あれ」は私の車です。" ( ? ) is my car."', options: ['This', 'That', 'It', 'There'], answer: 'That' },
+    { question: '「彼ら」を表す代名詞は？', options: ['they', 'them', 'their', 'theirs'], answer: 'they' },
+    { question: '再帰代名詞（自分自身）はどれ？', options: ['myself', 'me', 'my', 'mine'], answer: 'myself' }
   ]
 };

@@ -63,6 +63,14 @@ export const noun = {
   examples: ['apple', 'Tokyo', 'happiness', 'water', 'student'],
   quiz: [
     { question: '次のうち、名詞はどれですか？', options: ['run', 'happy', 'apple', 'quickly'], answer: 'apple' },
-    { question: '不可算名詞（数えられない名詞）はどれですか？', options: ['book', 'water', 'pen', 'dog'], answer: 'water' }
+    { question: '不可算名詞（数えられない名詞）はどれですか？', options: ['book', 'water', 'pen', 'dog'], answer: 'water' },
+    { question: '固有名詞（大文字で始まる名詞）はどれですか？', options: ['city', 'tokyo', 'Tokyo', 'country'], answer: 'Tokyo' },
+    { question: '「愛」を表す抽象名詞はどれですか？', options: ['love', 'lovely', 'lover', 'loving'], answer: 'love' },
+    { question: '複数形が正しいものはどれですか？', options: ['childs', 'children', 'childes', 'childrens'], answer: 'children' },
+    { question: '「情報」という意味の不可算名詞は？', options: ['informations', 'inform', 'information', 'informative'], answer: 'information' },
+    { question: '次の文の主語（名詞）はどれですか？ "The cat sleeps."', options: ['The', 'cat', 'sleeps', 'none'], answer: 'cat' },
+    { question: '「平和」を意味する名詞は？', options: ['peace', 'piece', 'peaceful', 'pace'], answer: 'peace' },
+    { question: '集合名詞（グループを表す名詞）はどれですか？', options: ['student', 'family', 'member', 'person'], answer: 'family' },
+    { question: '次のうち、可算名詞はどれですか？', options: ['milk', 'rice', 'cup', 'air'], answer: 'cup' }
   ]
 };

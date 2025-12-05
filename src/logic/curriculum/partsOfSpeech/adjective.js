@@ -63,6 +63,14 @@ export const adjective = {
   examples: ['big', 'red', 'happy', 'beautiful', 'tall'],
   quiz: [
     { question: '次のうち、形容詞はどれですか？', options: ['run', 'book', 'happy', 'very'], answer: 'happy' },
-    { question: '「美しい花」を英語にすると？', options: ['flower beautiful', 'beautiful flower', 'beauty flower', 'flower beauty'], answer: 'beautiful flower' }
+    { question: '「美しい花」を英語にすると？', options: ['flower beautiful', 'beautiful flower', 'beauty flower', 'flower beauty'], answer: 'beautiful flower' },
+    { question: '「大きい」の比較級（より大きい）は？', options: ['more big', 'biger', 'bigger', 'biggest'], answer: 'bigger' },
+    { question: '「興味深い本」は "an ( ? ) book"', options: ['interest', 'interested', 'interesting', 'interestingly'], answer: 'interesting' },
+    { question: '「彼は背が高い」を英語にすると？', options: ['He is high.', 'He is tall.', 'He is big.', 'He is height.'], answer: 'He is tall.' },
+    { question: '最上級（一番〜）を作る時につける語尾は？', options: ['-er', '-est', '-ing', '-ed'], answer: '-est' },
+    { question: '「忙しい」を意味する形容詞は？', options: ['busy', 'business', 'busily', 'bus'], answer: 'busy' },
+    { question: '「私の父は有名です」 "My father is ( ? )."', options: ['fame', 'famous', 'famously', 'famed'], answer: 'famous' },
+    { question: '色の名前（red, blueなど）は何詞？', options: ['名詞', '動詞', '形容詞', '副詞'], answer: '形容詞' },
+    { question: '「わくわくしている」人の気持ちを表すのは？', options: ['exciting', 'excited', 'excite', 'excitement'], answer: 'excited' }
   ]
 };

@@ -50,7 +50,10 @@ export const LearningPageTemplate = (config) => {
         <h1 class="fancy-title">${config.title}</h1>
         <p class="fancy-subtitle">${config.subtitle}</p>
       </div>
-      <a href="${config.backLink || '#/dashboard'}" class="back-link btn" style="position: absolute; left: 2rem; top: 2rem;">← 戻る</a>
+      </div>
+      <a href="${config.backLink || '#/dashboard'}" class="back-link btn" style="position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.1); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.9rem; color: var(--text-muted); text-decoration: none; transition: all 0.2s;">
+        <span style="font-size: 1.2rem;">←</span> 戻る
+      </a>
     `;
     header.style.position = 'relative';
     header.style.marginBottom = '3rem';

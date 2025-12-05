@@ -1,57 +1,47 @@
-# 📖 機能説明
+# 機能一覧
 
-English Grammar Mastery Appの全機能について詳しく解説します。
+## 1. 学習コース
+### 5文型マスター (Sentence Patterns)
+英語の基本となる5つの文型を学びます。
+- **SV**: 第1文型 (Subject + Verb)
+- **SVC**: 第2文型 (Subject + Verb + Complement)
+- **SVO**: 第3文型 (Subject + Verb + Object)
+- **SVOO**: 第4文型 (Subject + Verb + Object + Object)
+- **SVOC**: 第5文型 (Subject + Verb + Object + Complement)
 
-## 目次
+### 品詞マスター (Parts of Speech)
+単語の役割である8つの品詞を学びます。
+- **名詞 (Noun)**
+- **動詞 (Verb)**
+- **形容詞 (Adjective)**
+- **副詞 (Adverb)**
+- **前置詞 (Preposition)**
+- **代名詞 (Pronoun)**
+- **接続詞 (Conjunction)**
+- **間投詞 (Interjection)**
 
-- [レッスンシステム](#レッスンシステム)
-- [クイズ機能](#クイズ機能)
-- [AI問題生成](#ai問題生成)
-- [Master Review Challenge](#master-review-challenge)
-- [進捗管理](#進捗管理)
-- [隠し機能](#隠し機能)
+## 2. 学習機能
+- **解説ページ**: 図解や例文を用いた分かりやすい解説。
+- **確認クイズ**: 各レッスンに付随する選択式クイズ。全問正解でクリアとなります。
+- **進捗管理**: クリアしたレッスンにはチェックマークが付き、進捗状況が可視化されます。
+- **Word Shifter**: 同じ単語でも文脈によって品詞が変わることを学ぶコラム機能。
 
----
+## 3. エキスパートチャレンジ (Expert Challenge)
+コース内の全レッスンをクリアすると解放される特別モードです。
+- **ランダム出題**: 学習した内容からランダムに出題されます。
+- **連続正解記録**: 連続で何問正解できるか（Streak）を記録し、モチベーションを高めます。
+- **レベルアップ**: 正解数に応じてレベルが上がり、問題の難易度が変化します（AIモード）。
 
-## レッスンシステム
+## 4. AIモード (Beta)
+Google Gemini APIを活用した機能です。
+- **無限クイズ生成**: AIが文脈に沿った問題を無限に生成します。
+- **解説生成**: 正解・不正解時に、AIによる詳細な解説が表示されます。
 
-### 5つの文型レッスン
-
-アプリでは英語の基本5文型を体系的に学習できます。
-
-#### 第1文型 (SV)
-- **構造**: Subject + Verb
-- **説明**: 主語と動詞だけで完結する最もシンプルな文型
-- **よく使う動詞**: run, walk, sleep, smile, exist, happen
-- **例文**: "Birds fly." (鳥が飛ぶ)
-
-#### 第2文型 (SVC)
-- **構造**: Subject + Verb + Complement
-- **説明**: 主語と補語がイコール関係（S = C）
-- **よく使う動詞**: be, become, look, seem, feel, taste, smell
-- **例文**: "She is a teacher." (彼女は先生です)
-
-#### 第3文型 (SVO)
-- **構造**: Subject + Verb + Object
-- **説明**: 主語が目的語に対して動作を行う（S ≠ O）
-- **よく使う動詞**: have, make, buy, eat, drink, watch, study
-- **例文**: "I study English." (私は英語を勉強する)
-
-#### 第4文型 (SVOO)
-- **構造**: Subject + Verb + Object + Object
-- **説明**: 「誰かに何かを〜する」という授与を表す
-- **よく使う動詞**: give, show, teach, tell, buy, make, send
-- **例文**: "He gave me a book." (彼は私に本をくれた)
-
-#### 第5文型 (SVOC)
-- **構造**: Subject + Verb + Object + Complement
-- **説明**: 目的語と補語がイコール関係（O = C）
-- **よく使う動詞**: call, name, make, keep, find, leave
-- **例文**: "We call him Tom." (私たちは彼をトムと呼ぶ)
-
-### ビジュアルダイアグラム
-
-各レッスンには、文型の構造を視覚的に理解できるインタラクティブなSVGダイアグラムが含まれています。
+## 5. UI/UX
+- **Glassmorphism Design**: すりガラスのような美しいモダンなデザイン。
+- **レスポンシブ対応**: スマートフォンでも快適に操作可能。
+- **ダークモード基調**: 目に優しく、集中しやすい配色。
+- **直感的なナビゲーション**: スムーズな画面遷移と分かりやすいボタン配置。
 
 ---
 

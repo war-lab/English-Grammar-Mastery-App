@@ -67,6 +67,14 @@ export const verb = {
   examples: ['run', 'eat', 'is', 'have', 'study'],
   quiz: [
     { question: '次のうち、動詞はどれですか？', options: ['beautiful', 'eat', 'desk', 'slowly'], answer: 'eat' },
-    { question: 'be動詞はどれですか？', options: ['play', 'am', 'go', 'like'], answer: 'am' }
+    { question: 'be動詞はどれですか？', options: ['play', 'am', 'go', 'like'], answer: 'am' },
+    { question: '「勉強する」を意味する動詞は？', options: ['student', 'study', 'studious', 'studio'], answer: 'study' },
+    { question: '過去形の動詞はどれですか？', options: ['play', 'played', 'playing', 'plays'], answer: 'played' },
+    { question: '3人称単数現在形（三単現）のsがついているのは？', options: ['go', 'going', 'goes', 'gone'], answer: 'goes' },
+    { question: '「楽しむ」を意味する動詞は？', options: ['joy', 'enjoy', 'fun', 'happy'], answer: 'enjoy' },
+    { question: '助動詞（動詞を助ける言葉）はどれですか？', options: ['can', 'run', 'big', 'cat'], answer: 'can' },
+    { question: '不規則動詞の過去形として正しいのは？ (go -> ?)', options: ['goed', 'gone', 'went', 'going'], answer: 'went' },
+    { question: '「食べる」の現在進行形は？', options: ['eat', 'ate', 'eating', 'eaten'], answer: 'eating' },
+    { question: '状態動詞（動作ではなく状態を表す動詞）はどれですか？', options: ['run', 'know', 'hit', 'jump'], answer: 'know' }
   ]
 };

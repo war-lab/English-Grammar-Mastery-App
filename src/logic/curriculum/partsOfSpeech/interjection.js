@@ -54,6 +54,14 @@ export const interjection = {
   examples: ['Oh', 'Wow', 'Hi', 'Ouch', 'Yes'],
   quiz: [
     { question: '次のうち、間投詞はどれですか？', options: ['run', 'Wow', 'big', 'in'], answer: 'Wow' },
-    { question: '痛いときに使う言葉は？', options: ['Hello', 'Ouch', 'Yes', 'Good'], answer: 'Ouch' }
+    { question: '痛いときに使う言葉は？', options: ['Hello', 'Ouch', 'Yes', 'Good'], answer: 'Ouch' },
+    { question: '挨拶の言葉はどれですか？', options: ['Hi', 'Yes', 'Oh', 'Really'], answer: 'Hi' },
+    { question: '驚いたときに使う言葉は？', options: ['Yes', 'No', 'Wow', 'OK'], answer: 'Wow' },
+    { question: '同意するときに使う言葉は？', options: ['No', 'Yeah', 'Ouch', 'Hey'], answer: 'Yeah' },
+    { question: '「まあ！」と驚きや落胆を表す言葉は？', options: ['Oh', 'Yes', 'Hi', 'OK'], answer: 'Oh' },
+    { question: '呼びかけるときに使う言葉は？', options: ['Hey', 'Ouch', 'Yes', 'No'], answer: 'Hey' },
+    { question: '「うーん」と考え込むときの言葉は？', options: ['Hmm', 'Wow', 'Hi', 'Yes'], answer: 'Hmm' },
+    { question: '失敗したときに「しまった！」と言う言葉は？', options: ['Oops', 'Yes', 'Hi', 'Good'], answer: 'Oops' },
+    { question: '「わかった」と承諾する言葉は？', options: ['OK', 'No', 'Ouch', 'Wow'], answer: 'OK' }
   ]
 };
