@@ -1,6 +1,8 @@
 import { navigate } from '../navigation.js';
 import { curriculum } from '../../logic/curriculum.js';
 import { getCategoryProgress } from '../../logic/storage.js';
+import iconPatterns from '../../assets/images/icon-patterns.png';
+import iconPos from '../../assets/images/icon-pos.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -33,7 +35,7 @@ export const Home = () => {
   const patternsData = curriculum.find(c => c.id === 'sentence-patterns');
   const patternsCard = createCourseCard({
     id: 'course-patterns',
-    image: '/images/icon-patterns.png', // Updated path
+    image: iconPatterns,
     title: '5 Sentence Patterns',
     description: '英語の基本5文型（SV, SVC, SVO, SVOO, SVOC）をマスターしよう',
     streakKey: 'summaryBestStreak',
@@ -47,7 +49,7 @@ export const Home = () => {
   const posData = curriculum.find(c => c.id === 'parts-of-speech');
   const posCard = createCourseCard({
     id: 'course-pos',
-    image: '/images/icon-pos.png', // Updated path
+    image: iconPos,
     title: 'Parts of Speech',
     description: '8大品詞（名詞、動詞、形容詞など）を完全理解',
     streakKey: 'posBestStreak',
