@@ -8,14 +8,36 @@ export const PartsOfSpeech = () => {
 
   const renderExplanationContent = () => {
     let html = `
-      <h2 class="section-title">📚 品詞の完全解説</h2>
-      <p style="text-align: center; margin-bottom: 3rem;">英語の8大品詞を理解しよう！</p>
+      <div class="summary-header">
+        <h2 class="section-title">📚 8大品詞 完全攻略</h2>
+        <p class="summary-intro">英語の単語は、役割によって8つのグループ（品詞）に分けられます。<br>それぞれの役割を理解することが、文法マスターへの第一歩です！</p>
+      </div>
+      
+      <div class="patterns-grid">
     `;
 
+    const iconMap = {
+      'noun': '🍎',
+      'verb': '🏃',
+      'adjective': '✨',
+      'adverb': '🚀',
+      'preposition': '📍',
+      'pronoun': '👤',
+      'conjunction': '🔗',
+      'interjection': '😲'
+    };
+
     posData.topics.forEach(topic => {
+      // Extract key from ID (e.g., 'pos-noun' -> 'noun')
+      const key = topic.id.replace('pos-', '');
+      const icon = iconMap[key] || '📝';
+
       html += `
-        <div class="pattern-explanation-card">
-          <h3>${topic.title}</h3>
+        <div class="pattern-explanation-card glass">
+          <div class="pattern-header">
+            <span class="pattern-icon">${icon}</span>
+            <h3>${topic.title}</h3>
+          </div>
           <p class="pattern-desc">${topic.description}</p>
           <div class="pattern-notes" style="margin-top: 1rem;">
             ${topic.explanation}
@@ -24,11 +46,12 @@ export const PartsOfSpeech = () => {
       `;
     });
 
+    html += `</div>`;
     return html;
   };
 
   return LearningPageTemplate({
-    title: '品詞マスター (Parts of Speech Master)',
+    title: '品詞 エキスパートチャレンジ',
     subtitle: '英語の言葉の役割を理解しよう！',
     storageKey: 'posBestStreak',
     renderExplanationContent,

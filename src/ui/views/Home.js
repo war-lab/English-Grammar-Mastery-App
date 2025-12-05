@@ -120,18 +120,25 @@ function createCourseCard({ id, image, title, description, streakKey, topics, on
   card.appendChild(descEl);
   card.appendChild(statusBadge);
 
+  // Button Container
+  const actionsEl = document.createElement('div');
+  actionsEl.className = 'card-actions';
+  actionsEl.style.width = '100%';
+  actionsEl.style.display = 'flex';
+  actionsEl.style.flexDirection = 'column';
+  actionsEl.style.alignItems = 'center';
+  actionsEl.style.gap = '1rem';
+
   // Challenge Button (Visible if all completed)
   if (progress.allCompleted) {
     const challengeBtn = document.createElement('button');
     challengeBtn.className = 'btn btn-challenge';
-    challengeBtn.innerHTML = '🏆 100問クイズに挑戦';
-    challengeBtn.style.marginBottom = '1rem';
+    challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
     challengeBtn.onclick = (e) => {
       e.stopPropagation();
       onChallengeClick();
     };
-    card.appendChild(document.createElement('br'));
-    card.appendChild(challengeBtn);
+    actionsEl.appendChild(challengeBtn);
   }
 
   const startBtn = document.createElement('button');
@@ -141,9 +148,9 @@ function createCourseCard({ id, image, title, description, streakKey, topics, on
     e.stopPropagation();
     onClick();
   };
+  actionsEl.appendChild(startBtn);
 
-  card.appendChild(document.createElement('br')); // Line break for button
-  card.appendChild(startBtn);
+  card.appendChild(actionsEl);
 
   // Hover effect handled by CSS .topic-card-refined:hover
 

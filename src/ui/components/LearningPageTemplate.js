@@ -92,7 +92,7 @@ export const LearningPageTemplate = (config) => {
       actionsDiv.innerHTML = `
         <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 1rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; max-width: 600px;">
           <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
-          <h3 style="color: var(--text-muted); margin-bottom: 1rem;">100問クイズはロックされています</h3>
+          <h3 style="color: var(--text-muted); margin-bottom: 1rem;">エキスパートチャレンジはロックされています</h3>
           <p style="font-size: 1.1rem;">レッスンを全てクリアして挑戦権を獲得しよう！</p>
           <p style="margin-top: 1rem; color: var(--secondary); font-weight: bold;">残り ${remainingLessons} レッスン</p>
         </div>

@@ -50,7 +50,7 @@ export const CategorySelection = (categoryId) => {
 
     const challengeBtn = document.createElement('button');
     challengeBtn.className = 'btn btn-challenge';
-    challengeBtn.innerHTML = '🏆 100問クイズに挑戦する';
+    challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
     challengeBtn.onclick = () => {
       if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
       else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
@@ -118,7 +118,9 @@ export const CategorySelection = (categoryId) => {
 
     // Button container
     const btnContainer = document.createElement('div');
+    btnContainer.className = 'card-actions'; // Add class for positioning
     btnContainer.style.textAlign = 'center';
+    btnContainer.style.width = '100%'; // Ensure full width
 
     const startBtn = document.createElement('button');
     startBtn.className = 'btn btn-unified'; // Unified button class
