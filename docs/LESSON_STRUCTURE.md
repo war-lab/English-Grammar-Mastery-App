@@ -21,12 +21,18 @@ src/logic/curriculum/
 │   ├── conjunction.js          # 接続詞
 │   ├── interjection.js         # 間投詞
 │   └── quizGenerator.js        # クイズ生成ユーティリティ
-└── sentencePatterns/           # 文型カテゴリ
-    ├── sv.js                   # 第1文型
-    ├── svc.js                  # 第2文型
-    ├── svo.js                  # 第3文型
-    ├── svoo.js                 # 第4文型
-    ├── svoc.js                 # 第5文型
+├── sentencePatterns/           # 文型カテゴリ
+│   ├── sv.js                   # 第1文型
+│   ├── svc.js                  # 第2文型
+│   ├── svo.js                  # 第3文型
+│   ├── svoo.js                 # 第4文型
+│   ├── svoc.js                 # 第5文型
+│   └── quizGenerator.js        # クイズ生成ユーティリティ
+└── tenses/                     # 時制マスターカテゴリ
+    ├── pastTense.js            # 過去形
+    ├── futureTense.js          # 未来形
+    ├── progressiveTense.js     # 進行形
+    ├── perfectTense.js         # 完了形
     └── quizGenerator.js        # クイズ生成ユーティリティ
 ```
 
@@ -586,5 +592,116 @@ export const lessonName = {
 
 ---
 
+## 📦 Gitコミット手順
+
+作業に1区切りつく毎に、必ずコミットを行ってください。
+
+### コミットメッセージの形式
+
+```
+[プレフィックス] 日本語での簡潔な説明
+```
+
+### プレフィックス一覧
+
+| プレフィックス | 用途 | 例 |
+|------------|------|-----|
+| `feat` | 新機能の追加 | `feat: 時制レッスンカテゴリを追加` |
+| `fix` | バグ修正 | `fix: タイトルの中央揃えを修正` |
+| `docs` | ドキュメントの変更のみ | `docs: LESSON_STRUCTUREに100問クイズ実装方法を追加` |
+| `style` | コードの意味に影響しない変更（スペース、フォーマット等） | `style: インデントを修正` |
+| `refactor` | バグ修正や機能追加ではないコード変更 | `refactor: クイズジェネレーターのロジックを整理` |
+| `perf` | パフォーマンス改善 | `perf: クイズ生成速度を最適化` |
+| `test` | テストの追加・修正 | `test: 時制クイズジェネレーターのテストを追加` |
+| `chore` | ビルドプロセスやツールの変更 | `chore: 依存関係を更新` |
+| `ui` | UIに関する変更 | `ui: カテゴリカードのホバー効果を改善` |
+
+### コミット手順
+
+#### 1. 変更を確認
+```bash
+git status
+```
+
+#### 2. ファイルをステージング
+
+全ての変更をステージング:
+```bash
+git add .
+```
+
+特定のファイルのみステージング:
+```bash
+git add src/logic/curriculum/tenses/pastTense.js
+git add src/ui/views/SummaryTenses.js
+```
+
+#### 3. コミット
+
+```bash
+git commit -m "[プレフィックス] 日本語での説明"
+```
+
+### コミット例
+
+#### 新しいレッスンカテゴリを追加した場合
+```bash
+git add src/logic/curriculum/tenses/
+git add src/logic/curriculum/index.js
+git commit -m "feat: 時制マスターカテゴリと4つのレッスンを追加"
+```
+
+#### 100問クイズジェネレーターを追加した場合
+```bash
+git add src/logic/curriculum/tenses/quizGenerator.js
+git commit -m "feat: 時制用100問クイズジェネレーターを実装"
+```
+
+#### UIページを追加した場合
+```bash
+git add src/ui/views/SummaryTenses.js
+git add src/ui/router.js
+git commit -m "feat: 時制エキスパートチャレンジページを追加"
+```
+
+#### ドキュメントを更新した場合
+```bash
+git add docs/LESSON_STRUCTURE.md
+git commit -m "docs: 時制カテゴリとクイズジェネレーター実装手順を追加"
+```
+
+#### バグを修正した場合
+```bash
+git add src/styles/main.css
+git commit -m "fix: サマリーページのタイトル中央揃えを修正"
+```
+
+#### デバッグ機能を追加した場合
+```bash
+git add src/config.json
+git add src/ui/components/LearningPageTemplate.js
+git add src/ui/views/CategorySelection.js
+git commit -m "feat: デバッグモード用100問クイズアンロック機能を追加"
+```
+
+### ベストプラクティス
+
+1. **小さく頻繁にコミット**: 大きな変更を一度にコミットせず、機能ごとに分けてコミット
+2. **明確な説明**: コミットメッセージは変更内容が一目でわかるように記述
+3. **1コミット1目的**: 複数の無関係な変更を1つのコミットにまとめない
+4. **日本語で記述**: チーム全員が理解しやすいよう、説明は日本語で記述
+
+### Git履歴の確認
+
+```bash
+# 最近のコミット履歴を表示
+git log --oneline -10
+
+# 各コミットの変更内容を確認
+git log -p -2
+```
+
+---
+
 **最終更新日**: 2025-12-10  
-**バージョン**: 1.0.0
+**バージョン**: 2.0.0
