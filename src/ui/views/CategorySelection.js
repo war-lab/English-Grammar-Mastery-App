@@ -2,6 +2,7 @@
 import { navigate } from '../navigation.js';
 import { curriculum } from '../../logic/curriculum.js';
 import { getProgress, getCategoryProgress } from '../../logic/storage.js';
+import appConfig from '../../config.json';
 
 export const CategorySelection = (categoryId) => {
   const container = document.createElement('div');
@@ -32,9 +33,12 @@ export const CategorySelection = (categoryId) => {
   lessonsTitle.style.marginBottom = '1rem';
   container.appendChild(lessonsTitle);
 
-  // Challenge Mode Button (if all completed)
+  // Challenge Mode Button (if all completed or debug mode)
   const progress = getCategoryProgress(categoryData.topics);
-  if (progress.allCompleted) {
+  const debugUnlock = appConfig?.debug?.unlock100QuizMode || false;
+  const showChallenge = debugUnlock || progress.allCompleted;
+
+  if (showChallenge) {
     const challengeContainer = document.createElement('div');
     challengeContainer.style.textAlign = 'center';
     challengeContainer.style.marginBottom = '2rem';
@@ -54,6 +58,7 @@ export const CategorySelection = (categoryId) => {
     challengeBtn.onclick = () => {
       if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
       else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
+      else if (categoryId === 'tenses') navigate('/summary/tenses');
     };
 
     challengeContainer.appendChild(challengeTitle);
