@@ -2,6 +2,7 @@ import { navigate } from '../navigation.js';
 import { curriculum } from '../../logic/curriculum.js';
 import { getCategoryProgress } from '../../logic/storage.js';
 import iconPatterns from '../../assets/images/icon-patterns.png';
+import iconTenses from '../../assets/images/icon-tenses.png';
 import iconPos from '../../assets/images/icon-pos.png';
 
 export const Home = () => {
@@ -44,6 +45,20 @@ export const Home = () => {
     onChallengeClick: () => navigate('/summary/5-sentence-patterns')
   });
   courseGrid.appendChild(patternsCard);
+
+  // Verb Tenses Card
+  const tensesData = curriculum.find(c => c.id === 'tenses');
+  const tensesCard = createCourseCard({
+    id: 'course-tenses',
+    image: iconTenses,
+    title: 'Verb Tenses',
+    description: '過去、未来、進行、完了形をマスターして時制を使いこなそう',
+    streakKey: 'tensesBestStreak',
+    topics: tensesData?.topics || [],
+    onClick: () => navigate('/category/tenses'),
+    onChallengeClick: () => navigate('/summary/tenses')
+  });
+  courseGrid.appendChild(tensesCard);
 
   // Parts of Speech Card
   const posData = curriculum.find(c => c.id === 'parts-of-speech');
