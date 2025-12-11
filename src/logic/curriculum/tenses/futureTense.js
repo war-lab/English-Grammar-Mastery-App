@@ -8,6 +8,12 @@ export const futureTense = {
     <div class="explanation-section">
       <p>未来形は、<strong>これから起こること、未来の予定や意志</strong>を表現する時制です。「〜するだろう」「〜する予定だ」という意味になります。</p>
       
+      <div style="padding: 1rem; background: rgba(100, 150, 255, 0.1); border-left: 4px solid var(--secondary); border-radius: 0.5rem; margin: 1rem 0;">
+        <p style="margin: 0; font-weight: bold;">📚 中学生の学習ポイント</p>
+        <p style="margin: 0.5rem 0; font-size: 0.9rem;"><strong>重点：</strong> will と be going to の使い分けをしっかり理解しましょう。</p>
+        <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;"><strong>発展：</strong> 現在進行形・現在形による未来は「こういう表現もある」程度で大丈夫です。</p>
+      </div>
+      
       <div class="diagram-container">
         <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 2rem 0;">
           <div style="text-align: center;">
@@ -23,10 +29,10 @@ export const futureTense = {
         </div>
       </div>
 
-      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">未来形の作り方</h3>
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">【必須】基本の未来形</h3>
 
       <div class="concept-box">
-        <h4>🔮 will + 動詞の原形</h4>
+        <h4>🔮 1. will + 動詞の原形</h4>
         <p>最も基本的な未来表現。<strong>will</strong> の後は必ず動詞の原形を使います。</p>
         <div class="example-grid">
           <div class="example-item"><strong>I will play</strong><br>（私は〜するだろう）</div>
@@ -41,26 +47,57 @@ export const futureTense = {
       </div>
 
       <div class="concept-box">
-        <h4>📅 be going to + 動詞の原形</h4>
+        <h4>📅 2. be going to + 動詞の原形</h4>
         <p><strong>予定や計画</strong>を表す未来表現。「〜する予定だ」「〜しようとしている」</p>
         <div class="example-grid">
           <div class="example-item"><strong>I am going to play</strong><br>（私は〜する予定だ）</div>
           <div class="example-item"><strong>He is going to study</strong><br>（彼は〜する予定だ）</div>
           <div class="example-item"><strong>We are going to visit</strong><br>（私たちは〜する予定だ）</div>
         </div>
-        <p style="margin-top: 1rem;"><strong>使い分け：</strong></p>
-        <ul class="check-list">
-          <li>✓ <strong>will</strong>：その場で決めた意志、予測</li>
-          <li>✓ <strong>be going to</strong>：以前から決めていた予定、確実な予測</li>
-        </ul>
+        <p style="margin-top: 1rem;"><strong>💡 will と be going to の使い分け（重要！）</strong></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+          <div style="padding: 0.75rem; background: rgba(255, 100, 100, 0.1); border-radius: 0.5rem;">
+            <p style="margin: 0; font-weight: bold;">🔮 will</p>
+            <ul class="check-list" style="margin-top: 0.5rem;">
+              <li>✓ その場で決めた意志</li>
+              <li>✓ 予測・推量</li>
+              <li>✓ 「今思いついた」感覚</li>
+            </ul>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; font-style: italic;">例：のどが渇いた。水を買おう。<br>→ I will buy water.</p>
+          </div>
+          <div style="padding: 0.75rem; background: rgba(100, 100, 255, 0.1); border-radius: 0.5rem;">
+            <p style="margin: 0; font-weight: bold;">📅 be going to</p>
+            <ul class="check-list" style="margin-top: 0.5rem;">
+              <li>✓ 以前から決めていた予定</li>
+              <li>✓ 計画していたこと</li>
+              <li>✓ 根拠のある予測</li>
+            </ul>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; font-style: italic;">例：週末の計画を話す<br>→ I'm going to visit my grandma.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">【発展】その他の未来表現</h3>
+      
+      <div style="padding: 1rem; background: rgba(150, 150, 150, 0.1); border-radius: 0.5rem; margin-bottom: 1rem;">
+        <p style="margin: 0; font-size: 0.9rem;">💡 <strong>学習のヒント：</strong> 以下の表現は「こういう使い方もある」程度で覚えておけば十分です。テストでは will と be going to の使い分けが中心です。</p>
       </div>
 
       <div class="concept-box">
-        <h4>🕐 現在形・現在進行形で未来を表す</h4>
-        <p>決まった予定やスケジュールは現在形や現在進行形でも表せます。</p>
+        <h4>🏃 現在進行形で未来を表す</h4>
+        <p>近い未来の<strong>確定した予定</strong>（約束・予約など）に使います。</p>
+        <div class="example-grid">
+          <div class="example-item"><strong>I'm meeting him tomorrow.</strong><br>（明日彼に会う予定だ）<br>→ すでに約束している</div>
+          <div class="example-item"><strong>We're having a party next week.</strong><br>（来週パーティーをします）<br>→ もう決まっている</div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <h4>📅 現在形で未来を表す</h4>
+        <p>時刻表やスケジュールなど、<strong>確定した予定</strong>に使います。</p>
         <div class="example-grid">
           <div class="example-item"><strong>The train leaves at 8.</strong><br>（電車は8時に出発する）<br>→ 時刻表の予定</div>
-          <div class="example-item"><strong>I'm meeting him tomorrow.</strong><br>（明日彼に会う予定だ）<br>→ すでに決まっている予定</div>
+          <div class="example-item"><strong>The concert starts at 7 PM.</strong><br>（コンサートは午後7時に始まる）<br>→ 公式スケジュール</div>
         </div>
       </div>
 
