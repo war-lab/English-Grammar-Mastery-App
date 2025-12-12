@@ -45,18 +45,39 @@ export const Lesson = (topic) => {
   // We need to wait for append to style, or just style inline in data. 
   // Better to use a class in main.css for .lesson-content, but inline style function works for now.
 
+  // Button container
+  const buttonContainer = document.createElement('div');
+  buttonContainer.style.display = 'flex';
+  buttonContainer.style.gap = '1rem';
+  buttonContainer.style.marginTop = '2rem';
+  buttonContainer.style.flexWrap = 'wrap';
+
   const quizBtn = document.createElement('button');
   quizBtn.className = 'btn btn-primary';
   quizBtn.textContent = 'クイズに挑戦';
-  quizBtn.style.marginTop = '2rem';
   quizBtn.onclick = () => navigate('/quiz', topic); // Pass topic data to quiz
+
+  const topBtn = document.createElement('button');
+  topBtn.className = 'btn btn-secondary';
+  topBtn.textContent = '↑ レッスントップに戻る';
+  topBtn.onclick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  buttonContainer.appendChild(quizBtn);
+  buttonContainer.appendChild(topBtn);
 
   container.appendChild(title);
   container.appendChild(content);
-  container.appendChild(quizBtn);
+  container.appendChild(buttonContainer);
 
   // Apply styles after creation (micro-task)
   setTimeout(styleContent, 0);
+
+  // Scroll to top when lesson loads
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 100);
 
   return container;
 };

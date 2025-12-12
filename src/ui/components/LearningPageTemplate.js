@@ -2,6 +2,7 @@
 import { getCategoryProgress } from '../../logic/storage.js';
 import { generateAIQuestion } from '../../logic/geminiService.js';
 import { createResultModal } from './ResultModal.js';
+import appConfig from '../../config.json';
 
 /**
  * Reusable template for learning pages (e.g., 5 Sentence Patterns, Parts of Speech).
@@ -100,7 +101,9 @@ export const LearningPageTemplate = (config) => {
 
     if (config.topics) {
       const progress = getCategoryProgress(config.topics);
-      isLocked = !progress.allCompleted;
+      // Check debug mode: unlock quiz if debug.unlock100QuizMode is true
+      const debugUnlock = appConfig?.debug?.unlock100QuizMode || false;
+      isLocked = debugUnlock ? false : !progress.allCompleted;
       remainingLessons = progress.remaining;
     }
 

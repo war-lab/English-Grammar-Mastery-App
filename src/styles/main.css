@@ -465,6 +465,8 @@ button {
 .summary-header {
   text-align: center;
   margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .summary-intro {
@@ -501,6 +503,7 @@ button {
   border-radius: 1rem;
   font-size: 0.8rem;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .pattern-icon {
