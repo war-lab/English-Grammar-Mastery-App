@@ -23,6 +23,12 @@ import { pronoun } from './partsOfSpeech/pronoun.js';
 import { conjunction } from './partsOfSpeech/conjunction.js';
 import { interjection } from './partsOfSpeech/interjection.js';
 
+
+import { canCould } from './auxiliaryVerbs/canCould.js';
+import { willWould } from './auxiliaryVerbs/willWould.js';
+import { mustShould } from './auxiliaryVerbs/mustShould.js';
+import { mayMight } from './auxiliaryVerbs/mayMight.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -35,8 +41,14 @@ export const curriculum = [
     topics: [presentSimple, presentComparison, pastTense, pastComparison, progressiveTense, futureTense, perfectTense, presentPerfectProgressive]
   },
   {
+    id: 'auxiliary-verbs',
+    title: '助動詞 (Auxiliary Verbs)',
+    topics: [canCould, willWould, mustShould, mayMight]
+  },
+  {
     id: 'parts-of-speech',
     title: '品詞マスター (Parts of Speech)',
     topics: [noun, verb, adjective, adverb, preposition, pronoun, conjunction, interjection]
   }
 ];
+
