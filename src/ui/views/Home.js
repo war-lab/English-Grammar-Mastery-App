@@ -4,6 +4,7 @@ import { getCategoryProgress } from '../../logic/storage.js';
 import iconPatterns from '../../assets/images/icon-patterns.png';
 import iconTenses from '../../assets/images/icon-tenses.png';
 import iconPos from '../../assets/images/icon-pos.png';
+import iconAuxiliary from '../../assets/images/icon-auxiliary.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -18,9 +19,6 @@ export const Home = () => {
   `;
   container.appendChild(header);
 
-  // Stats section removed or integrated into cards? User didn't explicitly ask to remove it, but "Top screen card design refined" might imply focusing on course cards.
-  // I'll keep it simple and focus on course cards as requested.
-
   // Course section title
   const courseTitleEl = document.createElement('h2');
   courseTitleEl.className = 'section-title';
@@ -32,7 +30,7 @@ export const Home = () => {
   courseGrid.className = 'course-grid';
   courseGrid.style.gap = '2rem'; // Margin between cards
 
-  // 5 Sentence Patterns Card
+  // 1. 5 Sentence Patterns Card
   const patternsData = curriculum.find(c => c.id === 'sentence-patterns');
   const patternsCard = createCourseCard({
     id: 'course-patterns',
@@ -46,7 +44,7 @@ export const Home = () => {
   });
   courseGrid.appendChild(patternsCard);
 
-  // Verb Tenses Card
+  // 2. Verb Tenses Card
   const tensesData = curriculum.find(c => c.id === 'tenses');
   const tensesCard = createCourseCard({
     id: 'course-tenses',
@@ -60,7 +58,21 @@ export const Home = () => {
   });
   courseGrid.appendChild(tensesCard);
 
-  // Parts of Speech Card
+  // 3. Auxiliary Verbs Card
+  const auxData = curriculum.find(c => c.id === 'auxiliary-verbs');
+  const auxCard = createCourseCard({
+    id: 'course-auxiliary',
+    image: iconAuxiliary,
+    title: 'Auxiliary Verbs',
+    description: 'can, will, mustなど、動詞にニュアンスを加える助動詞をマスター',
+    streakKey: 'auxiliaryVerbsBestStreak',
+    topics: auxData?.topics || [],
+    onClick: () => navigate('/category/auxiliary-verbs'),
+    onChallengeClick: () => navigate('/summary/auxiliary-verbs')
+  });
+  courseGrid.appendChild(auxCard);
+
+  // 4. Parts of Speech Card
   const posData = curriculum.find(c => c.id === 'parts-of-speech');
   const posCard = createCourseCard({
     id: 'course-pos',
