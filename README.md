@@ -98,6 +98,12 @@ VITE_GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemi
 - **5文型マスター**:
   - SV, SVC, SVO, SVOO, SVOCの基本5文型を徹底解説
   - 無限クイズで定着度を確認
+- **時制マスター**:
+  - 現在形、過去形、未来形、進行形、完了形を学習
+  - 各時制の使い分けと時間の感覚をマスター
+- **助動詞**:
+  - can, will, must, should, may など、動詞にニュアンスを加える助動詞を学習
+  - 日常会話で役立つ丁寧な表現も紹介
 - **品詞マスター**:
   - 名詞、動詞、形容詞など8大品詞を学習
   - 文中での役割を理解するクイズ

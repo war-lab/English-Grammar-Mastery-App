@@ -28,11 +28,17 @@ src/logic/curriculum/
 │   ├── svoo.js                 # 第4文型
 │   ├── svoc.js                 # 第5文型
 │   └── quizGenerator.js        # クイズ生成ユーティリティ
-└── tenses/                     # 時制マスターカテゴリ
-    ├── pastTense.js            # 過去形
-    ├── futureTense.js          # 未来形
-    ├── progressiveTense.js     # 進行形
-    ├── perfectTense.js         # 完了形
+├── tenses/                     # 時制マスターカテゴリ
+│   ├── pastTense.js            # 過去形
+│   ├── futureTense.js          # 未来形
+│   ├── progressiveTense.js     # 進行形
+│   ├── perfectTense.js         # 完了形
+│   └── quizGenerator.js        # クイズ生成ユーティリティ
+└── auxiliaryVerbs/             # 助動詞カテゴリ
+    ├── canCould.js             # can/could
+    ├── willWould.js            # will/would
+    ├── mustShould.js           # must/should
+    ├── mayMight.js             # may/might
     └── quizGenerator.js        # クイズ生成ユーティリティ
 ```
 
