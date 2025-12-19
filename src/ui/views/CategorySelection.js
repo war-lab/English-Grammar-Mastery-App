@@ -59,6 +59,7 @@ export const CategorySelection = (categoryId) => {
       if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
       else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
       else if (categoryId === 'tenses') navigate('/summary/tenses');
+      else if (categoryId === 'auxiliary-verbs') navigate('/summary/auxiliary-verbs');
     };
 
     challengeContainer.appendChild(challengeTitle);

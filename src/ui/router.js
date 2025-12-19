@@ -3,6 +3,7 @@ import { Lesson } from './views/Lesson.js';
 import { Quiz } from './views/Quiz.js';
 import { Summary5Patterns } from './views/Summary5Patterns.js';
 import { SummaryTenses } from './views/SummaryTenses.js';
+import { SummaryAuxiliaryVerbs } from './views/SummaryAuxiliaryVerbs.js';
 import { PartsOfSpeech } from './views/PartsOfSpeech.js';
 import { CategorySelection } from './views/CategorySelection.js';
 import { getNavigationState } from './navigation.js';
@@ -13,8 +14,10 @@ const routes = {
   '/quiz': Quiz,
   '/summary/5-sentence-patterns': Summary5Patterns,
   '/summary/tenses': SummaryTenses,
+  '/summary/auxiliary-verbs': SummaryAuxiliaryVerbs,
   '/summary/parts-of-speech': PartsOfSpeech
 };
+
 
 export const initRouter = () => {
   const render = () => {
