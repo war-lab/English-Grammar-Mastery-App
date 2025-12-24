@@ -29,6 +29,45 @@ export const generatePassiveVoiceQuiz = (level = 1, isAIMode = false) => {
       o: ['by', 'to', 'for', 'with'],
       a: 'by',
       exp: '動作主は通常「by + 人/物」で表します。'
+    },
+    // Future
+    {
+      q: '「その橋は来年建設されるでしょう」',
+      o: ['will be built', 'will built', 'will be build', 'is built'],
+      a: 'will be built',
+      exp: '未来の受動態は will be + Vpp です。'
+    },
+    {
+      q: '「それは明日終わるでしょう」: It ___ ___ finished tomorrow.',
+      o: ['will be', 'will is', 'is will', 'will been'],
+      a: 'will be',
+      exp: 'It will be finished tomorrow.'
+    },
+    // Auxiliary
+    {
+      q: '「これは簡単になされ得る」: This ___ ___ done easily.',
+      o: ['can be', 'can do', 'can is', 'is can'],
+      a: 'can be',
+      exp: '助動詞 can + be + Vpp の形です。'
+    },
+    {
+      q: '「そのドアはロックされなければならない」',
+      o: ['must be locked', 'must lock', 'must be lock', 'must is locked'],
+      a: 'must be locked',
+      exp: '義務 must + be + Vpp (locked) です。'
+    },
+    // Perfect
+    {
+      q: '「私の自転車が盗まれてしまった」',
+      o: ['has been stolen', 'has stolen', 'is stolen', 'was stolen'],
+      a: 'has been stolen',
+      exp: '完了の意味（してしまった）を含む受動態は has been + Vpp です。'
+    },
+    {
+      q: '現在完了の受動態の基本形は？',
+      o: ['have/has been + Vpp', 'have/has + Vpp', 'have/has be + Vpp', 'be + Vpp'],
+      a: 'have/has been + Vpp',
+      exp: '完了形の have + 過去分詞(been) + 受動態の be + Vpp が組み合わさります。'
     }
   ];
 

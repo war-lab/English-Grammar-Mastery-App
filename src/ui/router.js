@@ -5,6 +5,7 @@ import { Summary5Patterns } from './views/Summary5Patterns.js';
 import { SummaryTenses } from './views/SummaryTenses.js';
 import { SummaryAuxiliaryVerbs } from './views/SummaryAuxiliaryVerbs.js';
 import { PartsOfSpeech } from './views/PartsOfSpeech.js';
+import { SummaryPassiveVoice } from './views/SummaryPassiveVoice.js';
 import { CategorySelection } from './views/CategorySelection.js';
 import { getNavigationState } from './navigation.js';
 
@@ -15,7 +16,9 @@ const routes = {
   '/summary/5-sentence-patterns': Summary5Patterns,
   '/summary/tenses': SummaryTenses,
   '/summary/auxiliary-verbs': SummaryAuxiliaryVerbs,
-  '/summary/parts-of-speech': PartsOfSpeech
+  '/summary/auxiliary-verbs': SummaryAuxiliaryVerbs,
+  '/summary/parts-of-speech': PartsOfSpeech,
+  '/summary/passive-voice': SummaryPassiveVoice
 };
 
 

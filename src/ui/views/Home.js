@@ -86,6 +86,20 @@ export const Home = () => {
   });
   courseGrid.appendChild(posCard);
 
+  // 5. Passive Voice Card
+  const passiveData = curriculum.find(c => c.id === 'passive-voice');
+  const passiveCard = createCourseCard({
+    id: 'course-passive',
+    image: iconPatterns, // Using placeholder icon for now
+    title: 'Passive Voice',
+    description: '受動態（受け身）の表現をマスターしよう',
+    streakKey: 'passiveVoiceBestStreak',
+    topics: passiveData?.topics || [],
+    onClick: () => navigate('/category/passive-voice'),
+    onChallengeClick: () => navigate('/summary/passive-voice')
+  });
+  courseGrid.appendChild(passiveCard);
+
   container.appendChild(courseGrid);
 
   return container;

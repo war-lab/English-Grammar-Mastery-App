@@ -30,6 +30,9 @@ import { mustShould } from './auxiliaryVerbs/mustShould.js';
 import { mayMight } from './auxiliaryVerbs/mayMight.js';
 
 import { passiveBasics } from './passiveVoice/basics.js';
+import { passiveFuture } from './passiveVoice/future.js';
+import { passiveAuxiliary } from './passiveVoice/auxiliary.js';
+import { passivePerfect } from './passiveVoice/perfect.js';
 
 export const curriculum = [
   {
@@ -50,7 +53,7 @@ export const curriculum = [
   {
     id: 'passive-voice',
     title: '受動態 (Passive Voice)',
-    topics: [passiveBasics]
+    topics: [passiveBasics, passiveFuture, passiveAuxiliary, passivePerfect]
   },
   {
     id: 'parts-of-speech',
