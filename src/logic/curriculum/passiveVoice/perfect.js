@@ -11,6 +11,16 @@ export const passivePerfect = {
       
       <div class="concept-box">
         <h4>📝 have/has + been + 過去分詞</h4>
+        <div class="diagram-container">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; flex-wrap: wrap;">
+             <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">have / has</div>
+            <div style="font-size: 1.5rem;">+</div>
+            <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">been</div>
+            <div style="font-size: 1.5rem;">+</div>
+            <div class="diagram-box" style="background:var(--accent-light); color:var(--background);">Vpp</div>
+          </div>
+          <p style="text-align: center; margin-top: 1rem;">完了の意味（be動詞の過去分詞 <strong>been</strong> が必須）</p>
+        </div>
         <p style="text-align: center; font-size: 1.2rem;"><strong>have/has been + Vpp</strong></p>
         <p>be動詞の過去分詞 <strong>been</strong> がポイントです。</p>
         <div class="example-grid">

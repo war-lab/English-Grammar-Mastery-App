@@ -9,10 +9,28 @@ export const passiveBasics = {
       <p>受動態（Passive Voice）は、主語が動作を「する」のではなく、動作を<strong>「される」</strong>側・<strong>「受ける」</strong>側であることを表す文です。</p>
       
       <div class="diagram-container">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: 2rem 0;">
-           <!-- Placeholder usage as requested -->
-           <p style="color: #666; font-size: 0.9rem;">(以下の画像は現在準備中です)</p>
-           <img src="/images/passive-voice-diagram.png" alt="Active vs Passive Voice Diagram" style="max-width: 100%; border: 1px dashed #ccc; padding: 10px;" />
+        <h3 style="text-align: center; color: var(--text-muted); margin-bottom: 1rem;">能動態と受動態の関係</h3>
+        <div style="display: flex; flex-direction: column; gap: 2rem; align-items: center; padding: 1rem;">
+          
+          <!-- Active -->
+          <div style="display: flex; align-items: center; gap: 1rem;">
+             <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">Tom</div>
+             <div class="diagram-arrow">writes</div>
+             <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">the letter</div>
+          </div>
+
+          <div style="font-size: 2rem; color: var(--text-muted);">⬇️</div>
+
+          <!-- Passive -->
+          <div style="display: flex; align-items: center; gap: 1rem;">
+             <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">The letter</div>
+             <div class="diagram-arrow">is written</div>
+             <div style="display: flex; align-items: center; gap: 0.5rem;">
+               <span style="font-size: 0.9rem;">by</span>
+               <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">Tom</div>
+             </div>
+          </div>
+          
         </div>
       </div>
 
@@ -20,8 +38,15 @@ export const passiveBasics = {
       
       <div class="concept-box">
         <h4>📝 受動態の形</h4>
-        <p style="font-size: 1.2rem; text-align: center; margin: 1.5rem 0;"><strong>be動詞 + 過去分詞 (Vpp)</strong></p>
+        <p style="font-size: 1.5rem; text-align: center; margin: 1.5rem 0; color: var(--primary);"><strong>be動詞 + 過去分詞 (Vpp)</strong></p>
         <p>「〜によって」と動作主を示す場合は <strong>by + 動作主</strong> を付け加えます。</p>
+        <div style="background: rgba(0,0,0,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+           <p><strong>例: clean (掃除する)</strong></p>
+           <ul style="list-style: none; padding: 0;">
+             <li>現在: is cleaned / are cleaned</li>
+             <li>過去: was cleaned / were cleaned</li>
+           </ul>
+        </div>
       </div>
 
       <div class="concept-box">
@@ -31,8 +56,8 @@ export const passiveBasics = {
         <div class="example-grid" style="grid-template-columns: 1fr; gap: 1.5rem;">
           <div class="example-item">
             <div style="margin-bottom: 0.5rem; font-weight: bold; color: var(--text-muted);">能動態 (Active):</div>
-            <div>Some people speak English.</div>
-            <div style="font-size: 0.8rem; color: #666;">（一部の人々は英語を話します。）</div>
+            <div style="font-size: 1.1rem;">Some people speak English.</div>
+            <div style="font-size: 0.8rem; color: #888;">（一部の人々は英語を話します。）</div>
             <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                <span class="tag s-tag">S</span> Some people
                <span class="tag v-tag">V</span> speak
@@ -44,8 +69,8 @@ export const passiveBasics = {
 
           <div class="example-item">
             <div style="margin-bottom: 0.5rem; font-weight: bold; color: var(--primary);">受動態 (Passive):</div>
-            <div>English is spoken by some people.</div>
-            <div style="font-size: 0.8rem; color: #666;">（英語は一部の人々によって話されます。）</div>
+            <div style="font-size: 1.1rem;">English is spoken by some people.</div>
+            <div style="font-size: 0.8rem; color: #888;">（英語は一部の人々によって話されます。）</div>
              <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                <span class="tag s-tag">S</span> English
                <span class="tag v-tag">be+Vpp</span> is spoken
