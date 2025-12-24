@@ -530,8 +530,24 @@ const newCatCard = createCourseCard({
 courseGrid.appendChild(newCatCard);
 ```
 
+### ステップ4: カテゴリ選択画面 (CategorySelection) の更新
+`src/ui/views/CategorySelection.js` 内の「エキスパートチャレンジ」ボタンの遷移ロジックに、新しいカテゴリへの分岐を追加します。
+
+```javascript
+/* src/ui/views/CategorySelection.js */
+// challengeBtn.onclick 内...
+
+challengeBtn.onclick = () => {
+  if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
+  else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
+  // ...
+  else if (categoryId === 'new-category') navigate('/summary/new-category'); // 追加
+};
+```
+
 ### 必須確認項目
 - [ ] `Home.js`: `onChallengeClick` が設定されており、正しいパス (`/summary/...`) に遷移するか
+- [ ] `CategorySelection.js`: エキスパートチャレンジボタンの遷移先が追加されているか
 - [ ] `router.js`: そのパスに対応する View コンポーネントが登録されているか
 - [ ] `SummaryView`: クイズジェネレーターが正しくインポートされ、接続されているか
 
