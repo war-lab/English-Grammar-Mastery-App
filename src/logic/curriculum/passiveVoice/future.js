@@ -11,14 +11,14 @@ export const passiveFuture = {
       <div class="concept-box">
         <h4>📝 will + be + 過去分詞</h4>
         <div class="diagram-container">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 1rem;">
-            <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">will</div>
-            <div style="font-size: 1.5rem;">+</div>
-            <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">be</div>
-            <div style="font-size: 1.5rem;">+</div>
-            <div class="diagram-box" style="background:var(--accent-light); color:var(--background);">Vpp</div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="diagram-box" style="background:var(--primary); color:white; font-weight:bold;">will</div>
+            <div style="font-size: 1.5rem; color: var(--text-muted);">+</div>
+            <div class="diagram-box" style="background:var(--secondary); color:white; font-weight:bold;">be</div>
+            <div style="font-size: 1.5rem; color: var(--text-muted);">+</div>
+            <div class="diagram-box" style="background:var(--accent); color:white; font-weight:bold;">Vpp</div>
           </div>
-          <p style="text-align: center; margin-top: 1rem;">「〜されるでしょう」</p>
+          <p style="text-align: center; margin-top: 1rem; font-weight: bold; color: var(--primary);">「〜されるでしょう」</p>
         </div>
         <p>未来を表す助動詞 <strong>will</strong> の後ろに <strong>be + Vpp</strong> を続けます。</p>
         <div class="example-grid">

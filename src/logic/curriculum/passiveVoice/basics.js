@@ -9,25 +9,27 @@ export const passiveBasics = {
       <p>受動態（Passive Voice）は、主語が動作を「する」のではなく、動作を<strong>「される」</strong>側・<strong>「受ける」</strong>側であることを表す文です。</p>
       
       <div class="diagram-container">
-        <h3 style="text-align: center; color: var(--text-muted); margin-bottom: 1rem;">能動態と受動態の関係</h3>
-        <div style="display: flex; flex-direction: column; gap: 2rem; align-items: center; padding: 1rem;">
+        <h3 style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">能動態と受動態の関係</h3>
+        <div style="display: flex; flex-direction: column; gap: 2rem; align-items: center; padding: 2rem; background: rgba(255,255,255,0.03); border-radius: 12px;">
           
           <!-- Active -->
-          <div style="display: flex; align-items: center; gap: 1rem;">
-             <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">Tom</div>
-             <div class="diagram-arrow">writes</div>
-             <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">the letter</div>
+          <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+             <span style="position: absolute; top: -1.5rem; left: 0; font-size: 0.8rem; color: var(--text-muted);">能動態</span>
+             <div class="diagram-box" style="background:var(--primary); color:white; font-weight:bold;">Tom</div>
+             <div class="diagram-arrow" style="color: var(--text-main);">writes</div>
+             <div class="diagram-box" style="background:var(--secondary); color:white; font-weight:bold;">the letter</div>
           </div>
 
-          <div style="font-size: 2rem; color: var(--text-muted);">⬇️</div>
+          <div style="font-size: 2rem; color: var(--accent); transform: scale(1.5);">⬇️</div>
 
           <!-- Passive -->
-          <div style="display: flex; align-items: center; gap: 1rem;">
-             <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">The letter</div>
-             <div class="diagram-arrow">is written</div>
-             <div style="display: flex; align-items: center; gap: 0.5rem;">
-               <span style="font-size: 0.9rem;">by</span>
-               <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">Tom</div>
+          <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+             <span style="position: absolute; top: -1.5rem; left: 0; font-size: 0.8rem; color: var(--text-muted);">受動態</span>
+             <div class="diagram-box" style="background:var(--secondary); color:white; font-weight:bold; border: 2px solid var(--accent);">The letter</div>
+             <div class="diagram-arrow" style="color: var(--text-main);">is written</div>
+             <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); padding: 0.5rem; border-radius: 8px;">
+               <span style="font-size: 0.9rem; color: var(--text-muted);">by</span>
+               <div class="diagram-box" style="background:var(--primary); color:white; font-weight:bold; transform: scale(0.9);">Tom</div>
              </div>
           </div>
           

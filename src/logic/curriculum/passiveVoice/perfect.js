@@ -12,14 +12,14 @@ export const passivePerfect = {
       <div class="concept-box">
         <h4>📝 have/has + been + 過去分詞</h4>
         <div class="diagram-container">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; flex-wrap: wrap;">
-             <div class="diagram-box" style="background:var(--primary-light); color:var(--background);">have / has</div>
-            <div style="font-size: 1.5rem;">+</div>
-            <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">been</div>
-            <div style="font-size: 1.5rem;">+</div>
-            <div class="diagram-box" style="background:var(--accent-light); color:var(--background);">Vpp</div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem; flex-wrap: wrap; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+             <div class="diagram-box" style="background:var(--primary); color:white; font-weight:bold;">have / has</div>
+            <div style="font-size: 1.5rem; color: var(--text-muted);">+</div>
+            <div class="diagram-box" style="background:var(--secondary); color:white; font-weight:bold;">been</div>
+            <div style="font-size: 1.5rem; color: var(--text-muted);">+</div>
+            <div class="diagram-box" style="background:var(--accent); color:white; font-weight:bold;">Vpp</div>
           </div>
-          <p style="text-align: center; margin-top: 1rem;">完了の意味（be動詞の過去分詞 <strong>been</strong> が必須）</p>
+          <p style="text-align: center; margin-top: 1rem;">完了の意味（be動詞の過去分詞 <strong style="color: var(--secondary);">been</strong> が必須）</p>
         </div>
         <p style="text-align: center; font-size: 1.2rem;"><strong>have/has been + Vpp</strong></p>
         <p>be動詞の過去分詞 <strong>been</strong> がポイントです。</p>

@@ -12,14 +12,14 @@ export const passiveAuxiliary = {
       <div class="concept-box">
         <h4>📝 基本パターン</h4>
         <div class="diagram-container">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; flex-wrap: wrap;">
-            <div class="diagram-box" style="background:var(--primary-light); color:var(--background); min-width: 80px;">can / must</div>
-            <div style="font-size: 1.5rem;">+</div>
-            <div class="diagram-box" style="background:var(--secondary-light); color:var(--background);">be</div>
-            <div style="font-size: 1.5rem;">+</div>
-            <div class="diagram-box" style="background:var(--accent-light); color:var(--background);">Vpp</div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem; flex-wrap: wrap; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="diagram-box" style="background:var(--primary); color:white; font-weight:bold; min-width: 80px;">can / must</div>
+            <div style="font-size: 1.5rem; color: var(--text-muted);">+</div>
+            <div class="diagram-box" style="background:var(--secondary); color:white; font-weight:bold;">be</div>
+            <div style="font-size: 1.5rem; color: var(--text-muted);">+</div>
+            <div class="diagram-box" style="background:var(--accent); color:white; font-weight:bold;">Vpp</div>
           </div>
-          <p style="text-align: center; margin-top: 1rem;">助動詞の意味 + 受け身</p>
+          <p style="text-align: center; margin-top: 1rem; color: var(--text-muted);">助動詞の意味 + 受け身</p>
         </div>
         <p style="text-align: center; font-size: 1.2rem;"><strong>助動詞 + be + Vpp</strong></p>
         <div class="example-grid">
