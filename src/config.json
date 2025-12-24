@@ -2,6 +2,6 @@
   "geminiApiUrl": "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
   "apiKey": "",
   "debug": {
-    "unlock100QuizMode": true
+    "unlock100QuizMode": false
   }
 }
