@@ -5,6 +5,7 @@ import iconPatterns from '../../assets/images/icon-patterns.png';
 import iconTenses from '../../assets/images/icon-tenses.png';
 import iconPos from '../../assets/images/icon-pos.png';
 import iconAuxiliary from '../../assets/images/icon-auxiliary.png';
+import iconPassiveVoice from '../../assets/images/icon-passive-voice.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -90,7 +91,7 @@ export const Home = () => {
   const passiveData = curriculum.find(c => c.id === 'passive-voice');
   const passiveCard = createCourseCard({
     id: 'course-passive',
-    image: iconPatterns, // Using placeholder icon for now
+    image: iconPassiveVoice,
     title: 'Passive Voice',
     description: '受動態（受け身）の表現をマスターしよう',
     streakKey: 'passiveVoiceBestStreak',
