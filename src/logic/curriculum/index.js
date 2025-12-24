@@ -29,6 +29,11 @@ import { willWould } from './auxiliaryVerbs/willWould.js';
 import { mustShould } from './auxiliaryVerbs/mustShould.js';
 import { mayMight } from './auxiliaryVerbs/mayMight.js';
 
+import { passiveBasics } from './passiveVoice/basics.js';
+import { passiveFuture } from './passiveVoice/future.js';
+import { passiveAuxiliary } from './passiveVoice/auxiliary.js';
+import { passivePerfect } from './passiveVoice/perfect.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -44,6 +49,11 @@ export const curriculum = [
     id: 'auxiliary-verbs',
     title: '助動詞 (Auxiliary Verbs)',
     topics: [canCould, willWould, mustShould, mayMight]
+  },
+  {
+    id: 'passive-voice',
+    title: '受動態 (Passive Voice)',
+    topics: [passiveBasics, passiveFuture, passiveAuxiliary, passivePerfect]
   },
   {
     id: 'parts-of-speech',

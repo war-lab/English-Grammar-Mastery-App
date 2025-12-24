@@ -446,6 +446,112 @@ export const curriculum = [
 - 説明文のHTMLレンダリングを確認
 
 ---
+      
+## 🖥️ 新しいカテゴリのUI実装 (UI Implementation for New Categories)
+
+カテゴリを純粋にデータとして追加するだけでなく、UI上でアクセス可能にするためには以下のステップが必要です。
+
+### ステップ1: サマリービュー（エキスパートチャレンジ画面）の作成
+`src/ui/views/Summary[CategoryName].js` を作成します。これは`SummaryTenses.js`などをコピーして修正するのが最も簡単です。
+
+```javascript
+/* src/ui/views/SummaryNewCategory.js */
+import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
+import { generateNewCategoryQuiz } from '../../logic/curriculum/newCategory/quizGenerator.js';
+import { curriculum } from '../../logic/curriculum/index.js';
+
+export const SummaryNewCategory = (context) => {
+  const categoryId = 'new-category';
+  const categoryData = curriculum.find(c => c.id === categoryId);
+
+  // 説明コンテンツの定義
+  const renderExplanationContent = () => `
+    <div class="explanation-content">
+       <!-- カテゴリ全体の概要や学習のポイント -->
+       <h3>学習のポイント</h3>
+       <ul class="feature-list">
+         <li>ポイント1...</li>
+       </ul>
+    </div>
+  `;
+
+  return LearningPageTemplate({
+    context,
+    headerTitle: categoryData.title,
+    // ... 中略 ...
+    challengeMode: {
+      isEnabled: true, // エキスパートチャレンジを有効化
+      quizGenerator: (level, isAIMode) => generateNewCategoryQuiz(level, isAIMode),
+      totalQuestions: 100
+    }
+  });
+};
+```
+
+### ステップ2: ルーティングの設定
+`src/ui/router.js` に新しいカテゴリのサマリー画面へのルートを追加します。
+
+```javascript
+/* src/ui/router.js */
+import { SummaryNewCategory } from './views/SummaryNewCategory.js';
+
+const routes = {
+  // ...
+  '/summary/new-category': SummaryNewCategory, // 追加
+};
+```
+
+### ステップ3: ホーム画面 (ダッシュボード) への追加
+`src/ui/views/Home.js` を編集し、新しいカテゴリのカードを表示させます。
+
+```javascript
+/* src/ui/views/Home.js */
+// createCourseGrid関数内にて...
+
+// 新しいカテゴリのデータを取得
+const newCatData = curriculum.find(c => c.id === 'new-category');
+
+// カードを作成
+const newCatCard = createCourseCard({
+  id: 'course-new-category',
+  image: iconPath, // 適切なアイコン
+  title: 'New Category',
+  description: 'カテゴリの説明',
+  streakKey: 'newCategoryBestStreak', // ストリーク保存用のキー名
+  topics: newCatData?.topics || [],
+  
+  // 通常のレッスンリストへの遷移
+  onClick: () => navigate('/category/new-category'),
+  
+  // エキスパートチャレンジ（サマリー画面）への遷移
+  onChallengeClick: () => navigate('/summary/new-category')
+});
+
+courseGrid.appendChild(newCatCard);
+```
+
+### ステップ4: カテゴリ選択画面 (CategorySelection) の更新
+`src/ui/views/CategorySelection.js` 内の「エキスパートチャレンジ」ボタンの遷移ロジックに、新しいカテゴリへの分岐を追加します。
+
+```javascript
+/* src/ui/views/CategorySelection.js */
+// challengeBtn.onclick 内...
+
+challengeBtn.onclick = () => {
+  if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
+  else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
+  // ...
+  else if (categoryId === 'new-category') navigate('/summary/new-category'); // 追加
+};
+```
+
+### 必須確認項目
+- [ ] `Home.js`: `onChallengeClick` が設定されており、正しいパス (`/summary/...`) に遷移するか
+- [ ] `CategorySelection.js`: エキスパートチャレンジボタンの遷移先が追加されているか
+- [ ] `router.js`: そのパスに対応する View コンポーネントが登録されているか
+- [ ] `SummaryView`: クイズジェネレーターが正しくインポートされ、接続されているか
+
+---
 
 ## 📋 テンプレート
 

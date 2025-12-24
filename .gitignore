@@ -26,3 +26,5 @@ dist-ssr
 # Environment variables with sensitive data (for local override)
 .env.local
 .env.*.local
+
+src/config.json
