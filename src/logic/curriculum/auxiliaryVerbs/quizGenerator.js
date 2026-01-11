@@ -1,3 +1,4 @@
+import { generateQuiz } from '../../geminiService.js';
 
 export const generateAuxiliaryVerbQuiz = (level = 1) => {
   const problems = [
@@ -83,4 +84,56 @@ export const generateAuxiliaryVerbQuiz = (level = 1) => {
     answer: problem.answer,
     explanation: `正解は **${problem.answer}** です。${problem.explanation}\n\n訳：${problem.translation}`
   };
+};
+
+/**
+ * Generates an AI-powered quiz for Auxiliary Verbs.
+ * @param {number} level - Difficulty level (1-10).
+ * @param {AbortSignal} signal - Abort signal for cancellation.
+ * @returns {Promise<Object>} Quiz object.
+ */
+export const generateAIQuiz = async (level = 1, signal) => {
+  const types = ['fill-blank-aux', 'choose-nuance', 'rewrite-polite'];
+  const selectedType = types[Math.floor(Math.random() * types.length)];
+
+  let prompt = '';
+
+  if (selectedType === 'fill-blank-aux') {
+    prompt = `Generate 1 fill-in-the-blank question testing auxiliary verbs (can, could, may, might, must, should, will, would).
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の空欄に入る最も適切な助動詞を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Auxiliary Verb]", "answer":"[Answer Auxiliary Verb]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Context must clearly determine the correct auxiliary verb.`;
+  }
+  else if (selectedType === 'choose-nuance') {
+    prompt = `Generate 1 nuance/meaning identification question for auxiliary verbs.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の助動詞 [Auxiliary Verb] が表す意味として最も適切なものを選びなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "targetAux":"[Auxiliary Verb]", "answer":"[Correct Nuance (Japanese)]", "options":["[Nuance 1]","[Nuance 2]","[Nuance 3]","[Nuance 4]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Options should be Japanese meanings (e.g. 許可, 義務, 推量, 能力).`;
+  }
+  else if (selectedType === 'rewrite-polite') {
+    prompt = `Generate 1 polite rewrite question using auxiliary verbs.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文をより丁寧な表現に書き換えなさい：\\n\\n元の文: \\"[Original Sentence]\\"\\n指示: [Instruction, e.g. use Could]", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original Sentence]", "answer":"[Polite Sentence]", "options":["[Polite Sentence]","[Wrong Opt1]","[Wrong Opt2]","[Wrong Opt3]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Focus on politeness (Can -> Could, Will -> Would, etc).`;
+  }
+
+  const result = await generateQuiz({
+    prompt,
+    temperature: 0.8,
+    responseMimeType: 'application/json',
+    signal
+  });
+
+  // Validation
+  if (!result || typeof result !== 'object') throw new Error('Invalid response format');
+  if (!result.question || typeof result.question !== 'string') throw new Error('Missing question field');
+  if (!Array.isArray(result.options) || result.options.length < 2) throw new Error('Invalid options array');
+  if (!result.answer || !result.options.includes(result.answer)) throw new Error('Answer not found in options');
+
+  // Trim
+  result.question = result.question.trim();
+  result.answer = result.answer.trim();
+  result.options = result.options.map(o => o.trim()).filter(o => o.length > 0);
+
+  return result;
 };

@@ -1,9 +1,8 @@
 
-
-import { generateSentencePatternQuiz } from '../../logic/curriculum/sentencePatterns/quizGenerator.js';
+import { generateSentencePatternQuiz, generateAIQuiz } from '../../logic/curriculum/sentencePatterns/quizGenerator.js';
 import { createPatternDiagram } from '../components/patternDiagrams.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
-import { curriculum } from '../../logic/curriculum.js';
+import { curriculum } from '../../logic/curriculum/index.js';
 
 export const Summary5Patterns = () => {
   const renderExplanationContent = () => {
@@ -113,7 +112,7 @@ export const Summary5Patterns = () => {
     storageKey: 'summaryBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateSentencePatternQuiz(level, false),
-    aiPromptContext: 'English sentence patterns (SV, SVC, SVO, SVOO, SVOC)',
+    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
     backLink: '#/',
     topics: curriculum.find(c => c.id === 'sentence-patterns')?.topics || []
   });

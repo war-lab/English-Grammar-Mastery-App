@@ -1,28 +1,24 @@
+import { generateQuiz } from '../../geminiService.js';
+
 export const generateSentencePatternQuiz = (level = 1, isAIMode = false) => {
+  // Deprecated isAIMode argument support kept for backward compatibility if needed locally,
+  // but strictly speaking the new UI routes AI requests to generateAIQuiz.
   const patterns = ['SV', 'SVC', 'SVO', 'SVOO', 'SVOC'];
   let targetPattern;
   let complexity = 1; // 1: Basic, 2: Intermediate, 3: Advanced
 
-  // --- AI Mode Logic ---
-  if (isAIMode) {
-    targetPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    complexity = 3; // Always max complexity
-    // In AI mode, we might want even crazier sentences, handled by complexity 3 pools for now
-  }
   // --- Granular Level Logic (1-10) ---
+  if (level === 1) targetPattern = 'SV';
+  else if (level === 2) targetPattern = 'SVC';
+  else if (level === 3) targetPattern = 'SVO';
+  else if (level === 4) targetPattern = 'SVOO';
+  else if (level === 5) targetPattern = 'SVOC';
   else {
-    if (level === 1) targetPattern = 'SV';
-    else if (level === 2) targetPattern = 'SVC';
-    else if (level === 3) targetPattern = 'SVO';
-    else if (level === 4) targetPattern = 'SVOO';
-    else if (level === 5) targetPattern = 'SVOC';
-    else {
-      // Levels 6-10: Mixed patterns, increasing complexity
-      targetPattern = patterns[Math.floor(Math.random() * patterns.length)];
-      if (level <= 7) complexity = 1;
-      else if (level <= 9) complexity = 2;
-      else complexity = 3;
-    }
+    // Levels 6-10: Mixed patterns, increasing complexity
+    targetPattern = patterns[Math.floor(Math.random() * patterns.length)];
+    if (level <= 7) complexity = 1;
+    else if (level <= 9) complexity = 2;
+    else complexity = 3;
   }
 
   let question = '';
@@ -100,33 +96,22 @@ export const generateSentencePatternQuiz = (level = 1, isAIMode = false) => {
     svocC = [...svocComplementsL1, ...svocComplementsL2, ...svocComplementsL3];
   }
 
+  // Fallback to random pattern generator for quick testing if needed
   switch (targetPattern) {
-    case 'SV':
-      question = `${getRandom(sub)} ${getRandom(svV)}.`;
-      break;
-    case 'SVC':
-      question = `${getRandom(sub)} ${getRandom(svcV)} ${getRandom(svcC)}.`;
-      break;
-    case 'SVO':
-      question = `${getRandom(sub)} ${getRandom(svoV)} ${getRandom(svoO)}.`;
-      break;
-    case 'SVOO':
-      question = `${getRandom(sub)} ${getRandom(svooV)} ${getRandom(svooI)} ${getRandom(svooD)}.`;
-      break;
+    case 'SV': question = `${getRandom(sub)} ${getRandom(svV)}.`; break;
+    case 'SVC': question = `${getRandom(sub)} ${getRandom(svcV)} ${getRandom(svcC)}.`; break;
+    case 'SVO': question = `${getRandom(sub)} ${getRandom(svoV)} ${getRandom(svoO)}.`; break;
+    case 'SVOO': question = `${getRandom(sub)} ${getRandom(svooV)} ${getRandom(svooI)} ${getRandom(svooD)}.`; break;
     case 'SVOC':
       const verb = getRandom(svocV);
       let obj = getRandom(svocO);
       let comp = getRandom(svocC);
-
-      // Basic logic to avoid nonsense
       if (['call', 'name', 'elect', 'appoint'].includes(verb)) {
         comp = Math.random() > 0.5 ? 'Tom' : 'captain';
         if (complexity > 1) comp = getRandom(['president', 'chairman', 'leader']);
       } else if (['make', 'keep', 'leave', 'find', 'consider'].includes(verb)) {
-        // Adjectives usually
         comp = getRandom(['happy', 'sad', 'clean', 'safe', 'difficult', 'wrong']);
       }
-
       question = `${getRandom(sub)} ${verb} ${obj} ${comp}.`;
       break;
   }
@@ -149,20 +134,15 @@ const fixGrammar = (sentence) => {
     return `I ${verb}`; // I run (no s)
   });
 
-  // He/She/The dog/The bird/My father/The teacher -> needs 's' for 3rd person singular
-  // Expanded list for new subjects
   const singularSubjects = ['He', 'She', 'The dog', 'The cat', 'The bird', 'My father', 'The teacher', 'The new student', 'The sudden noise', 'His explanation', 'The long journey', 'Her decision', 'The weather', 'Everyone'];
 
   singularSubjects.forEach(sub => {
     if (s.startsWith(sub + ' ')) {
-      // Fix be verbs
       s = s.replace(new RegExp(`^${sub} am`), `${sub} is`);
       s = s.replace(new RegExp(`^${sub} are`), `${sub} is`);
 
-      // Add 's' to other verbs if not already ending in s (rough heuristic)
       const words = s.split(' ');
       if (words[1] && !['is', 'was', 'can', 'will', 'must', 'should'].includes(words[1]) && !words[1].endsWith('s') && !words[1].endsWith('ed')) {
-        // specific irregulars
         if (words[1] === 'have') words[1] = 'has';
         else if (words[1] === 'study') words[1] = 'studies';
         else if (words[1] === 'fly') words[1] = 'flies';
@@ -175,15 +155,12 @@ const fixGrammar = (sentence) => {
         else if (words[1] === 'approach') words[1] = 'approaches';
         else if (words[1] === 'finish') words[1] = 'finishes';
         else words[1] += 's';
-
         s = words.join(' ');
       }
     }
   });
 
-  // You/We/They -> are, no 's'
   const pluralSubjects = ['You', 'We', 'They', 'Our team'];
-
   pluralSubjects.forEach(sub => {
     if (s.startsWith(sub + ' ')) {
       s = s.replace(new RegExp(`^${sub} am`), `${sub} are`);
@@ -193,3 +170,66 @@ const fixGrammar = (sentence) => {
 
   return s;
 };
+
+// --- New AI Quiz Generator ---
+
+/**
+ * Generates an AI-powered quiz for 5 Sentence Patterns.
+ * @param {number} level - Difficulty level (1-10).
+ * @param {AbortSignal} signal - Abort signal for cancellation.
+ * @returns {Promise<Object>} Quiz object.
+ */
+export const generateAIQuiz = async (level = 1, signal) => {
+  const types = ['pattern-id', 'fill-blank', 'error-correction', 'transformation'];
+  const selectedType = types[Math.floor(Math.random() * types.length)];
+
+  let prompt = '';
+
+  if (selectedType === 'pattern-id') {
+    prompt = `Generate 1 English sentence using one of 5 patterns (SV, SVC, SVO, SVOO, SVOC).
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の英文の文型を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "answer":"[Pattern(SV/SVC/SVO/SVOO/SVOC)]", "options":["SV","SVC","SVO","SVOO","SVOC"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The 'sentence' MUST be in English. Answer MUST be one of SV, SVC, SVO, SVOO, SVOC.`;
+  }
+  else if (selectedType === 'fill-blank') {
+    prompt = `Generate 1 fill-in-the-blank question using 5 patterns.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Word (English)]", "answer":"[Answer Word (English)]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The 'sentence' and options MUST be in English. Provide 4 options.`;
+  }
+  else if (selectedType === 'error-correction') {
+    prompt = `Generate 1 error correction question related to sentence patterns.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の誤りを訂正しなさい：\\n\\n\\"[Wrong English Sentence]\\"", "japaneseTranslation":"[Correct Japanese Translation]", "wrongSentence":"[Wrong English Sentence]", "correctSentence":"[Correct English Sentence]", "answer":"[Correct English Word/Phrase]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The sentences and options MUST be in English. Provide 4 options found in the sentence or corrections.`;
+  }
+  else if (selectedType === 'transformation') {
+    prompt = `Generate 1 sentence pattern transformation question.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文を指定された文型に書き換えなさい：\\n\\n元の文: \\"[Original English Sentence]\\"\\n目標文型: [Target Pattern]", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original English Sentence]", "targetPattern":"[Target Pattern]", "answer":"[Correct English Sentence]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
+Note: The sentences and options MUST be in English. Target pattern must be SV/SVC/SVO/SVOO/SVOC. Provide 4 full sentence options.`;
+  }
+
+  const result = await generateQuiz({
+    prompt,
+    temperature: 0.8,
+    responseMimeType: 'application/json',
+    signal
+  });
+
+  // Strict Validation
+  if (!result || typeof result !== 'object') throw new Error('Invalid response format');
+  if (!result.question || typeof result.question !== 'string') throw new Error('Missing question field');
+  if (!Array.isArray(result.options) || result.options.length < 2) throw new Error('Invalid options array');
+  if (!result.answer || !result.options.includes(result.answer)) throw new Error('Answer not found in options');
+
+  // Trim strings
+  result.question = result.question.trim();
+  result.answer = result.answer.trim();
+  result.options = result.options.map(o => o.trim()).filter(o => o.length > 0);
+
+  if (result.options.length < 2) throw new Error('Not enough valid options');
+
+  return result;
+};
+

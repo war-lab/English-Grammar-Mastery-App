@@ -1,5 +1,4 @@
-
-import { generateTenseQuiz } from '../../logic/curriculum/tenses/quizGenerator.js';
+import { generateTenseQuiz, generateAIQuiz } from '../../logic/curriculum/tenses/quizGenerator.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -98,7 +97,7 @@ export const SummaryTenses = () => {
     storageKey: 'tensesBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateTenseQuiz(level, false),
-    aiPromptContext: 'English verb tenses (past, future, progressive, perfect)',
+    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
     backLink: '#/',
     topics: curriculum.find(c => c.id === 'tenses')?.topics || []
   });

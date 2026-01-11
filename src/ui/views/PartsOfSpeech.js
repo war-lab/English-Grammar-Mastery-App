@@ -1,7 +1,6 @@
-
-import { generatePOSQuiz } from '../../logic/curriculum/partsOfSpeech/quizGenerator.js';
+import { generatePOSQuiz, generateAIQuiz } from '../../logic/curriculum/partsOfSpeech/quizGenerator.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
-import { curriculum } from '../../logic/curriculum.js';
+import { curriculum } from '../../logic/curriculum/index.js';
 
 export const PartsOfSpeech = () => {
   const posData = curriculum.find(c => c.id === 'parts-of-speech');
@@ -111,7 +110,7 @@ export const PartsOfSpeech = () => {
     storageKey: 'posBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generatePOSQuiz(level),
-    aiPromptContext: 'English parts of speech (Noun, Verb, Adjective, Adverb, Preposition, Pronoun, Conjunction, Interjection)',
+    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
     backLink: '#/',
     topics: posData.topics
   });

@@ -1,20 +1,19 @@
-
+// Reusable template for learning pages
 import { getCategoryProgress } from '../../logic/storage.js';
-import { generateAIQuestion } from '../../logic/geminiService.js';
 import { createResultModal } from './ResultModal.js';
 import appConfig from '../../config.json';
 
 /**
- * Reusable template for learning pages (e.g., 5 Sentence Patterns, Parts of Speech).
- * @param {Object} config - Configuration object.
- * @param {string} config.title - Page title.
- * @param {string} config.subtitle - Page subtitle.
- * @param {string} config.storageKey - LocalStorage key for best streak.
- * @param {Function} config.renderExplanationContent - Function returning HTML string for the explanation section.
- * @param {Function} config.generateQuiz - Function(level) returning a quiz object { question, options, answer, explanation, japaneseTranslation }.
- * @param {string} config.aiPromptContext - Context string for AI question generation (e.g., "English sentence patterns").
- * @param {string} config.backLink - Path to go back to (default: #/dashboard).
- * @param {Array} config.topics - List of topics to check for completion (optional).
+ * Reusable template for learning pages
+ * @param {Object} config
+ * @param {string} config.title
+ * @param {string} config.subtitle
+ * @param {string} config.storageKey
+ * @param {Function} config.renderExplanationContent
+ * @param {Function} config.generateQuiz - Sync function for normal quiz
+ * @param {Function} config.aiQuizGenerator - Async function (level, signal) => quiz object
+ * @param {string} config.backLink
+ * @param {Array} config.topics
  */
 export const LearningPageTemplate = (config) => {
   const wrapper = document.createElement('div');
@@ -22,7 +21,7 @@ export const LearningPageTemplate = (config) => {
   wrapper.style.margin = '2rem auto';
   wrapper.style.position = 'relative';
 
-  // Back Button (Outside the glass container)
+  // Back Button
   const backBtn = document.createElement('a');
   backBtn.href = config.backLink || '#/dashboard';
   backBtn.className = 'back-link btn';
@@ -44,8 +43,6 @@ export const LearningPageTemplate = (config) => {
   const container = document.createElement('div');
   container.className = 'summary-container glass';
   container.style.padding = '2rem';
-  // container.style.maxWidth = '1000px'; // Moved to wrapper
-  // container.style.margin = '2rem auto'; // Moved to wrapper
 
   wrapper.appendChild(container);
 
@@ -56,7 +53,22 @@ export const LearningPageTemplate = (config) => {
   let level = 1;
   let isAIMode = false;
   let currentQuiz = null;
-  let aiUnavailable = false;
+
+  // AI State
+  let isAILoading = false;
+  let aiError = null;
+  let abortController = null;
+
+  // Cleanup function to abort any pending requests
+  const cleanupAI = () => {
+    if (abortController) {
+      abortController.abort();
+      abortController = null;
+    }
+  };
+
+  // Attach cleanup to wrapper for external callers (if needed)
+  wrapper._cleanup = cleanupAI;
 
   const render = () => {
     container.innerHTML = '';
@@ -95,19 +107,18 @@ export const LearningPageTemplate = (config) => {
     explanationSection.innerHTML = config.renderExplanationContent();
     container.appendChild(explanationSection);
 
-    // Check progress if topics are provided
+    // Check progress
     let isLocked = false;
     let remainingLessons = 0;
 
     if (config.topics) {
       const progress = getCategoryProgress(config.topics);
-      // Check debug mode: unlock quiz if debug.unlock100QuizMode is true
       const debugUnlock = appConfig?.debug?.unlock100QuizMode || false;
       isLocked = debugUnlock ? false : !progress.allCompleted;
       remainingLessons = progress.remaining;
     }
 
-    // Challenge Buttons or Lock Message
+    // Actions
     const actionsDiv = document.createElement('div');
     actionsDiv.style.textAlign = 'center';
     actionsDiv.style.marginTop = '3rem';
@@ -142,8 +153,9 @@ export const LearningPageTemplate = (config) => {
 
       const aiBtn = document.createElement('button');
       aiBtn.className = 'btn btn-ai';
-      if (aiUnavailable) {
-        aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">現在使用できません</span>';
+      // If no AI generator provided, disable
+      if (!config.aiQuizGenerator) {
+        aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">未実装</span>';
         aiBtn.style.opacity = '0.5';
         aiBtn.style.cursor = 'not-allowed';
         aiBtn.disabled = true;
@@ -156,13 +168,17 @@ export const LearningPageTemplate = (config) => {
       aiBtn.style.background = 'linear-gradient(135deg, #00ff00, #00aa00)';
       aiBtn.style.border = '2px solid #00ff00';
       aiBtn.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.3)';
+
       aiBtn.onclick = () => {
-        if (!aiUnavailable) {
+        if (config.aiQuizGenerator) {
           viewState = 'quiz';
           streak = 0;
           level = 1;
           isAIMode = true;
+          isAILoading = true; // Start loading immediately
+          aiError = null;
           render();
+          fetchAIQuestion(); // Trigger fetch
         }
       };
 
@@ -195,6 +211,36 @@ export const LearningPageTemplate = (config) => {
 
     resetDiv.appendChild(resetBtn);
     container.appendChild(resetDiv);
+  };
+
+  const fetchAIQuestion = async () => {
+    cleanupAI(); // Cancel previous
+    abortController = new AbortController();
+
+    isAILoading = true;
+    aiError = null;
+    currentQuiz = null;
+    render(); // Update UI to loading state
+
+    try {
+      if (!config.aiQuizGenerator) throw new Error('AI Generator not configured');
+
+      // Call the lesson-specific generator
+      const quiz = await config.aiQuizGenerator(level, abortController.signal);
+
+      currentQuiz = quiz;
+      isAILoading = false;
+      render();
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        console.log('AI Request aborted');
+        return; // Do nothing, user probably navigated away
+      }
+      console.error('AI Generation Error:', error);
+      isAILoading = false;
+      aiError = error.message || '問題生成に失敗しました';
+      render();
+    }
   };
 
   const renderQuiz = () => {
@@ -233,47 +279,70 @@ export const LearningPageTemplate = (config) => {
     const questionArea = document.createElement('div');
     questionArea.className = 'question-area';
 
-    // AI Loading or Error
-    if (isAIMode && !currentQuiz) {
+    // 1. Loading State
+    if (isAILoading) {
       questionArea.innerHTML = `
         <div style="text-align: center; padding: 4rem;">
-          <div class="ai-loader">🤖 AIが問題を生成中...</div>
-          <p style="color: #00ff00; margin-top: 1rem; font-family: monospace;">Gemini AI による問題生成</p>
+          <div class="ai-loader"></div>
+          <p style="color: #00ff00; margin-top: 1rem; font-family: monospace;">Gemini AI Generating...</p>
+          <button id="cancel-ai" class="btn" style="margin-top: 1rem; border: 1px solid #444;">キャンセル</button>
         </div>
-       `;
+      `;
       quizSection.appendChild(questionArea);
       container.appendChild(quizSection);
 
-      setTimeout(async () => {
-        try {
-          currentQuiz = await generateAIQuestion(level, config.aiPromptContext);
-          render();
-        } catch (error) {
-          console.error('AI generation failed:', error);
-          if (error.message === 'API_KEY_NOT_CONFIGURED') {
-            aiUnavailable = true;
-            alert('AIモードは現在使用できません。\nAPIキーが設定されていません。');
-          } else {
-            alert('AIモードでエラーが発生しました。\n通常モードに切り替えます。');
-          }
-          isAIMode = false;
+      // Cancel button logic
+      const cancelBtn = questionArea.querySelector('#cancel-ai');
+      if (cancelBtn) {
+        cancelBtn.onclick = () => {
+          cleanupAI();
           viewState = 'explanation';
           render();
-        }
-      }, 2000);
+        };
+      }
       return;
     }
 
-    // Generate Quiz
+    // 2. Error State
+    if (aiError) {
+      questionArea.innerHTML = `
+        <div style="text-align: center; padding: 3rem; background: rgba(255, 0, 0, 0.1); border-radius: 1rem; border: 1px solid rgba(255, 0, 0, 0.3);">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+          <h3 style="color: #ff6b6b; margin-bottom: 1rem;">生成エラー</h3>
+          <p style="margin-bottom: 1.5rem;">${aiError}</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem;">API制限や通信環境の問題の可能性があります。</p>
+          <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button id="retry-ai" class="btn btn-primary">再試行する</button>
+            <button id="back-error" class="btn" style="background: rgba(255,255,255,0.1);">戻る</button>
+          </div>
+        </div>
+      `;
+      quizSection.appendChild(questionArea);
+      container.appendChild(quizSection);
+
+      questionArea.querySelector('#retry-ai').onclick = () => {
+        fetchAIQuestion();
+      };
+      questionArea.querySelector('#back-error').onclick = () => {
+        viewState = 'explanation';
+        render();
+      };
+      return;
+    }
+
+    // 3. Normal Question State
     if (!currentQuiz) {
-      if (isAIMode) {
-        return;
-      } else {
+      if (!isAIMode) {
         currentQuiz = config.generateQuiz(level);
+      } else {
+        // Should have been fetched or is loading, so strictly speaking shouldn't happen unless sync error
+        questionArea.innerHTML = '<div>State Error: No Quiz Data</div>';
+        quizSection.appendChild(questionArea);
+        container.appendChild(quizSection);
+        return;
       }
     }
 
-    // Radio Button UI
     const optionsHtml = currentQuiz.options.map((opt, index) => `
       <div class="quiz-radio-option">
         <input type="radio" id="opt-${index}" name="quiz-answer" value="${opt}">
@@ -325,7 +394,6 @@ export const LearningPageTemplate = (config) => {
       feedbackEl.innerHTML = '<div style="font-size: 1.2rem; margin-bottom: 1rem;">✓ 正解！</div>';
       feedbackEl.className = 'feedback-area correct';
 
-      // Add explanation for correct answer
       if (currentQuiz.explanation) {
         const explanationBox = document.createElement('div');
         explanationBox.style.marginTop = '1rem';
@@ -370,9 +438,15 @@ export const LearningPageTemplate = (config) => {
       nextBtn.style.padding = '1rem 2rem';
       nextBtn.style.width = '100%';
       nextBtn.style.maxWidth = '400px';
+
       nextBtn.onclick = () => {
         currentQuiz = null;
-        render();
+        if (isAIMode) {
+          render(); // Re-render to trigger loading state
+          fetchAIQuestion();
+        } else {
+          render();
+        }
       };
       feedbackEl.appendChild(nextBtn);
 
@@ -401,13 +475,11 @@ export const LearningPageTemplate = (config) => {
       }
 
       setTimeout(() => {
-        const modal = createResultModal(streak, () => {
-          document.body.removeChild(modal);
+        createResultModal(streak, () => {
           viewState = 'explanation';
           container.className = 'summary-container glass';
           render();
-        });
-        document.body.appendChild(modal);
+        }).then(modal => document.body.appendChild(modal));
       }, 2000);
     }
   };
@@ -449,5 +521,5 @@ export const LearningPageTemplate = (config) => {
   };
 
   render();
-  return wrapper; // Return the wrapper instead of container
+  return wrapper;
 };
