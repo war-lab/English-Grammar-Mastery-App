@@ -98,7 +98,7 @@ export const SummaryTenses = () => {
     renderExplanationContent,
     generateQuiz: (level) => generateTenseQuiz(level, false),
     aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    backLink: '#/category/tenses',
     topics: curriculum.find(c => c.id === 'tenses')?.topics || []
   });
 };

@@ -56,7 +56,7 @@ export const SummaryPassiveVoice = () => {
     renderExplanationContent,
     generateQuiz: (level) => generatePassiveVoiceQuiz(level, false),
     aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    backLink: '#/category/passive-voice',
     topics: curriculum.find(c => c.id === 'passive-voice')?.topics || []
   });
 };

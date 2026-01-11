@@ -90,7 +90,7 @@ export const SummaryAuxiliaryVerbs = () => {
     renderExplanationContent,
     generateQuiz: (level) => generateAuxiliaryVerbQuiz(level),
     aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    backLink: '#/category/auxiliary-verbs',
     topics: curriculum.find(c => c.id === 'auxiliary-verbs')?.topics || []
   });
 };

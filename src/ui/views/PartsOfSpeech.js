@@ -111,7 +111,7 @@ export const PartsOfSpeech = () => {
     renderExplanationContent,
     generateQuiz: (level) => generatePOSQuiz(level),
     aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    backLink: '#/category/parts-of-speech',
     topics: posData.topics
   });
 };

@@ -113,7 +113,7 @@ export const Summary5Patterns = () => {
     renderExplanationContent,
     generateQuiz: (level) => generateSentencePatternQuiz(level, false),
     aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    backLink: '#/category/sentence-patterns',
     topics: curriculum.find(c => c.id === 'sentence-patterns')?.topics || []
   });
 };
