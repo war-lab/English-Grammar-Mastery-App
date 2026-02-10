@@ -34,7 +34,8 @@ jobs:
       - name: Build
         env:
           VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          VITE_GEMINI_API_URL: ${{ secrets.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent' }}
+          VITE_GEMINI_MODEL: ${{ secrets.GEMINI_MODEL || vars.GEMINI_MODEL || 'gemini-1.5-flash' }}
+          VITE_DEBUG_UNLOCK: ${{ vars.VITE_DEBUG_UNLOCK || 'false' }} 
         run: npm run build
 
       - name: Setup Pages
