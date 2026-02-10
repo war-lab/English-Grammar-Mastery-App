@@ -34,6 +34,11 @@ import { passiveFuture } from './passiveVoice/future.js';
 import { passiveAuxiliary } from './passiveVoice/auxiliary.js';
 import { passivePerfect } from './passiveVoice/perfect.js';
 
+import { imperativeSentence } from './variousExpressions/imperativeSentence.js';
+import { impersonalIt } from './variousExpressions/impersonalIt.js';
+import { thereIsConstruction } from './variousExpressions/thereIsConstruction.js';
+import { quantityExpressions } from './variousExpressions/quantityExpressions.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -59,6 +64,11 @@ export const curriculum = [
     id: 'parts-of-speech',
     title: '品詞マスター (Parts of Speech)',
     topics: [noun, verb, adjective, adverb, preposition, pronoun, conjunction, interjection]
+  },
+  {
+    id: 'various-expressions',
+    title: '色々な表現 (Various Expressions)',
+    topics: [imperativeSentence, impersonalIt, thereIsConstruction, quantityExpressions]
   }
 ];
 

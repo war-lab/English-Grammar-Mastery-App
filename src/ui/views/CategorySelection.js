@@ -61,6 +61,7 @@ export const CategorySelection = (categoryId) => {
       else if (categoryId === 'tenses') navigate('/summary/tenses');
       else if (categoryId === 'auxiliary-verbs') navigate('/summary/auxiliary-verbs');
       else if (categoryId === 'passive-voice') navigate('/summary/passive-voice');
+      else if (categoryId === 'various-expressions') navigate('/summary/various-expressions');
     };
 
     challengeContainer.appendChild(challengeTitle);
