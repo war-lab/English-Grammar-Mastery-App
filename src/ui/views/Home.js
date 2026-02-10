@@ -6,6 +6,7 @@ import iconTenses from '../../assets/images/icon-tenses.png';
 import iconPos from '../../assets/images/icon-pos.png';
 import iconAuxiliary from '../../assets/images/icon-auxiliary.png';
 import iconPassiveVoice from '../../assets/images/icon-passive-voice.png';
+import iconVarious from '../../assets/images/icon-various.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -100,6 +101,20 @@ export const Home = () => {
     onChallengeClick: () => navigate('/summary/passive-voice')
   });
   courseGrid.appendChild(passiveCard);
+
+  // 6. Various Expressions Card
+  const variousData = curriculum.find(c => c.id === 'various-expressions');
+  const variousCard = createCourseCard({
+    id: 'course-various',
+    image: iconVarious,
+    title: 'Various Expressions',
+    description: '命令文、There is構文、数量表現など、表現の幅を広げる構文をマスター',
+    streakKey: 'variousExpressionsBestStreak',
+    topics: variousData?.topics || [],
+    onClick: () => navigate('/category/various-expressions'),
+    onChallengeClick: () => navigate('/summary/various-expressions')
+  });
+  courseGrid.appendChild(variousCard);
 
   container.appendChild(courseGrid);
 

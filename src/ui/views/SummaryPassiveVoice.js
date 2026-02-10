@@ -1,5 +1,6 @@
 
-import { generatePassiveVoiceQuiz, generateAIQuiz } from '../../logic/curriculum/passiveVoice/quizGenerator.js';
+import { generatePassiveVoiceQuiz } from '../../logic/curriculum/passiveVoice/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -55,8 +56,8 @@ export const SummaryPassiveVoice = () => {
     storageKey: 'passiveVoiceBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generatePassiveVoiceQuiz(level, false),
-    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'passive voice'),
+    backLink: '#/category/passive-voice',
     topics: curriculum.find(c => c.id === 'passive-voice')?.topics || []
   });
 };

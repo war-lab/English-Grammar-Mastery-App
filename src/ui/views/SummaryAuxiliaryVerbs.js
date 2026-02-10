@@ -1,5 +1,6 @@
 
-import { generateAuxiliaryVerbQuiz, generateAIQuiz } from '../../logic/curriculum/auxiliaryVerbs/quizGenerator.js';
+import { generateAuxiliaryVerbQuiz } from '../../logic/curriculum/auxiliaryVerbs/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -89,8 +90,8 @@ export const SummaryAuxiliaryVerbs = () => {
     storageKey: 'auxiliaryVerbsBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateAuxiliaryVerbQuiz(level),
-    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'auxiliary verbs'),
+    backLink: '#/category/auxiliary-verbs',
     topics: curriculum.find(c => c.id === 'auxiliary-verbs')?.topics || []
   });
 };

@@ -1,5 +1,6 @@
 
-import { generateSentencePatternQuiz, generateAIQuiz } from '../../logic/curriculum/sentencePatterns/quizGenerator.js';
+import { generateSentencePatternQuiz } from '../../logic/curriculum/sentencePatterns/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { createPatternDiagram } from '../components/patternDiagrams.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum/index.js';
@@ -112,8 +113,8 @@ export const Summary5Patterns = () => {
     storageKey: 'summaryBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateSentencePatternQuiz(level, false),
-    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'sentence patterns'),
+    backLink: '#/category/sentence-patterns',
     topics: curriculum.find(c => c.id === 'sentence-patterns')?.topics || []
   });
 };

@@ -108,6 +108,9 @@ export const createResultModal = (score, onClose) => {
   closeBtn.onclick = () => {
     overlay.style.animation = 'fadeOut 0.3s ease-out';
     setTimeout(() => {
+      if (overlay.parentNode) {
+        overlay.parentNode.removeChild(overlay);
+      }
       onClose();
     }, 300);
   };

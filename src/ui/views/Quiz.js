@@ -72,11 +72,14 @@ export const Quiz = (topic) => {
 
       const backBtn = document.createElement('button');
       backBtn.className = 'btn btn-primary';
-      backBtn.textContent = 'レッスン選択に戻る';
+      backBtn.textContent = 'レッスン一覧に戻る';
       backBtn.onclick = () => {
         // Determine category based on topic ID
         if (topic.id.startsWith('pattern-')) navigate('/category/sentence-patterns');
         else if (topic.id.startsWith('pos-')) navigate('/category/parts-of-speech');
+        else if (topic.id.startsWith('tense-')) navigate('/category/tenses');
+        else if (topic.id.startsWith('aux-')) navigate('/category/auxiliary-verbs');
+        else if (topic.id.startsWith('passive-')) navigate('/category/passive-voice');
         else navigate('/dashboard');
       };
 

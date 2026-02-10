@@ -1,4 +1,5 @@
-import { generateTenseQuiz, generateAIQuiz } from '../../logic/curriculum/tenses/quizGenerator.js';
+import { generateTenseQuiz } from '../../logic/curriculum/tenses/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -97,8 +98,8 @@ export const SummaryTenses = () => {
     storageKey: 'tensesBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateTenseQuiz(level, false),
-    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'tenses'),
+    backLink: '#/category/tenses',
     topics: curriculum.find(c => c.id === 'tenses')?.topics || []
   });
 };

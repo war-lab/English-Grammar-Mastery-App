@@ -1,104 +1,181 @@
-// Gemini AI Service for Generic Table/JSON Generation
+// Gemini AI Service for Question Generation
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import configData from '../config.json';
+import * as sentencePatterns from './gemini/prompts/sentencePatterns.js';
+import * as partsOfSpeech from './gemini/prompts/partsOfSpeech.js';
+import * as tenses from './gemini/prompts/tenses.js';
+import * as auxiliaryVerbs from './gemini/prompts/auxiliaryVerbs.js';
+import * as passiveVoice from './gemini/prompts/passiveVoice.js';
+import * as variousExpressions from './gemini/prompts/variousExpressions.js';
 
 // Configuration with environment variable override support
-const GEMINI_API_URL = import.meta.env.VITE_GEMINI_API_URL || configData.geminiApiUrl;
+const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || configData.geminiModel || 'gemini-1.5-flash';
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || configData.apiKey;
 
+// Initialize the Google Generative AI client
+let genAI = null;
+if (GEMINI_API_KEY && GEMINI_API_KEY !== '' && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE') {
+  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+}
+
+// Question Pool Cache
+// Structure: { 'context_key': [questionObject, ...] }
+const questionPool = {};
+
 /**
- * Generates content using Google Gemini API.
- * This service is generic and does NOT contain lesson-specific logic.
+ * Generates an AI question based on level and context.
+ * Implements batching optimization: fetches 5 questions at a time.
  *
- * @param {Object} options
- * @param {string} options.prompt - The user prompt.
- * @param {string} [options.systemInstruction] - Optional system instruction.
- * @param {string} [options.model] - Model name (default: gemini-1.5-flash).
- * @param {number} [options.temperature] - Randomness (0.0 - 2.0).
- * @param {string} [options.responseMimeType] - Expected response type (e.g. 'application/json').
- * @param {AbortSignal} [options.signal] - Signal to abort the request.
- * @returns {Promise<Object>} - Parsed JSON response.
+ * @param {number} level - Difficulty level (1-10).
+ * @param {string} context - The learning context.
+ * @returns {Promise<Object>} - The generated quiz object.
  */
-export const generateQuiz = async ({
-  prompt,
-  systemInstruction,
-  model = 'gemini-1.5-flash',
-  temperature = 1.0,
-  responseMimeType = 'application/json',
-  signal
-}) => {
-  // Check if API key is configured
-  if (!GEMINI_API_KEY || GEMINI_API_KEY === '' || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
+export const generateAIQuestion = async (level, context) => {
+  if (!genAI) {
     throw new Error('API_KEY_NOT_CONFIGURED');
   }
 
+  const poolKey = getPoolKey(context);
+
+  // Initialize pool if needed
+  if (!questionPool[poolKey]) {
+    questionPool[poolKey] = [];
+  }
+
+  // If pool is empty, fetch a new batch
+  if (questionPool[poolKey].length === 0) {
+    await fetchQuestionBatch(level, context, poolKey);
+  }
+
+  // Return a question from the pool
+  if (questionPool[poolKey].length > 0) {
+    return questionPool[poolKey].pop();
+  } else {
+    throw new Error('Failed to generate questions');
+  }
+};
+
+/**
+ * Fetches specific prompts and updates the pool.
+ */
+const fetchQuestionBatch = async (level, context, poolKey) => {
+  const prompt = selectPromptStrategy(level, context);
+
   try {
-    const requestBody = {
-      contents: [{
-        parts: [{ text: prompt }]
-      }],
-      generationConfig: {
-        temperature: temperature,
-        responseMimeType: responseMimeType,
-      }
+    const responseData = await callGeminiAPI({ prompt });
+
+    if (responseData.quizData && Array.isArray(responseData.quizData)) {
+      // Push all 5 questions to the pool
+      // We shuffle them just in case, though the AI usually randomizes
+      const shuffled = responseData.quizData.sort(() => 0.5 - Math.random());
+      questionPool[poolKey].push(...shuffled);
+      console.log(`[GeminiService] Refilled pool for ${poolKey}. Count: ${questionPool[poolKey].length}`);
+    }
+    else if (responseData.question) {
+      // Handle single question fallback (legacy support or prompt error)
+      questionPool[poolKey].push(responseData);
+    }
+    else {
+      console.error('Invalid Response:', responseData);
+      throw new Error('Invalid AI Response Format');
+    }
+  } catch (error) {
+    console.error('Batch Fetch Error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Normalizes context to a key.
+ */
+const getPoolKey = (context) => {
+  const ctx = context.toLowerCase();
+  if (ctx.includes('sentence patterns')) return 'sentence_patterns';
+  if (ctx.includes('parts of speech')) return 'parts_of_speech';
+  if (ctx.includes('tenses')) return 'tenses';
+  if (ctx.includes('auxiliary')) return 'auxiliary';
+  if (ctx.includes('passive')) return 'passive';
+  if (ctx.includes('various')) return 'various';
+  return 'default';
+};
+
+/**
+ * Selects the appropriate prompt generation strategy based on context.
+ */
+const selectPromptStrategy = (level, context) => {
+  const ctx = context.toLowerCase();
+
+  if (ctx.includes('sentence patterns')) {
+    return sentencePatterns.generatePrompt(level);
+  }
+  else if (ctx.includes('parts of speech')) {
+    return partsOfSpeech.generatePrompt(level);
+  }
+  else if (ctx.includes('tenses') || ctx.includes('verb tenses')) {
+    return tenses.generatePrompt(level);
+  }
+  else if (ctx.includes('auxiliary') || ctx.includes('modal')) {
+    return auxiliaryVerbs.generatePrompt(level);
+  }
+  else if (ctx.includes('passive')) {
+    return passiveVoice.generatePrompt(level);
+  }
+  else if (ctx.includes('various') || ctx.includes('expressions')) {
+    return variousExpressions.generatePrompt(level);
+  }
+  else {
+    return `Generate 5 English grammar questions suitable for level ${level}/10. 
+Context: ${context}. Return ONLY JSON with key "quizData".`;
+  }
+};
+
+/**
+ * Low-level function to call Gemini API.
+ */
+export const callGeminiAPI = async ({
+  prompt,
+  model = GEMINI_MODEL,
+  temperature = 1.0,
+}) => {
+  try {
+    const modelInstance = genAI.getGenerativeModel({ model });
+
+    const generationConfig = {
+      temperature,
+      topK: 40,
+      topP: 0.95,
+      maxOutputTokens: 8192, // Increased for batch response
+      responseMimeType: "application/json",
     };
 
-    if (systemInstruction) {
-      requestBody.systemInstruction = {
-        parts: [{ text: systemInstruction }]
-      };
-    }
-
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-      signal: signal
+    const result = await modelInstance.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      // Throw specific error for rate limits to allow upper layers to decide on retry
-      if (response.status === 429) {
-        throw new Error('RATE_LIMIT_EXCEEDED');
-      }
-      throw new Error(`Gemini API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
-    }
+    const response = await result.response;
+    const text = response.text();
 
-    const data = await response.json();
-
-    // Safety check for empty candidates
-    if (!data.candidates || data.candidates.length === 0 || !data.candidates[0].content) {
-      throw new Error('Empty response from Gemini');
-    }
-
-    const generatedText = data.candidates[0].content.parts[0].text;
-
-    // Robust JSON Extraction
-    // Find the first '{' and the last '}' to handle any preamble/postscript text
-    const firstBrace = generatedText.indexOf('{');
-    const lastBrace = generatedText.lastIndexOf('}');
-
-    if (firstBrace === -1 || lastBrace === -1 || lastBrace < firstBrace) {
-      throw new Error('No valid JSON object found in response');
-    }
-
-    const jsonString = generatedText.substring(firstBrace, lastBrace + 1);
-
+    const jsonString = cleanJsonString(text);
     return JSON.parse(jsonString);
 
   } catch (error) {
-    if (error.name === 'AbortError') {
-      throw error; // Re-throw abort errors to be handled specifically
-    }
     console.error('Gemini Service Error:', error);
     throw error;
   }
 };
 
-// Deprecated wrapper for backward compatibility during migration
-// TODO: Remove after all consumers are updated
-export const generateAIQuestion = async () => {
-  throw new Error('generateAIQuestion is deprecated. Use generateQuiz instead.');
+const cleanJsonString = (text) => {
+  const firstBrace = text.indexOf('{');
+  const lastBrace = text.lastIndexOf('}');
+
+  if (firstBrace === -1 || lastBrace === -1 || lastBrace < firstBrace) {
+    throw new Error('No valid JSON object found in response');
+  }
+  return text.substring(firstBrace, lastBrace + 1);
+};
+
+// Aliases
+export const generateQuiz = async (options) => {
+  return await callGeminiAPI(options);
 };

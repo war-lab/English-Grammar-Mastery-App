@@ -1,4 +1,5 @@
-import { generatePOSQuiz, generateAIQuiz } from '../../logic/curriculum/partsOfSpeech/quizGenerator.js';
+import { generatePOSQuiz } from '../../logic/curriculum/partsOfSpeech/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum/index.js';
 
@@ -110,8 +111,8 @@ export const PartsOfSpeech = () => {
     storageKey: 'posBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generatePOSQuiz(level),
-    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
-    backLink: '#/',
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'parts of speech'),
+    backLink: '#/category/parts-of-speech',
     topics: posData.topics
   });
 };

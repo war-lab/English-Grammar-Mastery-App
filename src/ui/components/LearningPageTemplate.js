@@ -350,8 +350,13 @@ export const LearningPageTemplate = (config) => {
       </div>
     `).join('');
 
+    let questionHtml = currentQuiz.question;
+    if (currentQuiz.sentence) {
+      questionHtml += `<br><br><div style="font-size: 1.3rem; font-weight: bold; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; text-align: center;">${currentQuiz.sentence}</div>`;
+    }
+
     questionArea.innerHTML = `
-      <div class="quiz-question" style="white-space: pre-wrap; font-size: 1.1rem; line-height: 1.8;">${currentQuiz.question}</div>
+      <div class="quiz-question" style="white-space: pre-wrap; font-size: 1.1rem; line-height: 1.8;">${questionHtml}</div>
       <div class="quiz-radio-group">
         ${optionsHtml}
       </div>
@@ -475,11 +480,12 @@ export const LearningPageTemplate = (config) => {
       }
 
       setTimeout(() => {
-        createResultModal(streak, () => {
+        const modal = createResultModal(streak, () => {
           viewState = 'explanation';
           container.className = 'summary-container glass';
           render();
-        }).then(modal => document.body.appendChild(modal));
+        });
+        document.body.appendChild(modal);
       }, 2000);
     }
   };
