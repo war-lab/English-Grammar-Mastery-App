@@ -144,8 +144,12 @@ export const callGeminiAPI = async ({
       topK: 40,
       topP: 0.95,
       maxOutputTokens: 8192, // Increased for batch response
-      responseMimeType: "application/json",
     };
+
+    // Only set JSON mode for Gemini models (Gemma doesn't support it yet)
+    if (model.includes('gemini')) {
+      generationConfig.responseMimeType = "application/json";
+    }
 
     const result = await modelInstance.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
