@@ -2,21 +2,25 @@ import { getCommonInstructions } from './common.js';
 
 export const generatePrompt = (level) => {
   const commonInstructions = getCommonInstructions();
-  const types = ['pattern-id', 'fill-blank'];
-  const selectedType = types[Math.floor(Math.random() * types.length)];
 
   return `
-Generate 5 distinct English grammar questions focusing on Sentence Patterns (SV, SVC, SVO, SVOO, SVOC).
-Level: ${level}/10.
-Selected Type: ${selectedType}
+英語の「文型 (Sentence Patterns)」に関するクイズを5問生成してください。
+難易度レベル: ${level}/10.
 
 ${commonInstructions}
 
-Additional Constraints:
-- If 'pattern-id': Ask to identify the pattern of the given sentence (e.g. "Identify the sentence pattern"). Options: ["SV","SVC","SVO","SVOO","SVOC"].
-- If 'fill-blank': Ask to complete a sentence to match a specific pattern.
-- The 'sentence' field MUST be a complete, correct English sentence.
-  - For 'pattern-id', show the full sentence.
-  - For 'fill-blank', usage a blank (____).
+### 【文型カテゴリ専用の絶対命令】
+1. **文型判別問題の場合**:
+   - \`sentence\`: 判定の対象となる「完全な英文」を必ず入れてください。（例："He gave me a gift."）
+   - \`question\`: "**次の英文の文型を、SV, SVC, SVO, SVOO, SVOCの中から選びなさい。**" 
+   - \`options\`: ["SV", "SVC", "SVO", "SVOO", "SVOC"] から正解を含む4つ。
+   - \`explanation\`: その文のどの単語が S, V, O, C にあたるかを日本語で解説してください。
+
+2. **空所補充問題の場合**:
+   - \`sentence\`: 語句が抜けた英文（例："She ____ happy."）
+   - \`question\`: "次の文を[SVC]文型として完成させるのに、最も適切な語を選びなさい。"
+   - \`options\`: 文脈に合う英単語4つ。
+
+**【警告】**: \`sentence\`キーが欠落した問題は、クイズとして成立しません。必ず \`sentence\` に例文を入れてください。
 `;
 };
