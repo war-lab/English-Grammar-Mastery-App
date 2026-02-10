@@ -1,7 +1,7 @@
 // Reusable template for learning pages
 import { getCategoryProgress } from '../../logic/storage.js';
 import { createResultModal } from './ResultModal.js';
-import appConfig from '../../config.json';
+
 
 /**
  * Reusable template for learning pages
@@ -113,7 +113,7 @@ export const LearningPageTemplate = (config) => {
 
     if (config.topics) {
       const progress = getCategoryProgress(config.topics);
-      const debugUnlock = appConfig?.debug?.unlock100QuizMode || false;
+      const debugUnlock = import.meta.env.VITE_DEBUG_UNLOCK === 'true';
       isLocked = debugUnlock ? false : !progress.allCompleted;
       remainingLessons = progress.remaining;
     }

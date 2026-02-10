@@ -1,6 +1,5 @@
 // Gemini AI Service for Question Generation
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import configData from '../config.json';
 import * as sentencePatterns from './gemini/prompts/sentencePatterns.js';
 import * as partsOfSpeech from './gemini/prompts/partsOfSpeech.js';
 import * as tenses from './gemini/prompts/tenses.js';
@@ -9,8 +8,8 @@ import * as passiveVoice from './gemini/prompts/passiveVoice.js';
 import * as variousExpressions from './gemini/prompts/variousExpressions.js';
 
 // Configuration with environment variable override support
-const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || configData.geminiModel || 'gemini-1.5-flash';
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || configData.apiKey;
+const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-1.5-flash';
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 // Initialize the Google Generative AI client
 let genAI = null;
