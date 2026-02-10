@@ -1,5 +1,5 @@
 
-import { generatePassiveVoiceQuiz } from '../../logic/curriculum/passiveVoice/quizGenerator.js';
+import { generatePassiveVoiceQuiz, generateAIQuiz } from '../../logic/curriculum/passiveVoice/quizGenerator.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -55,8 +55,8 @@ export const SummaryPassiveVoice = () => {
     storageKey: 'passiveVoiceBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generatePassiveVoiceQuiz(level, false),
-    aiPromptContext: 'English passive voice (basics, future, perfect, auxiliary)',
-    backLink: '#/',
+    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
+    backLink: '#/category/passive-voice',
     topics: curriculum.find(c => c.id === 'passive-voice')?.topics || []
   });
 };

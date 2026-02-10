@@ -1,5 +1,5 @@
 
-import { generateAuxiliaryVerbQuiz } from '../../logic/curriculum/auxiliaryVerbs/quizGenerator.js';
+import { generateAuxiliaryVerbQuiz, generateAIQuiz } from '../../logic/curriculum/auxiliaryVerbs/quizGenerator.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -89,8 +89,8 @@ export const SummaryAuxiliaryVerbs = () => {
     storageKey: 'auxiliaryVerbsBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateAuxiliaryVerbQuiz(level),
-    aiPromptContext: 'English auxiliary verbs (can, could, will, would, must, should, may, might)',
-    backLink: '#/',
+    aiQuizGenerator: (level, signal) => generateAIQuiz(level, signal),
+    backLink: '#/category/auxiliary-verbs',
     topics: curriculum.find(c => c.id === 'auxiliary-verbs')?.topics || []
   });
 };

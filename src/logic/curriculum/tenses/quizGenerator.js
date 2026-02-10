@@ -1,3 +1,5 @@
+import { generateQuiz } from '../../geminiService.js';
+
 /**
  * 時制マスター用の100問クイズジェネレーター
  * @param {number} level - 問題のレベル (1-10)
@@ -15,24 +17,17 @@ export const generateTenseQuiz = (level = 1, isAIMode = false) => {
   let targetTense;
   let complexity = 1; // 1: Basic, 2: Intermediate, 3: Advanced
 
-  // --- AI Mode Logic ---
-  if (isAIMode) {
-    targetTense = tenses[Math.floor(Math.random() * tenses.length)].id;
-    complexity = 3; // Always max complexity
-  }
   // --- Granular Level Logic (1-10) ---
+  if (level === 1) targetTense = 'past';
+  else if (level === 2) targetTense = 'future';
+  else if (level === 3) targetTense = 'progressive';
+  else if (level === 4) targetTense = 'perfect';
   else {
-    if (level === 1) targetTense = 'past';
-    else if (level === 2) targetTense = 'future';
-    else if (level === 3) targetTense = 'progressive';
-    else if (level === 4) targetTense = 'perfect';
-    else {
-      // Levels 5-10: Mixed tenses, increasing complexity
-      targetTense = tenses[Math.floor(Math.random() * tenses.length)].id;
-      if (level <= 7) complexity = 1;
-      else if (level <= 9) complexity = 2;
-      else complexity = 3;
-    }
+    // Levels 5-10: Mixed tenses, increasing complexity
+    targetTense = tenses[Math.floor(Math.random() * tenses.length)].id;
+    if (level <= 7) complexity = 1;
+    else if (level <= 9) complexity = 2;
+    else complexity = 3;
   }
 
   const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -232,3 +227,58 @@ export const generateTenseQuiz = (level = 1, isAIMode = false) => {
     explanation
   };
 };
+
+// --- New AI Quiz Generator ---
+
+/**
+ * Generates an AI-powered quiz for Tenses.
+ * @param {number} level - Difficulty level (1-10).
+ * @param {AbortSignal} signal - Abort signal for cancellation.
+ * @returns {Promise<Object>} Quiz object.
+ */
+export const generateAIQuiz = async (level = 1, signal) => {
+  const types = ['tense-id', 'fill-blank-tense', 'rewrite-tense'];
+  const selectedType = types[Math.floor(Math.random() * types.length)];
+
+  let prompt = '';
+
+  if (selectedType === 'tense-id') {
+    prompt = `Generate 1 English sentence identifying its tense (Past, Future, Progressive, Perfect).
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の英文の時制を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "answer":"[Tense Label]", "options":["過去形 (Past Tense)","未来形 (Future Tense)","進行形 (Progressive Tense)","完了形 (Perfect Tense)"], "explanation":"[Concise explanation in Japanese]"}
+Note: The sentence must clearly demonstrate the target tense.`;
+  }
+  else if (selectedType === 'fill-blank-tense') {
+    prompt = `Generate 1 fill-in-the-blank question testing verb tenses.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文の（　）内の動詞を適切な形にして、空欄を埋めなさい（選択肢から選んでください）：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Verb Form]", "answer":"[Answer Verb Form]", "options":["[Form 1]","[Form 2]","[Form 3]","[Form 4]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Options should be different conjugations of the same verb (e.g. go, went, gone, going).`;
+  }
+  else if (selectedType === 'rewrite-tense') {
+    prompt = `Generate 1 tense rewrite question.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文を指定された時制に書き換えなさい：\\n\\n元の文: \\"[Original Sentence]\\"\\n指示: [Target Tense]にする", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original Sentence]", "targetTense":"[Target Tense]", "answer":"[Transformed Sentence]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Options should be full sentences. Ensure the transformation is logical.`;
+  }
+
+  const result = await generateQuiz({
+    prompt,
+    temperature: 0.8,
+    responseMimeType: 'application/json',
+    signal
+  });
+
+  // Validation
+  if (!result || typeof result !== 'object') throw new Error('Invalid response format');
+  if (!result.question || typeof result.question !== 'string') throw new Error('Missing question field');
+  if (!Array.isArray(result.options) || result.options.length < 2) throw new Error('Invalid options array');
+  if (!result.answer || !result.options.includes(result.answer)) throw new Error('Answer not found in options');
+
+  // Trim
+  result.question = result.question.trim();
+  result.answer = result.answer.trim();
+  result.options = result.options.map(o => o.trim()).filter(o => o.length > 0);
+
+  return result;
+};
+

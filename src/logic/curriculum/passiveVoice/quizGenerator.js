@@ -1,3 +1,5 @@
+import { generateQuiz } from '../../geminiService.js';
+
 export const generatePassiveVoiceQuiz = (level = 1, isAIMode = false) => {
   const templates = [
     {
@@ -81,4 +83,56 @@ export const generatePassiveVoiceQuiz = (level = 1, isAIMode = false) => {
     answer: t.a,
     explanation: t.exp
   };
+};
+
+/**
+ * Generates an AI-powered quiz for Passive Voice.
+ * @param {number} level - Difficulty level (1-10).
+ * @param {AbortSignal} signal - Abort signal for cancellation.
+ * @returns {Promise<Object>} Quiz object.
+ */
+export const generateAIQuiz = async (level = 1, signal) => {
+  const types = ['active-to-passive', 'passive-to-active', 'fill-blank-passive'];
+  const selectedType = types[Math.floor(Math.random() * types.length)];
+
+  let prompt = '';
+
+  if (selectedType === 'active-to-passive') {
+    prompt = `Generate 1 active-to-passive transformation question.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の能動態の文を受動態に書き換えなさい：\\n\\n能動態: \\"[Active Sentence]\\"\\n(意味: [Japanese Translation])", "japaneseTranslation":"[Japanese Translation]", "activeSentence":"[Active Sentence]", "answer":"[Passive Sentence]", "options":["[Passive Sentence]","[Wrong Opt1]","[Wrong Opt2]","[Wrong Opt3]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Check verb tense carefully.`;
+  }
+  else if (selectedType === 'passive-to-active') {
+    prompt = `Generate 1 passive-to-active transformation question.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の受動態の文を能動態に書き換えなさい：\\n\\n受動態: \\"[Passive Sentence]\\"\\n(意味: [Japanese Translation])", "japaneseTranslation":"[Japanese Translation]", "passiveSentence":"[Passive Sentence]", "answer":"[Active Sentence]", "options":["[Active Sentence]","[Wrong Opt1]","[Wrong Opt2]","[Wrong Opt3]"], "explanation":"[Concise explanation in Japanese]"}
+Note: If no agent (by ...) is present, use specific subjects like 'Someone', 'They', 'People'.`;
+  }
+  else if (selectedType === 'fill-blank-passive') {
+    prompt = `Generate 1 fill-in-the-blank question testing passive voice structure.
+Level: ${level}/10. Return ONLY JSON.
+Format: {"question":"次の文を受動態にするために、（　）内の動詞を適切な形にして空欄を埋めなさい（選択肢から選んでください）：\\n\\n\\"[Sentence Start] ___ [Sentence End] (base verb: [Verb])\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete Passive Sentence]", "blank":"[Answer Phrase]", "answer":"[Answer Phrase]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]"], "explanation":"[Concise explanation in Japanese]"}
+Note: Can include auxiliary verbs or progressive forms if level is high.`;
+  }
+
+  const result = await generateQuiz({
+    prompt,
+    temperature: 0.8,
+    responseMimeType: 'application/json',
+    signal
+  });
+
+  // Validation
+  if (!result || typeof result !== 'object') throw new Error('Invalid response format');
+  if (!result.question || typeof result.question !== 'string') throw new Error('Missing question field');
+  if (!Array.isArray(result.options) || result.options.length < 2) throw new Error('Invalid options array');
+  if (!result.answer || !result.options.includes(result.answer)) throw new Error('Answer not found in options');
+
+  // Trim
+  result.question = result.question.trim();
+  result.answer = result.answer.trim();
+  result.options = result.options.map(o => o.trim()).filter(o => o.length > 0);
+
+  return result;
 };
