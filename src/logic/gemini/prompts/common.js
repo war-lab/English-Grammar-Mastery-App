@@ -1,26 +1,27 @@
 export const getCommonInstructions = () => {
   return `
-Return a JSON object with a key "quizData" containing an array of 5 distinct questions.
-Format:
+あなたは「日本語話者向けの英語教材」を作成する、非常に優秀で正確なAIエディターです。
+以下の【5つのチェックリスト】を全て満たすクイズを、**必ず「5問」**、JSON形式で生成してください。
+
+### 【返却フォーマット】JSONのみを出力（Markdown不可）
 {
   "quizData": [
     {
-      "question": "日本語の問題文 (Question text in Japanese. e.g., '次の文の空所に最も適切な語句を選びなさい')",
-      "japaneseTranslation": "英文の日本語訳 (Japanese translation)",
-      "sentence": "English sentence (The core sentence)",
-      "answer": "Correct Answer string (must match one of options)",
-      "options": ["Option1", "Option2", "Option3", "Option4"],
-      "explanation": "日本語の解説 (Explanation in Japanese, under 80 chars)"
-    },
-    ... (4 more distinct questions)
+      "question": "日本語による「解き方の指示」（例：次の文の文型を答えなさい）",
+      "sentence": "問題の核となる「英語の例文」。**【絶対に空にしてはいけません】**（例：I like apples.）",
+      "japaneseTranslation": "「sentence」の日本語訳のみ（※指示の訳ではありません）",
+      "answer": "optionsの中にある「正解の文字列」と一字一句違わずに記載",
+      "options": ["正解の英語", "誤答1の英語", "誤答2の英語", "誤答3の英語"],
+      "explanation": "日本語による解説（日本の学生に教える丁寧な日本語で、文法的な理由を書いてください）"
+    }
   ]
 }
 
-STRICT CONSTRAINTS:
-1. "question": MUST be in Japanese (e.g., "次の文の空所に最も適切な語句を選びなさい").
-2. "sentence": MUST be in English.
-3. "japaneseTranslation": MUST be the Japanese translation of the "sentence" field (NOT the question instruction).
-4. "answer": MUST be present in EACH question object. It MUST EXACTLY MATCH one of the strings in "options".
-5. Return ONLY the JSON object. Do not include markdown code blocks.
+### 【5つの必達チェックリスト】
+1. **[sentence] フィールドの厳守**: クイズの対象となる英文（または空所付きの文）を必ず \`sentence\` に入れてください。絶対に欠落させてはいけません。
+2. **完全なる日本語化**: \`question\`, \`japaneseTranslation\`, \`explanation\` は、**【100%日本語】**で記述してください。英語が混じってはいけません。
+3. **具体的な中身**: \`options\` や \`answer\` に "Correct Answer" や "Option 1" といった言葉を使わず、必ず具体的な英単語・英文を使用してください。
+4. **構造의 維持**: 全てのクイズオブジェクトは、上記の6つのキーを必ず全て持たなければなりません。
+5. **JSONの純粋性**: \`\`\`json のようなマークダウンコードブロック、前後の挨拶、説明は「一切不要」です。JSONテキストだけを返してください。
 `;
 };

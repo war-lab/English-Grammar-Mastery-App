@@ -2,19 +2,20 @@ import { getCommonInstructions } from './common.js';
 
 export const generatePrompt = (level) => {
   const commonInstructions = getCommonInstructions();
-  const types = ['fill-blank', 'nuance-check'];
-  const selectedType = types[Math.floor(Math.random() * types.length)];
 
   return `
-Generate 5 distinct English grammar questions focusing on Auxiliary Verbs (can, could, will, would, must, should, may, might).
-Level: ${level}/10.
-Selected Type: ${selectedType}
+英語の「助動詞 (Auxiliary Verbs)」に関するクイズを5問生成してください。
+難易度レベル: ${level}/10.
 
 ${commonInstructions}
 
-Additional Constraints:
-- If 'fill-blank': Choose the best auxiliary verb for the context.
-- If 'nuance-check': Ask about the meaning (ability, permission, obligation, etc.).
-- Ensure options are confusing but have one clear best answer based on context.
+### 【このカテゴリの追加ルール】
+- can, must, should, may などの助動詞の使い分けを問う問題を作成してください。
+- 状況（能力、義務、許可、推量など）が明確に伝わる英文を作成してください。
+- 選択肢(options)には、意味の近い助動詞を混ぜて、文脈判断が必要な良問にしてください。
+
+- **重要**: プレースホルダは使用禁止です。具体的な英単語と英文を作成してください。
+- **言語**: 指示・翻訳・解説は100%日本語で書きなさい。
+- **構造**: \`sentence\` キーを絶対に欠落させないでください。
 `;
 };
