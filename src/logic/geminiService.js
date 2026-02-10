@@ -1,5 +1,12 @@
 // Gemini AI Service for Question Generation
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import configData from '../config.json';
+import * as sentencePatterns from './gemini/prompts/sentencePatterns.js';
+import * as partsOfSpeech from './gemini/prompts/partsOfSpeech.js';
+import * as tenses from './gemini/prompts/tenses.js';
+import * as auxiliaryVerbs from './gemini/prompts/auxiliaryVerbs.js';
+import * as passiveVoice from './gemini/prompts/passiveVoice.js';
+import * as variousExpressions from './gemini/prompts/variousExpressions.js';
 
 // Configuration with environment variable override support
 const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || configData.geminiModel || 'gemini-1.5-flash';
@@ -11,142 +18,164 @@ if (GEMINI_API_KEY && GEMINI_API_KEY !== '' && GEMINI_API_KEY !== 'YOUR_API_KEY_
   genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 }
 
+// Question Pool Cache
+// Structure: { 'context_key': [questionObject, ...] }
+const questionPool = {};
+
 /**
- * Generates content using Google Gemini API.
- * This service is generic and does NOT contain lesson-specific logic.
+ * Generates an AI question based on level and context.
+ * Implements batching optimization: fetches 5 questions at a time.
  *
- * @param {Object} options
- * @param {string} options.prompt - The user prompt.
- * @param {string} [options.systemInstruction] - Optional system instruction.
- * @param {string} [options.model] - Model name (default: gemini-1.5-flash).
- * @param {number} [options.temperature] - Randomness (0.0 - 2.0).
- * @param {string} [options.responseMimeType] - Expected response type (e.g. 'application/json').
- * @param {AbortSignal} [options.signal] - Signal to abort the request.
- * @returns {Promise<Object>} - Parsed JSON response.
+ * @param {number} level - Difficulty level (1-10).
+ * @param {string} context - The learning context.
+ * @returns {Promise<Object>} - The generated quiz object.
  */
-export const generateQuiz = async ({
-  prompt,
-  systemInstruction,
-  model = 'gemini-1.5-flash',
-  temperature = 1.0,
-  responseMimeType = 'application/json',
-  signal
-}) => {
-  // Check if API key is configured
+export const generateAIQuestion = async (level, context) => {
   if (!genAI) {
     throw new Error('API_KEY_NOT_CONFIGURED');
   }
 
-  let prompt = '';
-  let selectedType = 'random';
+  const poolKey = getPoolKey(context);
 
-  // Logic for Sentence Patterns
-  if (context.includes('sentence patterns')) {
-    const types = ['pattern-id', 'fill-blank', 'error-correction', 'transformation'];
-    selectedType = types[Math.floor(Math.random() * types.length)];
+  // Initialize pool if needed
+  if (!questionPool[poolKey]) {
+    questionPool[poolKey] = [];
+  }
 
-    if (selectedType === 'pattern-id') {
-      prompt = `Generate 1 English sentence using one of 5 patterns (SV, SVC, SVO, SVOO, SVOC).
-Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の英文の文型を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "answer":"[Pattern(SV/SVC/SVO/SVOO/SVOC)]", "options":["SV","SVC","SVO","SVOO","SVOC"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: The 'sentence' MUST be in English. Natural Japanese translation.`;
-    }
-    else if (selectedType === 'fill-blank') {
-      prompt = `Generate 1 fill-in-the-blank question using 5 patterns.
-Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Word (English)]", "answer":"[Answer Word (English)]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: The 'sentence' and options MUST be in English. Natural Japanese translation.`;
-    }
-    else if (selectedType === 'error-correction') {
-      prompt = `Generate 1 error correction question related to sentence patterns.
-Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文の誤りを訂正しなさい：\\n\\n\\"[Wrong English Sentence]\\"", "japaneseTranslation":"[Correct Japanese Translation]", "wrongSentence":"[Wrong English Sentence]", "correctSentence":"[Correct English Sentence]", "answer":"[Correct English Word/Phrase]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: The sentences and options MUST be in English. Natural Japanese translation.`;
-    }
-    else if (selectedType === 'transformation') {
-      prompt = `Generate 1 sentence pattern transformation question.
-Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文を指定された文型に書き換えなさい：\\n\\n元の文: \\"[Original English Sentence]\\"\\n目標文型: [Target Pattern]", "japaneseTranslation":"[Japanese Translation]", "originalSentence":"[Original English Sentence]", "targetPattern":"[Target Pattern]", "answer":"[Correct English Sentence]", "options":["[English Opt1]","[English Opt2]","[English Opt3]","[English Opt4]","[English Opt5]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: The sentences and options MUST be in English. Target pattern must be SV/SVC/SVO/SVOO/SVOC.`;
-    }
+  // If pool is empty, fetch a new batch
+  if (questionPool[poolKey].length === 0) {
+    await fetchQuestionBatch(level, context, poolKey);
   }
-  // Logic for Parts of Speech
-  else if (context.includes('parts of speech')) {
-    const types = ['identify-pos', 'fill-blank-pos'];
-    selectedType = types[Math.floor(Math.random() * types.length)];
 
-    if (selectedType === 'identify-pos') {
-      prompt = `Generate 1 question to identify the part of speech of a specific word in a sentence.
-Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文の [Target Word] の品詞を答えなさい：\\n\\n\\"[English Sentence]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[English Sentence]", "targetWord":"[Target Word]", "answer":"[Part of Speech (Noun/Verb/Adjective/Adverb/Preposition/Pronoun/Conjunction/Interjection)]", "options":["Noun","Verb","Adjective","Adverb","Preposition","Pronoun","Conjunction","Interjection"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: The sentence must be natural English.`;
-    }
-    else if (selectedType === 'fill-blank-pos') {
-      prompt = `Generate 1 fill-in-the-blank question focusing on parts of speech usage.
-Level: ${level}/10. Return ONLY JSON.
-Format: {"question":"次の文の空欄に入る最も適切な語を選びなさい：\\n\\n\\"[English Sentence with ___]\\"", "japaneseTranslation":"[Japanese Translation]", "sentence":"[Complete English Sentence]", "blank":"[Answer Word]", "answer":"[Answer Word]", "options":["[Opt1]","[Opt2]","[Opt3]","[Opt4]"], "explanation":"[Concise explanation in Japanese (under 80 chars)]"}
-Note: Focus on choosing the correct word form (e.g. noun vs adjective).`;
-    }
+  // Return a question from the pool
+  if (questionPool[poolKey].length > 0) {
+    return questionPool[poolKey].pop();
+  } else {
+    throw new Error('Failed to generate questions');
   }
-  else {
-    // Fallback or default
-    prompt = `Generate 1 simple English grammar question. Level: ${level}/10. Return ONLY JSON. Format: {"question":"...", "options":["..."], "answer":"...", "explanation":"..."}`;
-  }
+};
+
+/**
+ * Fetches specific prompts and updates the pool.
+ */
+const fetchQuestionBatch = async (level, context, poolKey) => {
+  const prompt = selectPromptStrategy(level, context);
 
   try {
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.8,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 2000,
-        }
-      })
+    const responseData = await callGeminiAPI({ prompt });
+
+    if (responseData.quizData && Array.isArray(responseData.quizData)) {
+      // Push all 5 questions to the pool
+      // We shuffle them just in case, though the AI usually randomizes
+      const shuffled = responseData.quizData.sort(() => 0.5 - Math.random());
+      questionPool[poolKey].push(...shuffled);
+      console.log(`[GeminiService] Refilled pool for ${poolKey}. Count: ${questionPool[poolKey].length}`);
+    }
+    else if (responseData.question) {
+      // Handle single question fallback (legacy support or prompt error)
+      questionPool[poolKey].push(responseData);
+    }
+    else {
+      console.error('Invalid Response:', responseData);
+      throw new Error('Invalid AI Response Format');
+    }
+  } catch (error) {
+    console.error('Batch Fetch Error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Normalizes context to a key.
+ */
+const getPoolKey = (context) => {
+  const ctx = context.toLowerCase();
+  if (ctx.includes('sentence patterns')) return 'sentence_patterns';
+  if (ctx.includes('parts of speech')) return 'parts_of_speech';
+  if (ctx.includes('tenses')) return 'tenses';
+  if (ctx.includes('auxiliary')) return 'auxiliary';
+  if (ctx.includes('passive')) return 'passive';
+  if (ctx.includes('various')) return 'various';
+  return 'default';
+};
+
+/**
+ * Selects the appropriate prompt generation strategy based on context.
+ */
+const selectPromptStrategy = (level, context) => {
+  const ctx = context.toLowerCase();
+
+  if (ctx.includes('sentence patterns')) {
+    return sentencePatterns.generatePrompt(level);
+  }
+  else if (ctx.includes('parts of speech')) {
+    return partsOfSpeech.generatePrompt(level);
+  }
+  else if (ctx.includes('tenses') || ctx.includes('verb tenses')) {
+    return tenses.generatePrompt(level);
+  }
+  else if (ctx.includes('auxiliary') || ctx.includes('modal')) {
+    return auxiliaryVerbs.generatePrompt(level);
+  }
+  else if (ctx.includes('passive')) {
+    return passiveVoice.generatePrompt(level);
+  }
+  else if (ctx.includes('various') || ctx.includes('expressions')) {
+    return variousExpressions.generatePrompt(level);
+  }
+  else {
+    return `Generate 5 English grammar questions suitable for level ${level}/10. 
+Context: ${context}. Return ONLY JSON with key "quizData".`;
+  }
+};
+
+/**
+ * Low-level function to call Gemini API.
+ */
+export const callGeminiAPI = async ({
+  prompt,
+  model = GEMINI_MODEL,
+  temperature = 1.0,
+}) => {
+  try {
+    const modelInstance = genAI.getGenerativeModel({ model });
+
+    const generationConfig = {
+      temperature,
+      topK: 40,
+      topP: 0.95,
+      maxOutputTokens: 8192, // Increased for batch response
+      responseMimeType: "application/json",
+    };
+
+    const result = await modelInstance.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('Gemini API Error Response:', errorData);
-      throw new Error(`Gemini API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
-    }
+    const response = await result.response;
+    const text = response.text();
 
-    const data = await response.json();
-    const generatedText = data.candidates[0].content.parts[0].text;
-
-    // Robust JSON Extraction
-    // Find the first '{' and the last '}' to handle any preamble/postscript text
-    const firstBrace = generatedText.indexOf('{');
-    const lastBrace = generatedText.lastIndexOf('}');
-
-    if (firstBrace === -1 || lastBrace === -1 || lastBrace < firstBrace) {
-      throw new Error('No valid JSON object found in response');
-    }
-
-    const jsonString = generatedText.substring(firstBrace, lastBrace + 1);
-
+    const jsonString = cleanJsonString(text);
     return JSON.parse(jsonString);
 
   } catch (error) {
-    if (error.name === 'AbortError') {
-      throw error; // Re-throw abort errors to be handled specifically
-    }
     console.error('Gemini Service Error:', error);
     throw error;
   }
 };
 
-// Deprecated wrapper for backward compatibility during migration
-// TODO: Remove after all consumers are updated
-export const generateAIQuestion = async () => {
-  throw new Error('generateAIQuestion is deprecated. Use generateQuiz instead.');
+const cleanJsonString = (text) => {
+  const firstBrace = text.indexOf('{');
+  const lastBrace = text.lastIndexOf('}');
+
+  if (firstBrace === -1 || lastBrace === -1 || lastBrace < firstBrace) {
+    throw new Error('No valid JSON object found in response');
+  }
+  return text.substring(firstBrace, lastBrace + 1);
+};
+
+// Aliases
+export const generateQuiz = async (options) => {
+  return await callGeminiAPI(options);
 };

@@ -1,5 +1,6 @@
 
 import { generateVariousExpressionsQuiz } from '../../logic/curriculum/variousExpressions/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
 import { curriculum } from '../../logic/curriculum.js';
 
@@ -89,7 +90,7 @@ export const SummaryVariousExpressions = () => {
     storageKey: 'variousExpressionsBestStreak',
     renderExplanationContent,
     generateQuiz: (level) => generateVariousExpressionsQuiz(level),
-    aiPromptContext: 'English various expressions (Imperative, Impersonal it, There is/are, Quantity expressions)',
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'various expressions'),
     backLink: '#/',
     topics: curriculum.find(c => c.id === 'various-expressions')?.topics || []
   });
