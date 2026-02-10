@@ -2,7 +2,7 @@
 import { navigate } from '../navigation.js';
 import { curriculum } from '../../logic/curriculum.js';
 import { getProgress, getCategoryProgress } from '../../logic/storage.js';
-import appConfig from '../../config.json';
+
 
 export const CategorySelection = (categoryId) => {
   const container = document.createElement('div');
@@ -35,7 +35,7 @@ export const CategorySelection = (categoryId) => {
 
   // Challenge Mode Button (if all completed or debug mode)
   const progress = getCategoryProgress(categoryData.topics);
-  const debugUnlock = appConfig?.debug?.unlock100QuizMode || false;
+  const debugUnlock = import.meta.env.VITE_DEBUG_UNLOCK === 'true';
   const showChallenge = debugUnlock || progress.allCompleted;
 
   if (showChallenge) {
