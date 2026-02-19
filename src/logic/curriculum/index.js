@@ -39,6 +39,12 @@ import { impersonalIt } from './variousExpressions/impersonalIt.js';
 import { thereIsConstruction } from './variousExpressions/thereIsConstruction.js';
 import { quantityExpressions } from './variousExpressions/quantityExpressions.js';
 
+import { whatWhich } from './questionWords/whatWhich.js';
+import { whoWhomWhose } from './questionWords/whoWhomWhose.js';
+import { whenWhere } from './questionWords/whenWhere.js';
+import { whyHow } from './questionWords/whyHow.js';
+import { tagNegativeQuestions } from './questionWords/tagNegativeQuestions.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -69,6 +75,11 @@ export const curriculum = [
     id: 'various-expressions',
     title: '色々な表現 (Various Expressions)',
     topics: [imperativeSentence, impersonalIt, thereIsConstruction, quantityExpressions]
+  },
+  {
+    id: 'question-words',
+    title: '疑問詞 (Question Words)',
+    topics: [whatWhich, whoWhomWhose, whenWhere, whyHow, tagNegativeQuestions]
   }
 ];
 
