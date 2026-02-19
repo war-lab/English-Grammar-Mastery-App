@@ -40,7 +40,19 @@ src/logic/curriculum/
     ├── mustShould.js           # must/should
     ├── mayMight.js             # may/might
     └── quizGenerator.js        # クイズ生成ユーティリティ
-```
+├── questionWords/              # 疑問詞カテゴリ
+│   ├── whatWhich.js            # What/Which
+│   ├── whoWhomWhose.js         # Who/Whom/Whose
+│   ├── whenWhere.js            # When/Where
+│   ├── whyHow.js               # Why/How
+│   ├── tagNegativeQuestions.js # 付加疑問・否定疑問
+│   └── quizGenerator.js        # クイズ生成ユーティリティ
+└── variousExpressions/         # 色々な表現カテゴリ
+    ├── imperativeSentence.js   # 命令文
+    ├── impersonalIt.js         # 非人称のit
+    ├── thereIsConstruction.js  # There is構文
+    ├── quantityExpressions.js  # 数量表現
+    └── quizGenerator.js        # クイズ生成ユーティリティ
 
 ---
 
@@ -385,6 +397,86 @@ for (let i = 1; i <= 10; i++) {
 
 - **品詞マスター**: [`partsOfSpeech/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/partsOfSpeech/quizGenerator.js) - テンプレート方式
 - **文型マスター**: [`sentencePatterns/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/sentencePatterns/quizGenerator.js) - データプール方式
+- **疑問詞マスター**: [`questionWords/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/questionWords/quizGenerator.js) - プール方式
+
+---
+
+## 🤖 AIクイズジェネレーターの実装 (AI Quiz Generator)
+
+Gemini 1.5 Flash を使用した、無限クイズ生成機能の実装手順です。
+
+### 1. プロンプトモジュールの作成
+
+`src/logic/gemini/prompts` ディレクトリに、新しいカテゴリ用のプロンプト生成モジュールを作成します。
+
+**ファイルパス**: `src/logic/gemini/prompts/newCategory.js`
+
+```javascript
+import { getCommonInstructions } from './common.js';
+
+export const generatePrompt = (level) => {
+  const commonInstructions = getCommonInstructions();
+  const topics = ['トピック1', 'トピック2']; // カテゴリ内のトピックリスト
+
+  return \`
+英語の「新しいカテゴリ」に関するクイズを5問生成してください。
+対象レベル: \${level}/10.
+
+\${commonInstructions}
+
+### 【このカテゴリ専用の絶対命令】
+- トピック1とトピック2からバランスよく出題してください。
+- \`sentence\` フィールドには、必ず「____」を含む問題文、または分析対象の英文を記述してください。絶対に空にしないでください。
+- \`explanation\` は日本の学生が理解できるよう、丁寧な日本語で「文法的なルール」を添えて書いてください。
+\`;
+};
+```
+
+**注意**: バッククォート (`) はテンプレートリテラル内で正しくエスケープするか、上記のようにそのまま使用してください。
+
+### 2. geminiService.js への登録
+
+`src/logic/geminiService.js` を編集し、新しいプロンプト戦略を登録します。
+
+1. **インポートの追加**:
+   ```javascript
+   import * as newCategory from './gemini/prompts/newCategory.js';
+   ```
+
+2. **プールキーの生成ロジック更新 (`getPoolKey` 関数)**:
+   ```javascript
+   const getPoolKey = (level, context) => {
+     // ...
+     if (ctx.includes('new category keyword')) return 'new_category'; // ユニークなキー
+     return 'default';
+   };
+   ```
+
+3. **プロンプト戦略の選択ロジック更新 (`selectPromptStrategy` 関数)**:
+   ```javascript
+   const selectPromptStrategy = (level, context) => {
+     // ...
+     else if (ctx.includes('new category keyword')) {
+       return newCategory.generatePrompt(level);
+     }
+     // ...
+   };
+   ```
+
+### 3. SummaryView での呼び出し
+
+各カテゴリのサマリー画面 (`SummaryNewCategory.js`) で、`generateAIQuestion` を呼び出す際に適切なコンテキスト（キーワード）を渡します。
+
+```javascript
+// SummaryNewCategory.js
+import { generateAIQuestion } from '../../logic/geminiService.js';
+
+// ...
+aiQuizGenerator: (level) => generateAIQuestion(level, 'new category keyword'),
+// ...
+```
+
+このキーワードが `geminiService.js` の `includes` 判定と一致する必要があります。
 
 
 

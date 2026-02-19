@@ -7,6 +7,7 @@ import iconPos from '../../assets/images/icon-pos.png';
 import iconAuxiliary from '../../assets/images/icon-auxiliary.png';
 import iconPassiveVoice from '../../assets/images/icon-passive-voice.png';
 import iconVarious from '../../assets/images/icon-various.png';
+import iconQuestionWords from '../../assets/images/icon-question-words.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -115,6 +116,20 @@ export const Home = () => {
     onChallengeClick: () => navigate('/summary/various-expressions')
   });
   courseGrid.appendChild(variousCard);
+
+  // 7. Question Words Card
+  const questionWordsData = curriculum.find(c => c.id === 'question-words');
+  const questionWordsCard = createCourseCard({
+    id: 'course-question-words',
+    image: iconQuestionWords, // TODO: Replace with dedicated icon-question-words.png
+    title: 'Question Words',
+    description: '5W1Hや付加疑問など、疑問文の基本をマスターしよう',
+    streakKey: 'questionWordsBestStreak',
+    topics: questionWordsData?.topics || [],
+    onClick: () => navigate('/category/question-words'),
+    onChallengeClick: () => navigate('/summary/question-words')
+  });
+  courseGrid.appendChild(questionWordsCard);
 
   container.appendChild(courseGrid);
 
