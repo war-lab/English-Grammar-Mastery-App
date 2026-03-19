@@ -8,6 +8,7 @@ import { PartsOfSpeech } from './views/PartsOfSpeech.js';
 import { SummaryPassiveVoice } from './views/SummaryPassiveVoice.js';
 import { SummaryVariousExpressions } from './views/SummaryVariousExpressions.js';
 import { SummaryQuestionWords } from './views/SummaryQuestionWords.js';
+import { SummaryComparisons } from './views/SummaryComparisons.js';
 import { CategorySelection } from './views/CategorySelection.js';
 import { getNavigationState } from './navigation.js';
 
@@ -22,7 +23,8 @@ const routes = {
   '/summary/parts-of-speech': PartsOfSpeech,
   '/summary/passive-voice': SummaryPassiveVoice,
   '/summary/various-expressions': SummaryVariousExpressions,
-  '/summary/question-words': SummaryQuestionWords
+  '/summary/question-words': SummaryQuestionWords,
+  '/summary/comparisons': SummaryComparisons
 };
 
 

@@ -8,6 +8,7 @@ import iconAuxiliary from '../../assets/images/icon-auxiliary.png';
 import iconPassiveVoice from '../../assets/images/icon-passive-voice.png';
 import iconVarious from '../../assets/images/icon-various.png';
 import iconQuestionWords from '../../assets/images/icon-question-words.png';
+import iconComparisons from '../../assets/images/icon-comparisons.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -130,6 +131,20 @@ export const Home = () => {
     onChallengeClick: () => navigate('/summary/question-words')
   });
   courseGrid.appendChild(questionWordsCard);
+
+  // 8. Comparisons Card
+  const comparisonsData = curriculum.find(c => c.id === 'comparisons');
+  const comparisonsCard = createCourseCard({
+    id: 'course-comparisons',
+    image: iconComparisons,
+    title: 'Comparisons',
+    description: '原級・比較級・最上級を使いこなし、比較表現を完全マスター',
+    streakKey: 'comparisonsBestStreak',
+    topics: comparisonsData?.topics || [],
+    onClick: () => navigate('/category/comparisons'),
+    onChallengeClick: () => navigate('/summary/comparisons')
+  });
+  courseGrid.appendChild(comparisonsCard);
 
   container.appendChild(courseGrid);
 
