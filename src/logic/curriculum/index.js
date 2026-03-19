@@ -45,6 +45,11 @@ import { whenWhere } from './questionWords/whenWhere.js';
 import { whyHow } from './questionWords/whyHow.js';
 import { tagNegativeQuestions } from './questionWords/tagNegativeQuestions.js';
 
+import { asAs } from './comparisons/asAs.js';
+import { comparative } from './comparisons/comparative.js';
+import { superlative } from './comparisons/superlative.js';
+import { comparativeQuestions } from './comparisons/comparativeQuestions.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -80,6 +85,11 @@ export const curriculum = [
     id: 'question-words',
     title: '疑問詞 (Question Words)',
     topics: [whatWhich, whoWhomWhose, whenWhere, whyHow, tagNegativeQuestions]
+  },
+  {
+    id: 'comparisons',
+    title: '比較表現 (Comparisons)',
+    topics: [asAs, comparative, superlative, comparativeQuestions]
   }
 ];
 

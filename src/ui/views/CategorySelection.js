@@ -63,6 +63,7 @@ export const CategorySelection = (categoryId) => {
       else if (categoryId === 'passive-voice') navigate('/summary/passive-voice');
       else if (categoryId === 'various-expressions') navigate('/summary/various-expressions');
       else if (categoryId === 'question-words') navigate('/summary/question-words');
+      else if (categoryId === 'comparisons') navigate('/summary/comparisons');
     };
 
     challengeContainer.appendChild(challengeTitle);
