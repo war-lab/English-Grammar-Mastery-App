@@ -1,687 +1,692 @@
 # レッスン構成ガイド - Lesson Structure Guide
 
-このドキュメントは、English Grammar Mastery Appに新しいレッスンを追加する際の包括的なガイドです。既存のレッスンと同じ構造を保つため、このドキュメントを参照してください。
+新しいレッスン・カテゴリを追加する際の包括的なガイドです。
+レッスンデータの作成からクイズ、エキスパートチャレンジ、AI問題生成プロンプトまで、一気通貫で対応できるよう設計されています。
 
 ---
 
-## 📁 ディレクトリ構造
+## 目次
 
-レッスンファイルは以下のディレクトリに配置されています：
-
-```
-src/logic/curriculum/
-├── index.js                    # カリキュラム全体のエントリーポイント
-├── partsOfSpeech/              # 品詞マスターカテゴリ
-│   ├── noun.js                 # 名詞
-│   ├── verb.js                 # 動詞
-│   ├── adjective.js            # 形容詞
-│   ├── adverb.js               # 副詞
-│   ├── preposition.js          # 前置詞
-│   ├── pronoun.js              # 代名詞
-│   ├── conjunction.js          # 接続詞
-│   ├── interjection.js         # 間投詞
-│   └── quizGenerator.js        # クイズ生成ユーティリティ
-├── sentencePatterns/           # 文型カテゴリ
-│   ├── sv.js                   # 第1文型
-│   ├── svc.js                  # 第2文型
-│   ├── svo.js                  # 第3文型
-│   ├── svoo.js                 # 第4文型
-│   ├── svoc.js                 # 第5文型
-│   └── quizGenerator.js        # クイズ生成ユーティリティ
-├── tenses/                     # 時制マスターカテゴリ
-│   ├── pastTense.js            # 過去形
-│   ├── futureTense.js          # 未来形
-│   ├── progressiveTense.js     # 進行形
-│   ├── perfectTense.js         # 完了形
-│   └── quizGenerator.js        # クイズ生成ユーティリティ
-└── auxiliaryVerbs/             # 助動詞カテゴリ
-    ├── canCould.js             # can/could
-    ├── willWould.js            # will/would
-    ├── mustShould.js           # must/should
-    ├── mayMight.js             # may/might
-    └── quizGenerator.js        # クイズ生成ユーティリティ
-├── questionWords/              # 疑問詞カテゴリ
-│   ├── whatWhich.js            # What/Which
-│   ├── whoWhomWhose.js         # Who/Whom/Whose
-│   ├── whenWhere.js            # When/Where
-│   ├── whyHow.js               # Why/How
-│   ├── tagNegativeQuestions.js # 付加疑問・否定疑問
-│   └── quizGenerator.js        # クイズ生成ユーティリティ
-└── variousExpressions/         # 色々な表現カテゴリ
-    ├── imperativeSentence.js   # 命令文
-    ├── impersonalIt.js         # 非人称のit
-    ├── thereIsConstruction.js  # There is構文
-    ├── quantityExpressions.js  # 数量表現
-    └── quizGenerator.js        # クイズ生成ユーティリティ
+1. [プロジェクト全体構造](#1-プロジェクト全体構造)
+2. [レッスンファイルの仕様](#2-レッスンファイルの仕様)
+3. [クイズジェネレーター（通常チャレンジ）](#3-クイズジェネレーター通常チャレンジ)
+4. [AIプロンプト設計（AIチャレンジ）](#4-aiプロンプト設計aiチャレンジ)
+5. [Summaryビュー（エキスパートチャレンジ画面）](#5-summaryビューエキスパートチャレンジ画面)
+6. [UI接続（ルーティング・ホーム画面）](#6-ui接続ルーティングホーム画面)
+7. [新カテゴリ追加：一気通貫チェックリスト](#7-新カテゴリ追加一気通貫チェックリスト)
+8. [既存カテゴリへのレッスン追加チェックリスト](#8-既存カテゴリへのレッスン追加チェックリスト)
+9. [コピー用テンプレート集](#9-コピー用テンプレート集)
+10. [スタイリング・CSSクラス一覧](#10-スタイリングcssクラス一覧)
+11. [ID命名規則一覧](#11-id命名規則一覧)
+12. [コミット規約](#12-コミット規約)
 
 ---
 
-## 📝 レッスンファイルの必須構造
+## 1. プロジェクト全体構造
 
-各レッスンファイルは以下のフィールドを持つオブジェクトをエクスポートする必要があります：
+```
+src/
+├── main.js                              # アプリエントリーポイント
+├── logic/
+│   ├── curriculum.js                    # カリキュラムの再エクスポート
+│   ├── geminiService.js                 # Gemini AI問題生成サービス
+│   ├── storage.js                       # localStorage管理
+│   ├── proficiency.js                   # レベル判定
+│   ├── curriculum/                      # === カリキュラムデータ ===
+│   │   ├── index.js                     # 全カテゴリの統合定義
+│   │   ├── sentencePatterns/            # 5つの文型 (5 topics)
+│   │   │   ├── sv.js, svc.js, svo.js, svoo.js, svoc.js
+│   │   │   └── quizGenerator.js
+│   │   ├── tenses/                      # 時制マスター (8 topics)
+│   │   │   ├── presentSimple.js, presentComparison.js,
+│   │   │   │   pastTense.js, pastComparison.js,
+│   │   │   │   progressiveTense.js, futureTense.js,
+│   │   │   │   perfectTense.js, presentPerfectProgressive.js
+│   │   │   └── quizGenerator.js
+│   │   ├── auxiliaryVerbs/              # 助動詞 (4 topics)
+│   │   │   ├── canCould.js, willWould.js, mustShould.js, mayMight.js
+│   │   │   └── quizGenerator.js
+│   │   ├── passiveVoice/                # 受動態 (4 topics)
+│   │   │   ├── basics.js, future.js, auxiliary.js, perfect.js
+│   │   │   └── quizGenerator.js
+│   │   ├── partsOfSpeech/               # 品詞マスター (8 topics)
+│   │   │   ├── noun.js, verb.js, adjective.js, adverb.js,
+│   │   │   │   preposition.js, pronoun.js, conjunction.js, interjection.js
+│   │   │   └── quizGenerator.js
+│   │   ├── variousExpressions/          # 色々な表現 (4 topics)
+│   │   │   ├── imperativeSentence.js, impersonalIt.js,
+│   │   │   │   thereIsConstruction.js, quantityExpressions.js
+│   │   │   └── quizGenerator.js
+│   │   └── questionWords/               # 疑問詞 (5 topics)
+│   │       ├── whatWhich.js, whoWhomWhose.js, whenWhere.js,
+│   │       │   whyHow.js, tagNegativeQuestions.js
+│   │       └── quizGenerator.js
+│   └── gemini/prompts/                  # === AIプロンプト定義 ===
+│       ├── common.js                    # 共通指示（全カテゴリ共有）
+│       ├── sentencePatterns.js
+│       ├── tenses.js
+│       ├── partsOfSpeech.js
+│       ├── auxiliaryVerbs.js
+│       ├── passiveVoice.js
+│       ├── variousExpressions.js
+│       └── questionWords.js
+├── ui/
+│   ├── router.js                        # ハッシュベースルーティング
+│   ├── navigation.js                    # ナビゲーション状態管理
+│   ├── components/
+│   │   ├── LearningPageTemplate.js      # エキスパートチャレンジ共通テンプレート
+│   │   ├── ResultModal.js               # スコア表示モーダル
+│   │   └── patternDiagrams.js           # 文型図表示
+│   └── views/
+│       ├── Home.js                      # ホーム画面（カテゴリカード一覧）
+│       ├── CategorySelection.js         # カテゴリ内レッスン一覧
+│       ├── Lesson.js                    # 個別レッスン表示
+│       ├── Quiz.js                      # 基本クイズ
+│       ├── Summary5Patterns.js          # 文型エキスパートチャレンジ
+│       ├── SummaryTenses.js             # 時制エキスパートチャレンジ
+│       ├── SummaryAuxiliaryVerbs.js     # 助動詞エキスパートチャレンジ
+│       ├── SummaryPassiveVoice.js       # 受動態エキスパートチャレンジ
+│       ├── PartsOfSpeech.js             # 品詞エキスパートチャレンジ
+│       ├── SummaryVariousExpressions.js # 表現エキスパートチャレンジ
+│       └── SummaryQuestionWords.js      # 疑問詞エキスパートチャレンジ
+└── assets/images/
+    └── icon-*.png                       # カテゴリアイコン画像
+```
 
-### 必須フィールド一覧
+### カリキュラム定義 (`src/logic/curriculum/index.js`)
 
-| フィールド | 型 | 説明 | 必須 |
-|----------|-----|------|------|
-| `id` | String | レッスンの一意な識別子 | ✅ |
-| `isEnabled` | Boolean | レッスンの有効/無効状態 | ✅ |
-| `title` | String | レッスンのタイトル（日本語+英語） | ✅ |
-| `description` | String | レッスンの簡潔な説明 | ✅ |
-| `explanation` | String (HTML) | 詳細な説明（HTMLテンプレートリテラル） | ✅ |
-| `examples` | Array<String> | 例文のリスト | ✅ |
-| `quiz` | Array<Object> | クイズ問題の配列 | ✅ |
+```javascript
+export const curriculum = [
+  { id: 'sentence-patterns',    title: '5つの文型 (5 Sentence Patterns)',     topics: [...] },
+  { id: 'tenses',               title: '時制マスター (Verb Tenses)',           topics: [...] },
+  { id: 'auxiliary-verbs',      title: '助動詞 (Auxiliary Verbs)',             topics: [...] },
+  { id: 'passive-voice',        title: '受動態 (Passive Voice)',               topics: [...] },
+  { id: 'parts-of-speech',      title: '品詞マスター (Parts of Speech)',       topics: [...] },
+  { id: 'various-expressions',  title: '色々な表現 (Various Expressions)',     topics: [...] },
+  { id: 'question-words',       title: '疑問詞 (Question Words)',             topics: [...] },
+];
+```
 
 ---
 
-## 🏗️ フィールド詳細仕様
+## 2. レッスンファイルの仕様
 
-### 1. `id` (識別子)
+### 必須フィールド
 
-- **形式**: `'category-topic'` または `'category-pattern-topic'`
-- **命名規則**:
-  - 品詞: `'pos-{品詞名}'` 例: `'pos-noun'`, `'pos-verb'`
-  - 文型: `'sentence-pattern-{番号}-{パターン}'` 例: `'sentence-pattern-1-sv'`
-- **必須条件**: アプリ全体で一意である必要があります
+| フィールド | 型 | 説明 |
+|----------|-----|------|
+| `id` | String | アプリ全体で一意な識別子 |
+| `isEnabled` | Boolean | `true` で表示、`false` で非表示 |
+| `title` | String | レッスンタイトル |
+| `description` | String | 1〜2文の簡潔な説明 |
+| `explanation` | String (HTML) | 詳細な学習コンテンツ（HTMLテンプレートリテラル） |
+| `examples` | Array\<String\> | 例文リスト（5〜7個推奨） |
+| `quiz` | Array\<Object\> | クイズ問題の配列（4〜10問、推奨10問） |
 
-```javascript
-id: 'pos-noun',  // 品詞の例
-id: 'sentence-pattern-1-sv',  // 文型の例
-```
+### クイズ問題オブジェクトの構造
 
-### 2. `isEnabled` (有効化フラグ)
+| フィールド | 型 | 説明 |
+|----------|-----|------|
+| `question` | String | 問題文（日本語） |
+| `options` | Array\<String\> | 選択肢（**必ず4つ**） |
+| `answer` | String | 正解（**`options`内の文字列と完全一致**必須） |
+| `explanation` | String | 日本語の解説 |
 
-- **型**: `Boolean`
-- **用途**: レッスンの表示/非表示を制御
-- **デフォルト値**: `true`
-
-```javascript
-isEnabled: true,  // レッスンを表示
-```
-
-### 3. `title` (タイトル)
-
-- **形式**: `'日本語タイトル (English Title)'`
-- **推奨**: 簡潔で理解しやすい表現を使用
+### 実例（`questionWords/whatWhich.js` 抜粋）
 
 ```javascript
-title: '名詞 (Noun)',
-title: '第1文型 (SV) - Subject + Verb',
-```
+export const whatWhich = {
+  id: 'qw-what-which',
+  isEnabled: true,
+  title: 'What / Which の使い方',
+  description: '「何」「どれ」を尋ねる疑問詞の使い方と、主語・目的語の位置の入れ替わりを学びます。',
+  explanation: `
+    <div class="explanation-section">
+      <p>疑問詞は「何？」「誰？」「いつ？」のように、<strong>具体的な情報を尋ねる</strong>ための言葉です。</p>
 
-### 4. `description` (簡潔な説明)
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">What（何）</h3>
 
-- **長さ**: 1〜2文程度
-- **内容**: レッスンの核心を簡潔に説明
-
-```javascript
-description: '人、物、場所、概念などの名前を表す言葉です。',
-description: '主語と動詞だけで完結する文型。目的語も補語もない構造です。',
-```
-
-### 5. `explanation` (詳細説明 - HTML)
-
-HTMLテンプレートリテラルを使用した詳細な学習コンテンツです。
-
-#### 推奨される構造:
-
-```javascript
-explanation: `
-  <div class="explanation-section">
-    <p>導入部分：レッスンの概要</p>
-    
-    <div class="diagram-container">
-      <!-- 図解・ダイアグラム -->
-    </div>
-
-    <h3 class="section-title">セクションタイトル</h3>
-    
-    <div class="concept-box">
-      <h4>コンセプト見出し</h4>
-      <p>説明文</p>
-      <div class="example-grid">
-        <!-- 例の表示 -->
+      <div class="concept-box">
+        <h4>🔍 目的語を尋ねる What</h4>
+        <p>元の文の<strong>目的語</strong>を What に置き換え、文頭に移動させます。</p>
+        <div class="example-grid">
+          <div class="example-item"><strong>You like cats.</strong><br>→ <strong>What do you like?</strong><br>（何が好きですか？）</div>
+        </div>
       </div>
+
+      <div class="example-box">
+        <p class="example-sentence">What do you do on weekends?</p>
+        <p class="example-breakdown"><span class="tag">What</span> <span class="tag v-tag">do</span> <span class="tag s-tag">you</span> <span class="tag v-tag">do</span> on weekends?</p>
+        <p class="example-translation">週末は何をしますか？</p>
+        <p class="example-note">最初のdoは疑問文を作るためのdo、2つ目のdoは「する」という動詞です。</p>
+      </div>
+
+      <ul class="check-list">
+        <li>✓ <strong>What</strong> = 広い範囲で「何？」と尋ねる</li>
+        <li>✓ <strong>Which</strong> = 限られた選択肢から「どれ？」と尋ねる</li>
+      </ul>
     </div>
-
-    <div class="example-box">
-      <p class="example-sentence">例文</p>
-      <p class="example-breakdown">文の分解</p>
-      <p class="example-translation">日本語訳</p>
-      <p class="example-note">注釈</p>
-    </div>
-
-    <h3 class="section-title">覚えておくべきポイント</h3>
-    <ul class="check-list">
-      <li>✓ ポイント1</li>
-      <li>✓ ポイント2</li>
-    </ul>
-  </div>
-`,
+  `,
+  examples: [
+    'What do you like? — I like cats.',
+    'What time does the meeting start?',
+    'Which would you like, coffee or tea?',
+  ],
+  quiz: [
+    {
+      question: '「あなたは何が好きですか？」を英語で表すと？',
+      options: ['What do you like?', 'What you like?', 'What are you like?', 'What did you like?'],
+      answer: 'What do you like?',
+      explanation: '目的語を尋ねるWhatの疑問文は「What + do/does + 主語 + 動詞の原形」の語順です。'
+    },
+    // ... 他の問題
+  ]
+};
 ```
-
-#### 使用可能なCSSクラス:
-
-| クラス名 | 用途 |
-|---------|------|
-| `explanation-section` | 全体のコンテナ |
-| `section-title` | セクション見出し |
-| `diagram-container` | 図解コンテナ |
-| `diagram-box` | 図解のボックス要素 |
-| `diagram-arrow` | 矢印や接続要素 |
-| `diagram-operator` | 演算子（例: `=`） |
-| `diagram-example` | 図解の例文 |
-| `concept-box` | コンセプトボックス |
-| `example-box` | 例文ボックス |
-| `example-grid` | グリッドレイアウト |
-| `example-item` | グリッド内の項目 |
-| `example-sentence` | 英語例文 |
-| `example-breakdown` | 文の構造分解 |
-| `example-translation` | 日本語訳 |
-| `example-note` | 注釈・補足 |
-| `check-list` | チェックリスト |
-| `tag`, `s-tag`, `v-tag`, `c-tag`, `o-tag`, `m-tag` | 品詞/要素タグ |
-
-### 6. `examples` (例文リスト)
-
-- **型**: `Array<String>`
-- **推奨数**: 5〜7個
-- **内容**: レッスンで学んだ内容を示す簡潔な例文
-
-```javascript
-examples: [
-  'apple',
-  'Tokyo',
-  'happiness',
-  'water',
-  'student'
-],
-```
-
-### 7. `quiz` (クイズ問題配列)
-
-各クイズ問題は以下の構造を持つオブジェクトです：
-
-#### クイズ問題オブジェクトの構造:
-
-| フィールド | 型 | 説明 | 必須 |
-|----------|-----|------|------|
-| `question` | String | 問題文（日本語） | ✅ |
-| `options` | Array<String> | 選択肢（4つ推奨） | ✅ |
-| `answer` | String | 正解（optionsの中の1つと完全一致） | ✅ |
-| `explanation` | String | 解説（日本語） | ✅ |
-
-#### クイズ問題の例:
-
-```javascript
-quiz: [
-  {
-    question: '次のうち、名詞はどれですか？',
-    options: ['run', 'happy', 'apple', 'quickly'],
-    answer: 'apple',
-    explanation: '「apple（りんご）」は物の名前を表す名詞です。run（走る）は動詞、happy（幸せな）は形容詞、quickly（速く）は副詞です。'
-  },
-  {
-    question: '不可算名詞（数えられない名詞）はどれですか？',
-    options: ['book', 'water', 'pen', 'dog'],
-    answer: 'water',
-    explanation: '「water（水）」は液体で数えられない不可算名詞です。book、pen、dogは形のあるものなので可算名詞です。'
-  },
-  // ... 8〜10問程度推奨
-]
-```
-
-#### クイズ作成のベストプラクティス:
-
-1. **問題数**: 1レッスンあたり4〜10問（推奨: 10問）
-2. **選択肢**: 各問題に4つの選択肢を用意
-3. **難易度**: 基礎→応用の順に配置
-4. **解説**: 正解だけでなく、他の選択肢が不正解である理由も説明
-5. **答えの形式**: `answer`は`options`配列内の文字列と**完全一致**する必要があります
 
 ---
 
-## � 100問クイズジェネレーター (オプション)
+## 3. クイズジェネレーター（通常チャレンジ）
 
-カテゴリ全体の理解度をテストする100問クイズを実装できます。これは**カテゴリごとに1つ**作成します。
+エキスパートチャレンジの「通常チャレンジ」モードで使用される、カテゴリごとのクイズ生成ロジックです。
+各カテゴリの `quizGenerator.js` に配置します。
 
-### quizGenerator.jsの配置
-
-カテゴリディレクトリ内に`quizGenerator.js`を作成します：
+### ファイル配置
 
 ```
-src/logic/curriculum/
-└── yourCategory/
-    ├── lesson1.js
-    ├── lesson2.js
-    ├── lesson3.js
-    └── quizGenerator.js  ← ここに配置
-```
-
-### quizGenerator.jsの構造
-
-クイズジェネレーターは、レベルに応じて動的に問題を生成する関数をエクスポートします：
-
-```javascript
-/**
- * カテゴリ用の100問クイズジェネレーター
- * @param {number} level - 問題のレベル (1-10)
- * @param {boolean} isAIMode - AIモード（最高難易度）
- * @returns {Object} 問題オブジェクト {question, options, answer, explanation (optional)}
- */
-export const generateYourCategoryQuiz = (level = 1, isAIMode = false) => {
-  // 問題プール、難易度ロジック、ランダム生成を実装
-  // ...
-  
-  return {
-    question: '問題文',
-    options: ['選択肢1', '選択肢2', '選択肢3', '選択肢4'],
-    answer: '正解の選択肢',
-    explanation: '解説（オプション）'
-  };
-};
+src/logic/curriculum/<カテゴリ名>/quizGenerator.js
 ```
 
 ### 実装パターン
 
-#### パターン1: テンプレート方式（品詞マスター方式）
+#### パターンA: プール方式（推奨・シンプル）
 
-文のテンプレートと単語プールを使って問題を生成します。
-
-**参考**: [`src/logic/curriculum/partsOfSpeech/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/partsOfSpeech/quizGenerator.js)
+全トピックの静的クイズをプールして出題する方式。
+**参考**: `questionWords/quizGenerator.js`, `variousExpressions/quizGenerator.js`
 
 ```javascript
-export const generatePOSQuiz = (level = 1) => {
-  // 1. 文のテンプレートを定義
-  const templates = [
-    {
-      structure: '{Pronoun} {Verb} {Adjective} {Noun}.',
-      words: {
-        Pronoun: ['I', 'You', 'He'],
-        Verb: ['have', 'want', 'like'],
-        Adjective: ['red', 'big', 'new'],
-        Noun: ['apples', 'cars', 'books']
+import { topicA } from './topicA.js';
+import { topicB } from './topicB.js';
+
+const allTopics = [topicA, topicB];
+
+/**
+ * 全レッスンのクイズ問題をまとめてシャッフルし返す。
+ * @param {number} count - 出題数（デフォルト100）
+ * @returns {Array<Object>} クイズ問題の配列
+ */
+export function generateQuiz(count = 100) {
+  const allQuestions = [];
+
+  for (const topic of allTopics) {
+    if (topic.quiz && Array.isArray(topic.quiz)) {
+      for (const q of topic.quiz) {
+        allQuestions.push({
+          ...q,
+          topicId: topic.id,
+          topicTitle: topic.title,
+        });
       }
     }
-    // ... 他のテンプレート
-  ];
-  
-  // 2. ランダムにテンプレートを選択
-  const template = templates[Math.floor(Math.random() * templates.length)];
-  
-  // 3. テンプレートから文を生成
-  let sentence = generateSentence(template);
-  
-  // 4. ターゲット単語を選び、その品詞を問う
-  const targetWord = selectRandomWord(sentence);
-  
-  return {
-    question: `次の文中の "${targetWord}" の品詞はどれですか？\n\n"${sentence}"`,
-    options: ['名詞', '動詞', '形容詞', '副詞'],
-    answer: '名詞',
-    explanation: `"${targetWord}" はこの文では名詞として使われています。`
-  };
-};
-```
-
-#### パターン2: データプール方式（文型マスター方式）
-
-レベルごとに用意したデータプールから問題を生成します。
-
-**参考**: [`src/logic/curriculum/sentencePatterns/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/sentencePatterns/quizGenerator.js)
-
-```javascript
-export const generateSentencePatternQuiz = (level = 1, isAIMode = false) => {
-  const patterns = ['SV', 'SVC', 'SVO', 'SVOO', 'SVOC'];
-  let targetPattern;
-  let complexity = 1; // 1: Basic, 2: Intermediate, 3: Advanced
-  
-  // レベルに応じて難易度とパターンを選択
-  if (level <= 5) {
-    targetPattern = patterns[level - 1]; // レベル1-5で各パターン
-    complexity = 1;
-  } else {
-    targetPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    complexity = level <= 7 ? 1 : (level <= 9 ? 2 : 3);
   }
-  
-  // 難易度に応じたデータプールを用意
-  const subjectsBasic = ['I', 'You', 'He', 'She'];
-  const subjectsAdvanced = ['The sudden noise', 'His explanation'];
-  
-  const subjects = complexity === 1 ? subjectsBasic : 
-                   [...subjectsBasic, ...subjectsAdvanced];
-  
-  // 文を生成
-  const question = generateSentenceByPattern(targetPattern, subjects);
-  
-  return {
-    question: `次の英文の文型を答えなさい：\n\n"${question}"`,
-    options: patterns,
-    answer: targetPattern
-  };
-};
-```
 
-### 難易度システムの実装
+  // Fisher-Yatesシャッフル
+  for (let i = allQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+  }
 
-100問クイズは通常、レベル1-10の難易度で問題を生成します：
+  // 問題数が足りない場合はループして埋める
+  const result = [];
+  while (result.length < count) {
+    const remaining = count - result.length;
+    result.push(...allQuestions.slice(0, Math.min(remaining, allQuestions.length)));
+    // 再シャッフル
+    for (let i = allQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+    }
+  }
 
-- **レベル1-5**: 各レッスンの基礎内容（レベル1 = レッスン1の内容）
-- **レベル6-7**: 混合問題、基礎的な難易度
-- **レベル8-9**: 混合問題、中級の難易度
-- **レベル10**: 混合問題、上級の難易度
-- **AIモード**: 最高難易度、全レッスンの内容をランダムに出題
-
-### 実装のベストプラクティス
-
-1. **ランダム性**: 同じレベルでも毎回異なる問題が出題されるようにする
-2. **難易度の漸進性**: レベルが上がるにつれて徐々に難しくなるようにする
-3. **バリエーション**: 十分な問題のバリエーションを用意する
-4. **文法の正確性**: 生成される文が文法的に正しいことを保証する
-5. **解説の生成**: 可能であれば、答えの解説も動的に生成する
-
-### クイズジェネレーターのテスト
-
-```javascript
-// テスト例
-for (let i = 1; i <= 10; i++) {
-  const quiz = generateYourCategoryQuiz(i);
-  console.log(`Level ${i}:`, quiz.question);
+  return result;
 }
 ```
 
-### 参考実装
+> **注意**: このパターンの `generateQuiz()` は**配列全体**を返す。Summaryビューでは `generateQuiz(level)` として呼ばれ、`LearningPageTemplate` 側で1問ずつ `pop()` するわけではなく、`config.generateQuiz(level)` として呼ばれた結果のオブジェクト（1問分）を直接使用する。
+> ただし、実装によっては配列を返すパターンと1問を返すパターンがある。Summaryビュー側の呼び出し形式に合わせること。
 
-詳細な実装例は以下を参照してください：
+#### パターンB: テンプレート方式
 
-- **品詞マスター**: [`partsOfSpeech/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/partsOfSpeech/quizGenerator.js) - テンプレート方式
-- **文型マスター**: [`sentencePatterns/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/sentencePatterns/quizGenerator.js) - データプール方式
-- **疑問詞マスター**: [`questionWords/quizGenerator.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/questionWords/quizGenerator.js) - プール方式
+レベルに応じたデータプールから動的に1問生成する方式。
+**参考**: `sentencePatterns/quizGenerator.js`, `partsOfSpeech/quizGenerator.js`
+
+```javascript
+export const generateQuiz = (level = 1) => {
+  // レベルに応じて難易度・トピック範囲を調整
+  // 1問分のオブジェクトを返す
+  return {
+    question: '問題文',
+    options: ['A', 'B', 'C', 'D'],
+    answer: 'B',
+    explanation: '解説'
+  };
+};
+```
+
+### 難易度設計の指針
+
+| レベル | 内容 |
+|--------|------|
+| 1〜5 | 各トピック個別の基礎問題 |
+| 6〜7 | 複数トピック混合、基礎難易度 |
+| 8〜9 | 混合問題、中級難易度 |
+| 10 | 全トピック混合、上級難易度 |
 
 ---
 
-## 🤖 AIクイズジェネレーターの実装 (AI Quiz Generator)
+## 4. AIプロンプト設計（AIチャレンジ）
 
-Gemini 1.5 Flash を使用した、無限クイズ生成機能の実装手順です。
+Gemini AIを使ってレベルに応じた問題を動的に生成する仕組みです。
 
-### 1. プロンプトモジュールの作成
+### アーキテクチャ概要
 
-`src/logic/gemini/prompts` ディレクトリに、新しいカテゴリ用のプロンプト生成モジュールを作成します。
+```
+SummaryView
+  → aiQuizGenerator(level, signal)
+    → geminiService.generateAIQuestion(level, context)
+      → questionPool にキャッシュがあれば pop() して返す
+      → なければ fetchQuestionBatch()
+        → selectPromptStrategy(level, context) でプロンプト取得
+        → callGeminiAPI({ prompt }) で Gemini API 呼び出し
+        → JSON解析 → quizData[5問] を questionPool にpush
+        → pop() で1問返す
+```
 
-**ファイルパス**: `src/logic/gemini/prompts/newCategory.js`
+**ポイント**:
+- 5問バッチ取得でAPI効率化
+- `context` 文字列で `geminiService.js` 内のルーティングが決まる
+- `getPoolKey()` と `selectPromptStrategy()` の両方にキーワードを登録する必要がある
+
+### 4-1. 共通指示 (`common.js`)
+
+全カテゴリで共有される基本ルールです。変更不要ですが、理解しておく必要があります。
+
+```
+【返却フォーマット】JSONのみを出力
+{
+  "quizData": [
+    {
+      "question":            "日本語による指示",
+      "sentence":            "問題の核となる英文（空所補充なら____を含む）",
+      "japaneseTranslation": "sentenceフィールドの日本語訳",
+      "answer":              "正解（options内の文字列と完全一致）",
+      "options":             ["正解", "誤答1", "誤答2", "誤答3"],
+      "explanation":         "日本語による丁寧な解説"
+    }
+  ]
+}
+
+【論理的整合性チェックリスト】
+1. answer ∈ options（完全一致）
+2. 具体的な英単語・英文で回答（"Option 1"等の抽象値は禁止）
+3. 文法的正確性を二重チェック
+4. question, japaneseTranslation, explanation は日本語のみ
+5. sentenceキーは絶対に欠落させない
+```
+
+### 4-2. カテゴリ専用プロンプトの作成
+
+**ファイル配置**: `src/logic/gemini/prompts/<カテゴリ名>.js`
+
+**実例（`questionWords.js`）**:
 
 ```javascript
 import { getCommonInstructions } from './common.js';
 
 export const generatePrompt = (level) => {
   const commonInstructions = getCommonInstructions();
-  const topics = ['トピック1', 'トピック2']; // カテゴリ内のトピックリスト
+  const topics = [
+    'What / Which（疑問詞の主語・目的語の使い分け）',
+    'Who / Whom / Whose（人を尋ねる疑問詞）',
+    'When / Where（時と場所の疑問詞）',
+    'Why / How（理由と方法の疑問詞）',
+    '付加疑問文・否定疑問文'
+  ];
 
-  return \`
-英語の「新しいカテゴリ」に関するクイズを5問生成してください。
-対象レベル: \${level}/10.
+  return `
+英語の「疑問詞 (${topics.join(', ')})」に関するクイズを5問生成してください。
+対象レベル: ${level}/10.
 
-\${commonInstructions}
+${commonInstructions}
 
 ### 【このカテゴリ専用の絶対命令】
-- トピック1とトピック2からバランスよく出題してください。
+- 5W1H（What, Who, When, Where, Why, How）、Which, Whom, Whose、付加疑問文、否定疑問文からバランスよく出題してください。
+- 疑問詞が主語になる場合（do/does不要）と目的語になる場合（do/does必要）の区別を含めてください。
+- What vs How の日本語との微妙なズレ（「どう思う？」→ What do you think of ~?）を出題に含めてください。
+- 否定疑問文・付加疑問文では、英語のYes/Noが事実ベースであること（日本語とのズレ）を問う問題を含めてください。
 - \`sentence\` フィールドには、必ず「____」を含む問題文、または分析対象の英文を記述してください。絶対に空にしないでください。
 - \`explanation\` は日本の学生が理解できるよう、丁寧な日本語で「文法的なルール」を添えて書いてください。
-\`;
+`;
 };
 ```
 
-**注意**: バッククォート (`) はテンプレートリテラル内で正しくエスケープするか、上記のようにそのまま使用してください。
+### 4-3. プロンプト設計のガイドライン
 
-### 2. geminiService.js への登録
+「カテゴリ専用の絶対命令」セクションには、以下を必ず含めること：
 
-`src/logic/geminiService.js` を編集し、新しいプロンプト戦略を登録します。
+1. **出題範囲の指定** — カテゴリ内のトピックからバランスよく出題する旨
+2. **学習者の間違いやすいポイント** — そのカテゴリ特有の罠を出題に含める指示
+3. **`sentence`フィールドの要件** — `____`（空所補充）or 分析対象の英文。空にしない
+4. **`explanation`の品質基準** — 日本の学生向け、文法ルールを添えた丁寧な解説
 
-1. **インポートの追加**:
-   ```javascript
-   import * as newCategory from './gemini/prompts/newCategory.js';
-   ```
+### 4-4. `geminiService.js` への登録（3箇所）
 
-2. **プールキーの生成ロジック更新 (`getPoolKey` 関数)**:
-   ```javascript
-   const getPoolKey = (level, context) => {
-     // ...
-     if (ctx.includes('new category keyword')) return 'new_category'; // ユニークなキー
-     return 'default';
-   };
-   ```
+新しいカテゴリのプロンプトを作成したら、`src/logic/geminiService.js` に以下3つの変更を加えます。
 
-3. **プロンプト戦略の選択ロジック更新 (`selectPromptStrategy` 関数)**:
-   ```javascript
-   const selectPromptStrategy = (level, context) => {
-     // ...
-     else if (ctx.includes('new category keyword')) {
-       return newCategory.generatePrompt(level);
-     }
-     // ...
-   };
-   ```
-
-### 3. SummaryView での呼び出し
-
-各カテゴリのサマリー画面 (`SummaryNewCategory.js`) で、`generateAIQuestion` を呼び出す際に適切なコンテキスト（キーワード）を渡します。
+#### (a) インポート追加
 
 ```javascript
-// SummaryNewCategory.js
-import { generateAIQuestion } from '../../logic/geminiService.js';
-
-// ...
-aiQuizGenerator: (level) => generateAIQuestion(level, 'new category keyword'),
-// ...
+import * as newCategory from './gemini/prompts/newCategory.js';
 ```
 
-このキーワードが `geminiService.js` の `includes` 判定と一致する必要があります。
-
-
-
-## �🎯 新規レッスン追加の手順
-
-### ステップ1: カテゴリを決定
-
-新しいレッスンがどのカテゴリに属するか決定します：
-- 既存カテゴリ（品詞、文型）
-- 新規カテゴリ（例: 時制、関係詞など）
-
-### ステップ2: ファイルを作成
-
-適切なディレクトリに新しいファイルを作成します：
-
-```bash
-# 品詞カテゴリの場合
-src/logic/curriculum/partsOfSpeech/newLesson.js
-
-# 文型カテゴリの場合
-src/logic/curriculum/sentencePatterns/newPattern.js
-
-# 新規カテゴリの場合
-src/logic/curriculum/newCategory/newLesson.js
-```
-
-### ステップ3: レッスンオブジェクトを定義
-
-テンプレートを使用してレッスンを作成します（後述の「テンプレート」セクション参照）。
-
-### ステップ4: index.jsに登録
-
-`src/logic/curriculum/index.js`を更新して新しいレッスンを登録します：
+#### (b) `getPoolKey()` にキーワード追加
 
 ```javascript
-// 1. インポート
-import { newLesson } from './category/newLesson.js';
+const getPoolKey = (context) => {
+  const ctx = context.toLowerCase();
+  // ... 既存のキー ...
+  if (ctx.includes('new keyword')) return 'new_category';
+  return 'default';
+};
+```
 
-// 2. カリキュラム配列に追加
-export const curriculum = [
-  {
-    id: 'existing-category',
-    title: 'カテゴリタイトル',
-    topics: [existingLesson1, existingLesson2, newLesson] // 追加
-  },
-  // または新規カテゴリ
-  {
-    id: 'new-category',
-    title: '新しいカテゴリ',
-    topics: [newLesson]
+#### (c) `selectPromptStrategy()` にルーティング追加
+
+```javascript
+const selectPromptStrategy = (level, context) => {
+  const ctx = context.toLowerCase();
+  // ... 既存の分岐 ...
+  else if (ctx.includes('new keyword')) {
+    return newCategory.generatePrompt(level);
   }
-];
+  // ...
+};
 ```
 
-### ステップ5: テスト
+### 4-5. 現在のキーワード↔プロンプト対応表
 
-- レッスンが正しく表示されるか確認
-- クイズが正常に動作するか確認
-- 説明文のHTMLレンダリングを確認
+| Summaryビューで渡す context | getPoolKey の返り値 | プロンプトファイル |
+|---------------------------|--------------------|--------------------|
+| `'sentence patterns'` | `sentence_patterns` | `sentencePatterns.js` |
+| `'parts of speech'` | `parts_of_speech` | `partsOfSpeech.js` |
+| `'tenses'` or `'verb tenses'` | `tenses` | `tenses.js` |
+| `'auxiliary'` or `'modal'` | `auxiliary` | `auxiliaryVerbs.js` |
+| `'passive'` | `passive` | `passiveVoice.js` |
+| `'various'` or `'expressions'` | `various` | `variousExpressions.js` |
+| `'question words'` | `question_words` | `questionWords.js` |
 
 ---
-      
-## 🖥️ 新しいカテゴリのUI実装 (UI Implementation for New Categories)
 
-カテゴリを純粋にデータとして追加するだけでなく、UI上でアクセス可能にするためには以下のステップが必要です。
+## 5. Summaryビュー（エキスパートチャレンジ画面）
 
-### ステップ1: サマリービュー（エキスパートチャレンジ画面）の作成
-`src/ui/views/Summary[CategoryName].js` を作成します。これは`SummaryTenses.js`などをコピーして修正するのが最も簡単です。
+各カテゴリのエキスパートチャレンジ画面を担当するビューコンポーネントです。
+全カテゴリで `LearningPageTemplate` を共通的に使用します。
+
+### `LearningPageTemplate` のAPI
 
 ```javascript
-/* src/ui/views/SummaryNewCategory.js */
+LearningPageTemplate({
+  title: String,                    // ページタイトル
+  subtitle: String,                 // サブタイトル
+  storageKey: String,               // localStorage用キー（ベストストリーク保存）
+  renderExplanationContent: Function, // () => HTML文字列
+  generateQuiz: Function,           // (level) => {question, options, answer, explanation}
+  aiQuizGenerator: Function,        // (level, signal?) => Promise<{question, sentence, ...}>
+  backLink: String,                 // 戻りリンク（通常 '#/'）
+  topics: Array                     // curriculum内のtopics配列（ロック判定に使用）
+})
+```
+
+### 実例（`SummaryQuestionWords.js` — 最も典型的なパターン）
+
+```javascript
+import { generateQuiz as generateQuestionWordsQuiz } from '../../logic/curriculum/questionWords/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
 import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
-import { generateNewCategoryQuiz } from '../../logic/curriculum/newCategory/quizGenerator.js';
-import { curriculum } from '../../logic/curriculum/index.js';
+import { curriculum } from '../../logic/curriculum.js';
 
-export const SummaryNewCategory = (context) => {
-  const categoryId = 'new-category';
-  const categoryData = curriculum.find(c => c.id === categoryId);
+export const SummaryQuestionWords = () => {
+  const renderExplanationContent = () => {
+    return `
+      <div class="summary-header">
+        <h2 class="section-title">✨ 疑問詞 完全攻略</h2>
+        <p class="summary-intro">5W1Hから付加疑問・否定疑問まで、疑問文の全パターンをマスターしましょう。</p>
+      </div>
 
-  // 説明コンテンツの定義
-  const renderExplanationContent = () => `
-    <div class="explanation-content">
-       <!-- カテゴリ全体の概要や学習のポイント -->
-       <h3>学習のポイント</h3>
-       <ul class="feature-list">
-         <li>ポイント1...</li>
-       </ul>
-    </div>
-  `;
+      <div class="patterns-grid">
+        <div class="pattern-explanation-card glass">
+          <div class="pattern-header">
+            <span class="pattern-badge">疑問詞 1</span>
+            <h3>What / Which</h3>
+          </div>
+          <p class="pattern-desc"><strong>「何」「どれ」を尋ねる</strong><br>...</p>
+          <div class="pattern-notes">
+            <div class="example-box">
+              <p class="example-sentence">What do you like?</p>
+              <p class="example-translation">何が好きですか？</p>
+            </div>
+          </div>
+        </div>
+        <!-- 各トピックのカードを並べる -->
+      </div>
+    `;
+  };
 
   return LearningPageTemplate({
-    context,
-    headerTitle: categoryData.title,
-    // ... 中略 ...
-    challengeMode: {
-      isEnabled: true, // エキスパートチャレンジを有効化
-      quizGenerator: (level, isAIMode) => generateNewCategoryQuiz(level, isAIMode),
-      totalQuestions: 100
-    }
+    title: '疑問詞 エキスパートチャレンジ',
+    subtitle: '5W1H・付加疑問・否定疑問をマスターしよう！',
+    storageKey: 'questionWordsBestStreak',
+    renderExplanationContent,
+    generateQuiz: (level) => generateQuestionWordsQuiz(level),
+    aiQuizGenerator: (level) => generateAIQuestion(level, 'question words'),
+    backLink: '#/',
+    topics: curriculum.find(c => c.id === 'question-words')?.topics || []
   });
 };
 ```
 
-### ステップ2: ルーティングの設定
-`src/ui/router.js` に新しいカテゴリのサマリー画面へのルートを追加します。
+### `renderExplanationContent` のHTML構造パターン
 
-```javascript
-/* src/ui/router.js */
-import { SummaryNewCategory } from './views/SummaryNewCategory.js';
+```html
+<div class="summary-header">
+  <h2 class="section-title">✨ カテゴリ名 完全攻略</h2>
+  <p class="summary-intro">概要説明テキスト</p>
+</div>
 
-const routes = {
-  // ...
-  '/summary/new-category': SummaryNewCategory, // 追加
-};
+<div class="patterns-grid">
+  <!-- トピックごとに1カード -->
+  <div class="pattern-explanation-card glass">
+    <div class="pattern-header">
+      <span class="pattern-badge">トピック 1</span>
+      <h3>トピック名</h3>
+    </div>
+    <p class="pattern-desc"><strong>見出し</strong><br>説明</p>
+    <div class="pattern-notes">
+      <div class="example-box">
+        <p class="example-sentence">English sentence.</p>
+        <p class="example-translation">日本語訳</p>
+      </div>
+      <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.05); border-radius: 0.5rem;">
+        <p style="font-size: 0.9rem; margin: 0;"><strong>注意:</strong> 注意点テキスト</p>
+      </div>
+    </div>
+  </div>
+</div>
 ```
-
-### ステップ3: ホーム画面 (ダッシュボード) への追加
-`src/ui/views/Home.js` を編集し、新しいカテゴリのカードを表示させます。
-
-```javascript
-/* src/ui/views/Home.js */
-// createCourseGrid関数内にて...
-
-// 新しいカテゴリのデータを取得
-const newCatData = curriculum.find(c => c.id === 'new-category');
-
-// カードを作成
-const newCatCard = createCourseCard({
-  id: 'course-new-category',
-  image: iconPath, // 適切なアイコン
-  title: 'New Category',
-  description: 'カテゴリの説明',
-  streakKey: 'newCategoryBestStreak', // ストリーク保存用のキー名
-  topics: newCatData?.topics || [],
-  
-  // 通常のレッスンリストへの遷移
-  onClick: () => navigate('/category/new-category'),
-  
-  // エキスパートチャレンジ（サマリー画面）への遷移
-  onChallengeClick: () => navigate('/summary/new-category')
-});
-
-courseGrid.appendChild(newCatCard);
-```
-
-### ステップ4: カテゴリ選択画面 (CategorySelection) の更新
-`src/ui/views/CategorySelection.js` 内の「エキスパートチャレンジ」ボタンの遷移ロジックに、新しいカテゴリへの分岐を追加します。
-
-```javascript
-/* src/ui/views/CategorySelection.js */
-// challengeBtn.onclick 内...
-
-challengeBtn.onclick = () => {
-  if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
-  else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
-  // ...
-  else if (categoryId === 'new-category') navigate('/summary/new-category'); // 追加
-};
-```
-
-### 必須確認項目
-- [ ] `Home.js`: `onChallengeClick` が設定されており、正しいパス (`/summary/...`) に遷移するか
-- [ ] `CategorySelection.js`: エキスパートチャレンジボタンの遷移先が追加されているか
-- [ ] `router.js`: そのパスに対応する View コンポーネントが登録されているか
-- [ ] `SummaryView`: クイズジェネレーターが正しくインポートされ、接続されているか
 
 ---
 
-## 📋 テンプレート
+## 6. UI接続（ルーティング・ホーム画面）
 
-### 基本テンプレート（コピー&ペーストして使用）
+### 6-1. ルーティング (`src/ui/router.js`)
 
 ```javascript
-export const lessonName = {
-  id: 'category-lesson-name',
+import { SummaryNewCategory } from './views/SummaryNewCategory.js';
+
+const routes = {
+  // ... 既存ルート ...
+  '/summary/new-category': SummaryNewCategory,  // 追加
+};
+```
+
+### 6-2. ホーム画面 (`src/ui/views/Home.js`)
+
+```javascript
+import iconNewCategory from '../../assets/images/icon-new-category.png';
+
+// Home関数内で...
+const newCatData = curriculum.find(c => c.id === 'new-category');
+const newCatCard = createCourseCard({
+  id: 'course-new-category',
+  image: iconNewCategory,
+  title: 'New Category',
+  description: 'カテゴリの日本語説明文',
+  streakKey: 'newCategoryBestStreak',
+  topics: newCatData?.topics || [],
+  onClick: () => navigate('/category/new-category'),
+  onChallengeClick: () => navigate('/summary/new-category')
+});
+courseGrid.appendChild(newCatCard);
+```
+
+### 6-3. カテゴリ選択画面 (`src/ui/views/CategorySelection.js`)
+
+エキスパートチャレンジボタンの遷移先に分岐を追加：
+
+```javascript
+challengeBtn.onclick = () => {
+  // ... 既存の分岐 ...
+  else if (categoryId === 'new-category') navigate('/summary/new-category');
+};
+```
+
+### 現在のルーティング対応表
+
+| カテゴリID | Summary ルート | Summaryビューファイル |
+|-----------|---------------|---------------------|
+| `sentence-patterns` | `/summary/5-sentence-patterns` | `Summary5Patterns.js` |
+| `tenses` | `/summary/tenses` | `SummaryTenses.js` |
+| `auxiliary-verbs` | `/summary/auxiliary-verbs` | `SummaryAuxiliaryVerbs.js` |
+| `passive-voice` | `/summary/passive-voice` | `SummaryPassiveVoice.js` |
+| `parts-of-speech` | `/summary/parts-of-speech` | `PartsOfSpeech.js` |
+| `various-expressions` | `/summary/various-expressions` | `SummaryVariousExpressions.js` |
+| `question-words` | `/summary/question-words` | `SummaryQuestionWords.js` |
+
+---
+
+## 7. 新カテゴリ追加：一気通貫チェックリスト
+
+新しいカテゴリを「ゼロから」追加する場合の全手順です。
+`{cat}` = カテゴリ名（例: `relativeClauses`）、`{cat-id}` = ケバブケース（例: `relative-clauses`）として読み替えてください。
+
+### Step 1: レッスンデータ
+
+- [ ] `src/logic/curriculum/{cat}/` ディレクトリを作成
+- [ ] 各トピックの `.js` ファイルを作成（[テンプレート](#9-1-レッスンファイルテンプレート)参照）
+- [ ] 各ファイルで `id`, `isEnabled`, `title`, `description`, `explanation`, `examples`, `quiz` を定義
+- [ ] `quiz` は最低4問、各問題に `options`（4つ）、`answer`（options内と完全一致）、`explanation` を含む
+
+### Step 2: カリキュラム登録
+
+- [ ] `src/logic/curriculum/index.js` にインポート追加
+- [ ] `curriculum` 配列に `{ id: '{cat-id}', title: '...', topics: [...] }` を追加
+
+### Step 3: クイズジェネレーター
+
+- [ ] `src/logic/curriculum/{cat}/quizGenerator.js` を作成（[テンプレート](#9-2-クイズジェネレーターテンプレート)参照）
+- [ ] `export function generateQuiz(...)` をエクスポート
+
+### Step 4: AIプロンプト
+
+- [ ] `src/logic/gemini/prompts/{cat}.js` を作成（[テンプレート](#9-3-aiプロンプトテンプレート)参照）
+- [ ] `getCommonInstructions()` をインポートし、カテゴリ固有の指示を追加
+- [ ] `src/logic/geminiService.js` の3箇所を更新:
+  - [ ] (a) `import * as {cat} from './gemini/prompts/{cat}.js';`
+  - [ ] (b) `getPoolKey()` にキーワード分岐を追加
+  - [ ] (c) `selectPromptStrategy()` にキーワード分岐を追加
+
+### Step 5: Summaryビュー
+
+- [ ] `src/ui/views/Summary{Cat}.js` を作成（[テンプレート](#9-4-summaryビューテンプレート)参照）
+- [ ] `renderExplanationContent()` でカテゴリの概要HTMLを定義
+- [ ] `LearningPageTemplate()` に正しいパラメータを渡す
+- [ ] `aiQuizGenerator` の `context` が `geminiService.js` のキーワードと一致するか確認
+
+### Step 6: UI接続
+
+- [ ] `src/ui/router.js` にインポート・ルートを追加
+- [ ] `src/ui/views/Home.js` にカテゴリカードを追加（アイコン画像も準備）
+- [ ] `src/ui/views/CategorySelection.js` のチャレンジボタン分岐に追加
+- [ ] `src/assets/images/icon-{cat}.png` アイコン画像を配置
+
+### Step 7: 動作確認
+
+- [ ] ホーム画面にカードが表示される
+- [ ] カテゴリ選択画面でレッスン一覧が表示される
+- [ ] 各レッスンの説明とクイズが正常に動作する
+- [ ] エキスパートチャレンジ（通常モード）が動作する
+- [ ] エキスパートチャレンジ（AIモード）が動作する
+- [ ] ストリーク記録が localStorage に保存される
+
+---
+
+## 8. 既存カテゴリへのレッスン追加チェックリスト
+
+既存カテゴリにトピックを追加するだけの場合（UIの変更は最小限）。
+
+- [ ] `src/logic/curriculum/{cat}/{newTopic}.js` を作成
+- [ ] `src/logic/curriculum/index.js` にインポート追加、`topics` 配列に追加
+- [ ] `src/logic/curriculum/{cat}/quizGenerator.js` に新トピックのインポート・allTopics配列への追加（プール方式の場合）
+- [ ] Summaryビューの `renderExplanationContent()` に新トピックのカードHTML追加
+- [ ] AIプロンプト (`src/logic/gemini/prompts/{cat}.js`) の `topics` 配列に新トピック名を追加
+- [ ] 動作確認
+
+---
+
+## 9. コピー用テンプレート集
+
+### 9-1. レッスンファイルテンプレート
+
+```javascript
+export const newTopic = {
+  id: '{category-prefix}-{topic-name}',
   isEnabled: true,
-  title: '日本語タイトル (English Title)',
-  description: 'レッスンの簡潔な説明をここに書きます。',
+  title: 'トピックタイトル',
+  description: 'トピックの簡潔な説明（1〜2文）。',
   explanation: `
     <div class="explanation-section">
-      <p>レッスンの導入部分をここに書きます。</p>
-      
-      <div class="diagram-container">
-        <div class="diagram-box" data-label="ラベル">内容</div>
-      </div>
+      <p>このレッスンでは〇〇を学びます。</p>
 
-      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">セクションタイトル</h3>
-      
+      <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">基本ルール</h3>
+
       <div class="concept-box">
-        <h4>コンセプト見出し</h4>
-        <p>説明文</p>
+        <h4>📝 コンセプト名</h4>
+        <p>説明テキスト</p>
         <div class="example-grid">
-          <div class="example-item"><strong>例1</strong> 説明</div>
-          <div class="example-item"><strong>例2</strong> 説明</div>
-          <div class="example-item"><strong>例3</strong> 説明</div>
+          <div class="example-item"><strong>Example 1.</strong><br>（日本語訳1）</div>
+          <div class="example-item"><strong>Example 2.</strong><br>（日本語訳2）</div>
+          <div class="example-item"><strong>Example 3.</strong><br>（日本語訳3）</div>
         </div>
+        <p style="margin-top: 1rem;"><strong>💡 ポイント：</strong>重要な補足説明</p>
       </div>
 
       <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">詳細な例文と解説</h3>
-      
+
       <div class="example-box">
-        <p class="example-sentence">Example sentence here.</p>
-        <p class="example-breakdown"><span class="tag s-tag">S</span> Subject <span class="tag v-tag">V</span> Verb</p>
-        <p class="example-translation">日本語訳</p>
-        <p class="example-note">補足説明</p>
+        <p class="example-sentence">The cat sits on the mat.</p>
+        <p class="example-breakdown"><span class="tag s-tag">S</span> The cat <span class="tag v-tag">V</span> sits on the mat.</p>
+        <p class="example-translation">猫がマットの上に座っている。</p>
+        <p class="example-note">sitsは三人称単数現在形です。</p>
       </div>
 
       <h3 class="section-title" style="font-size: 1.5rem; margin-top: 2rem;">覚えておくべきポイント</h3>
@@ -693,48 +698,195 @@ export const lessonName = {
     </div>
   `,
   examples: [
-    '例文1',
-    '例文2',
-    '例文3',
-    '例文4',
-    '例文5'
+    'Example sentence 1.',
+    'Example sentence 2.',
+    'Example sentence 3.',
+    'Example sentence 4.',
+    'Example sentence 5.'
   ],
   quiz: [
     {
-      question: '問題文をここに書きます',
-      options: ['選択肢1', '選択肢2', '選択肢3', '選択肢4'],
-      answer: '選択肢2',
-      explanation: '正解の理由と、他の選択肢が不正解である理由を説明します。'
+      question: '問題文（日本語）',
+      options: ['選択肢A', '選択肢B', '選択肢C', '選択肢D'],
+      answer: '選択肢B',
+      explanation: '選択肢Bが正解である理由。他の選択肢が不正解である理由も説明します。'
     },
     {
       question: '2問目の問題文',
       options: ['選択肢A', '選択肢B', '選択肢C', '選択肢D'],
-      answer: '選択肢C',
-      explanation: '解説文'
+      answer: '選択肢A',
+      explanation: '解説テキスト。'
     },
-    // ... 最低4問、推奨10問
+    {
+      question: '3問目の問題文',
+      options: ['選択肢A', '選択肢B', '選択肢C', '選択肢D'],
+      answer: '選択肢D',
+      explanation: '解説テキスト。'
+    },
+    {
+      question: '4問目の問題文',
+      options: ['選択肢A', '選択肢B', '選択肢C', '選択肢D'],
+      answer: '選択肢C',
+      explanation: '解説テキスト。'
+    },
+    // 推奨: 合計10問
   ]
+};
+```
+
+### 9-2. クイズジェネレーターテンプレート
+
+```javascript
+import { topicA } from './topicA.js';
+import { topicB } from './topicB.js';
+// 全トピックをインポート
+
+const allTopics = [topicA, topicB];
+
+/**
+ * カテゴリのクイズジェネレーター
+ * エキスパートチャレンジ用に全レッスンから問題をプールして出題する。
+ * @param {number} count - 出題数（デフォルト100）
+ * @returns {Array<Object>} クイズ問題の配列
+ */
+export function generateQuiz(count = 100) {
+  const allQuestions = [];
+
+  for (const topic of allTopics) {
+    if (topic.quiz && Array.isArray(topic.quiz)) {
+      for (const q of topic.quiz) {
+        allQuestions.push({
+          ...q,
+          topicId: topic.id,
+          topicTitle: topic.title,
+        });
+      }
+    }
+  }
+
+  // Fisher-Yatesシャッフル
+  for (let i = allQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+  }
+
+  const result = [];
+  while (result.length < count) {
+    const remaining = count - result.length;
+    result.push(...allQuestions.slice(0, Math.min(remaining, allQuestions.length)));
+    for (let i = allQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+    }
+  }
+
+  return result;
+}
+```
+
+### 9-3. AIプロンプトテンプレート
+
+```javascript
+import { getCommonInstructions } from './common.js';
+
+export const generatePrompt = (level) => {
+  const commonInstructions = getCommonInstructions();
+  const topics = [
+    'トピック1の説明',
+    'トピック2の説明',
+    'トピック3の説明',
+    'トピック4の説明'
+  ];
+
+  return `
+英語の「カテゴリ名 (${topics.join(', ')})」に関するクイズを5問生成してください。
+対象レベル: ${level}/10.
+
+${commonInstructions}
+
+### 【このカテゴリ専用の絶対命令】
+- ${topics.join('、')}からバランスよく出題してください。
+- このカテゴリ特有の間違いやすいポイント（例: 〇〇と△△の混同）を出題に含めてください。
+- \`sentence\` フィールドには、必ず「____」を含む問題文、または分析対象の英文を記述してください。絶対に空にしないでください。
+- \`explanation\` は日本の学生が理解できるよう、丁寧な日本語で「文法的なルール」を添えて書いてください。
+`;
+};
+```
+
+### 9-4. Summaryビューテンプレート
+
+```javascript
+import { generateQuiz as generateCategoryQuiz } from '../../logic/curriculum/{cat}/quizGenerator.js';
+import { generateAIQuestion } from '../../logic/geminiService.js';
+import { LearningPageTemplate } from '../components/LearningPageTemplate.js';
+import { curriculum } from '../../logic/curriculum.js';
+
+export const SummaryNewCategory = () => {
+  const renderExplanationContent = () => {
+    return `
+      <div class="summary-header">
+        <h2 class="section-title">✨ カテゴリ名 完全攻略</h2>
+        <p class="summary-intro">概要説明テキスト。</p>
+      </div>
+
+      <div class="patterns-grid">
+        <div class="pattern-explanation-card glass">
+          <div class="pattern-header">
+            <span class="pattern-badge">トピック 1</span>
+            <h3>トピック1の名前</h3>
+          </div>
+          <p class="pattern-desc"><strong>見出し</strong><br>説明テキスト</p>
+          <div class="pattern-notes">
+            <div class="example-box">
+              <p class="example-sentence">Example sentence.</p>
+              <p class="example-translation">日本語訳</p>
+            </div>
+            <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.05); border-radius: 0.5rem;">
+              <p style="font-size: 0.9rem; margin: 0;"><strong>注意:</strong> 注意点テキスト</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- トピック数だけカードを繰り返す -->
+      </div>
+    `;
+  };
+
+  return LearningPageTemplate({
+    title: 'カテゴリ名 エキスパートチャレンジ',
+    subtitle: 'サブタイトルテキスト',
+    storageKey: '{camelCase}BestStreak',
+    renderExplanationContent,
+    generateQuiz: (level) => generateCategoryQuiz(level),
+    aiQuizGenerator: (level) => generateAIQuestion(level, '{context keyword}'),
+    backLink: '#/',
+    topics: curriculum.find(c => c.id === '{cat-id}')?.topics || []
+  });
 };
 ```
 
 ---
 
-## 🎨 スタイリングのヒント
+## 10. スタイリング・CSSクラス一覧
 
-### 絵文字の活用
+### レッスン説明 (`explanation`) で使用するクラス
 
-視覚的な理解を助けるため、適切な絵文字を使用してください：
+| クラス名 | 用途 |
+|---------|------|
+| `explanation-section` | 全体のコンテナ |
+| `section-title` | セクション見出し（`<h3>` に適用） |
+| `diagram-container` | 図解コンテナ |
+| `concept-box` | コンセプトボックス（背景付きの説明領域） |
+| `example-box` | 例文ボックス（枠付き） |
+| `example-grid` | 例文のグリッドレイアウト |
+| `example-item` | グリッド内の各項目 |
+| `example-sentence` | 英語の例文テキスト |
+| `example-breakdown` | 文の構造分解 |
+| `example-translation` | 日本語訳 |
+| `example-note` | 注釈・補足説明 |
+| `check-list` | チェックリスト（`<ul>` に適用） |
 
-- 📚 本、学習
-- ✅ 正しい、重要
-- ❌ 間違い、注意
-- 🔄 変化、変換
-- 🏃 動作
-- 🧘 状態
-- ➡️ 進行、矢印
-- 💡 ヒント、アイデア
-
-### タグの使い方（文型用）
+### 文法要素タグ
 
 ```html
 <span class="tag s-tag">S</span>  <!-- 主語 (Subject) -->
@@ -744,178 +896,58 @@ export const lessonName = {
 <span class="tag m-tag">M</span>  <!-- 修飾語 (Modifier) -->
 ```
 
----
+### Summaryビュー (`renderExplanationContent`) で使用するクラス
 
-## ✅ チェックリスト
-
-新しいレッスンを追加する前に、以下を確認してください：
-
-- [ ] 一意な`id`を設定しましたか？
-- [ ] `title`と`description`は分かりやすいですか？
-- [ ] `explanation`にHTMLの構造エラーはありませんか？
-- [ ] クイズは最低4問ありますか？
-- [ ] 各クイズ問題に4つの選択肢がありますか？
-- [ ] `answer`は`options`配列の要素と完全一致していますか？
-- [ ] すべてのクイズに`explanation`（解説）がありますか？
-- [ ] `examples`配列に例文が5つ以上ありますか？
-- [ ] `index.js`に新しいレッスンをインポート・登録しましたか？
-- [ ] 実際にアプリで表示とクイズの動作を確認しましたか？
+| クラス名 | 用途 |
+|---------|------|
+| `summary-header` | ヘッダー領域 |
+| `summary-intro` | 概要説明テキスト |
+| `patterns-grid` | トピックカードのグリッド |
+| `pattern-explanation-card` | 個別トピックのカード |
+| `pattern-header` | カードヘッダー（バッジ + タイトル） |
+| `pattern-badge` | トピック番号バッジ |
+| `pattern-desc` | カードの説明テキスト |
+| `pattern-notes` | カードの補足領域 |
 
 ---
 
-## 📚 参考例
+## 11. ID命名規則一覧
 
-### 品詞レッスンの例
+| カテゴリ | プレフィックス | 例 |
+|---------|-------------|-----|
+| 5つの文型 | `sentence-pattern-{N}-{type}` | `sentence-pattern-1-sv` |
+| 時制 | `tense-{name}` | `tense-present-simple` |
+| 助動詞 | `aux-{name}` | `aux-can-could` |
+| 受動態 | `passive-{name}` | `passive-basics` |
+| 品詞 | `pos-{name}` | `pos-noun` |
+| 色々な表現 | `expr-{name}` | `expr-imperative` |
+| 疑問詞 | `qw-{name}` | `qw-what-which` |
 
-参考: [`src/logic/curriculum/partsOfSpeech/noun.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/partsOfSpeech/noun.js)
-
-特徴:
-- 品詞の分類を視覚的に説明
-- 豊富な例を`example-grid`で表示
-- 絵文字を効果的に使用
-
-### 文型レッスンの例
-
-参考: 
-- [`src/logic/curriculum/sentencePatterns/sv.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/sentencePatterns/sv.js)
-- [`src/logic/curriculum/sentencePatterns/svc.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/sentencePatterns/svc.js)
-
-特徴:
-- 文型の構造を`diagram-container`で図解
-- S, V, O, Cのタグを使った文の分解
-- イコール関係（`=`）の視覚化
+新カテゴリを追加する場合は、短い一意なプレフィックスを定義してください。
 
 ---
 
-## 🚀 次のステップ
+## 12. コミット規約
 
-1. このドキュメントを保存してください
-2. 新しいレッスンを追加する際は、常にこのガイドを参照してください
-3. 既存のレッスンファイル（[`noun.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/partsOfSpeech/noun.js), [`verb.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/partsOfSpeech/verb.js), [`sv.js`](file:///c:/new/English-Grammar-Mastery-App-1/src/logic/curriculum/sentencePatterns/sv.js)など）を参考にしてください
-4. 不明な点があれば、既存のコードを確認するか、チームに相談してください
-
----
-
-## 📦 Gitコミット手順
-
-作業に1区切りつく毎に、必ずコミットを行ってください。
-
-### コミットメッセージの形式
-
-```
-[プレフィックス] 日本語での簡潔な説明
-```
-
-### プレフィックス一覧
+### プレフィックス
 
 | プレフィックス | 用途 | 例 |
 |------------|------|-----|
-| `feat` | 新機能の追加 | `feat: 時制レッスンカテゴリを追加` |
-| `fix` | バグ修正 | `fix: タイトルの中央揃えを修正` |
-| `docs` | ドキュメントの変更のみ | `docs: LESSON_STRUCTUREに100問クイズ実装方法を追加` |
-| `style` | コードの意味に影響しない変更（スペース、フォーマット等） | `style: インデントを修正` |
-| `refactor` | バグ修正や機能追加ではないコード変更 | `refactor: クイズジェネレーターのロジックを整理` |
-| `perf` | パフォーマンス改善 | `perf: クイズ生成速度を最適化` |
-| `test` | テストの追加・修正 | `test: 時制クイズジェネレーターのテストを追加` |
-| `chore` | ビルドプロセスやツールの変更 | `chore: 依存関係を更新` |
-| `ui` | UIに関する変更 | `ui: カテゴリカードのホバー効果を改善` |
+| `feat` | 新機能 | `feat: 関係代名詞カテゴリを追加` |
+| `fix` | バグ修正 | `fix: クイズの選択肢表示順を修正` |
+| `docs` | ドキュメント | `docs: LESSON_STRUCTUREガイドを更新` |
+| `style` | コード整形 | `style: インデントを修正` |
+| `refactor` | リファクタリング | `refactor: quizGeneratorの共通処理を抽出` |
+| `ui` | UI変更 | `ui: カテゴリカードのホバー効果を改善` |
+| `chore` | ツール・設定 | `chore: 依存関係を更新` |
 
-### コミット手順
+### バージョニング
 
-#### 1. 変更を確認
-```bash
-git status
-```
-
-#### 2. ファイルをステージング
-
-全ての変更をステージング:
-```bash
-git add .
-```
-
-特定のファイルのみステージング:
-```bash
-git add src/logic/curriculum/tenses/pastTense.js
-git add src/ui/views/SummaryTenses.js
-```
-
-#### 3. コミット
-
-```bash
-git commit -m "[プレフィックス] 日本語での説明"
-```
-
-### コミット例
-
-#### 新しいレッスンカテゴリを追加した場合
-```bash
-git add src/logic/curriculum/tenses/
-git add src/logic/curriculum/index.js
-git commit -m "feat: 時制マスターカテゴリと4つのレッスンを追加"
-```
-
-#### 100問クイズジェネレーターを追加した場合
-```bash
-git add src/logic/curriculum/tenses/quizGenerator.js
-git commit -m "feat: 時制用100問クイズジェネレーターを実装"
-```
-
-#### UIページを追加した場合
-```bash
-git add src/ui/views/SummaryTenses.js
-git add src/ui/router.js
-git commit -m "feat: 時制エキスパートチャレンジページを追加"
-```
-
-#### ドキュメントを更新した場合
-```bash
-git add docs/LESSON_STRUCTURE.md
-git commit -m "docs: 時制カテゴリとクイズジェネレーター実装手順を追加"
-```
-
-#### バグを修正した場合
-```bash
-git add src/styles/main.css
-git commit -m "fix: サマリーページのタイトル中央揃えを修正"
-```
-
-#### デバッグ機能を追加した場合
-```bash
-git add src/config.json
-git add src/ui/components/LearningPageTemplate.js
-git add src/ui/views/CategorySelection.js
-git commit -m "feat: デバッグモード用100問クイズアンロック機能を追加"
-```
-
-### ベストプラクティス
-
-1. **小さく頻繁にコミット**: 大きな変更を一度にコミットせず、機能ごとに分けてコミット
-2. **明確な説明**: コミットメッセージは変更内容が一目でわかるように記述
-3. **1コミット1目的**: 複数の無関係な変更を1つのコミットにまとめない
-4. **日本語で記述**: チーム全員が理解しやすいよう、説明は日本語で記述
-
-### Git履歴の確認
-
-```bash
-# 最近のコミット履歴を表示
-git log --oneline -10
-
-# 各コミットの変更内容を確認
-git log -p -2
-```
+- **x (メジャー)**: 大規模な構造変更
+- **y (マイナー)**: 新規カテゴリの追加
+- **z (パッチ)**: 既存カテゴリへのレッスン追加、バグ修正、UI調整
 
 ---
 
-**最終更新日**: 2025-12-12  
-**バージョン**: 1.1.1
-
----
-
-## 🔖 バージョニング規則
-
-当プロジェクトでは、以下の規則に従ってバージョン番号（x.y.z）を管理します。
-
-- **x (メジャーバージョン)**: 大規模なアップデートや構造的な変更（1桁目）
-- **y (マイナーバージョン)**: 新規カテゴリの追加や大規模な機能追加（2桁目）
-- **z (パッチバージョン)**: 既存カテゴリへのレッスン追加、バグ修正、UI調整（3桁目）
+**最終更新日**: 2026-03-19
+**バージョン**: 2.0.0
