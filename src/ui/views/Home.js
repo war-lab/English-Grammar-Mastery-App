@@ -205,7 +205,7 @@ function createCourseCard(cat) {
   if (progress.allCompleted) {
     progressText.innerHTML = `<span style="color: var(--color-success);">✓ 完了</span>`;
     if (streak > 0) {
-      progressText.innerHTML += ` · <span style="color: #fbbf24;">🔥 ${streak}問連続正解</span>`;
+      progressText.innerHTML += ` · <span style="color: var(--color-success);">🔥 ${streak}問連続正解</span>`;
     }
   } else {
     progressText.textContent = `${progress.completed}/${progress.total} 完了 (${percentage}%)`;

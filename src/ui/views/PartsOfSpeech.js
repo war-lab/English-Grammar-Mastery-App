@@ -33,7 +33,7 @@ export const PartsOfSpeech = () => {
       const icon = iconMap[key] || '📝';
 
       html += `
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-icon">${icon}</span>
             <h3>${topic.title}</h3>
@@ -50,7 +50,7 @@ export const PartsOfSpeech = () => {
 
     // Add Word Shifter Column
     html += `
-      <div class="column-section glass" style="margin-top: 4rem; padding: 2rem; border-left: 5px solid var(--secondary);">
+      <div class="column-section challenge-glass" style="margin-top: 4rem; padding: 2rem; border-left: 5px solid var(--secondary);">
         <h3 class="section-title" style="text-align: left; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
           <span style="font-size: 2rem;">🔄</span>
           <span>Word Shifter: Context Matters</span>

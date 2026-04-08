@@ -13,7 +13,7 @@ export const SummaryVariousExpressions = () => {
       </div>
       
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">表現 1</span>
             <h3>命令文 (Imperative)</h3>
@@ -30,7 +30,7 @@ export const SummaryVariousExpressions = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">表現 2</span>
             <h3>非人称のit (Impersonal it)</h3>
@@ -47,7 +47,7 @@ export const SummaryVariousExpressions = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">表現 3</span>
             <h3>There is/are 構文</h3>
@@ -64,7 +64,7 @@ export const SummaryVariousExpressions = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">表現 4</span>
             <h3>数量表現 (Quantity)</h3>

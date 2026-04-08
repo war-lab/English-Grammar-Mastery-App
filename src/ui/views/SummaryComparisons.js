@@ -13,7 +13,7 @@ export const SummaryComparisons = () => {
       </div>
 
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">比較 1</span>
             <h3>原級比較 (as ~ as)</h3>
@@ -30,7 +30,7 @@ export const SummaryComparisons = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">比較 2</span>
             <h3>比較級 (-er / more ~)</h3>
@@ -47,7 +47,7 @@ export const SummaryComparisons = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">比較 3</span>
             <h3>最上級 (-est / most ~)</h3>
@@ -64,7 +64,7 @@ export const SummaryComparisons = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">比較 4</span>
             <h3>疑問文と慣用表現</h3>

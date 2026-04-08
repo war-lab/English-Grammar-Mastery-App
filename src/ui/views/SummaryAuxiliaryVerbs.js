@@ -13,7 +13,7 @@ export const SummaryAuxiliaryVerbs = () => {
       </div>
       
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">助動詞 1</span>
             <h3>can / could</h3>
@@ -30,7 +30,7 @@ export const SummaryAuxiliaryVerbs = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">助動詞 2</span>
             <h3>will / would</h3>
@@ -47,7 +47,7 @@ export const SummaryAuxiliaryVerbs = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">助動詞 3</span>
             <h3>must / should</h3>
@@ -64,7 +64,7 @@ export const SummaryAuxiliaryVerbs = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">助動詞 4</span>
             <h3>may / might</h3>

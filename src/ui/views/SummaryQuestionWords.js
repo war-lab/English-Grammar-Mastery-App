@@ -13,7 +13,7 @@ export const SummaryQuestionWords = () => {
       </div>
       
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">疑問詞 1</span>
             <h3>What / Which</h3>
@@ -30,7 +30,7 @@ export const SummaryQuestionWords = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">疑問詞 2</span>
             <h3>Who / Whom / Whose</h3>
@@ -47,7 +47,7 @@ export const SummaryQuestionWords = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">疑問詞 3</span>
             <h3>When / Where</h3>
@@ -64,7 +64,7 @@ export const SummaryQuestionWords = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">疑問詞 4</span>
             <h3>Why / How</h3>
@@ -81,7 +81,7 @@ export const SummaryQuestionWords = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">疑問詞 5</span>
             <h3>付加疑問・否定疑問</h3>

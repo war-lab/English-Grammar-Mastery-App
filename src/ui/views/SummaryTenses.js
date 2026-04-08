@@ -12,7 +12,7 @@ export const SummaryTenses = () => {
       </div>
       
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">時制 1</span>
             <h3>過去形 (Past Tense)</h3>
@@ -31,7 +31,7 @@ export const SummaryTenses = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">時制 2</span>
             <h3>未来形 (Future Tense)</h3>
@@ -50,7 +50,7 @@ export const SummaryTenses = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">時制 3</span>
             <h3>進行形 (Progressive)</h3>
@@ -69,7 +69,7 @@ export const SummaryTenses = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">時制 4</span>
             <h3>完了形 (Perfect)</h3>

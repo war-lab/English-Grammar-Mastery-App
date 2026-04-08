@@ -4,12 +4,12 @@
 
 :root {
   /* === COLOR: Base === */
-  --color-bg-app: #0b1020;
-  --color-bg-subtle: #12182b;
-  --color-surface-1: #ffffff;
-  --color-surface-2: #f6f8fc;
-  --color-surface-3: #edf2f7;
-  --color-surface-dark: #182033;
+  --color-bg-app: #0e1525;
+  --color-bg-subtle: #141c30;
+  --color-surface-1: #f8fafc;
+  --color-surface-2: #f1f5f9;
+  --color-surface-3: #e8edf4;
+  --color-surface-dark: #1a2338;
 
   /* === COLOR: Text === */
   --color-text-primary: #162033;
@@ -40,10 +40,17 @@
   --color-border-subtle: #e9edf4;
   --color-border-dark: rgba(255,255,255,0.12);
 
-  /* === COLOR: Challenge専用 === */
+  /* === COLOR: Challenge/ご褒美専用 === */
   --color-challenge-bg: #101827;
   --color-challenge-surface: rgba(30, 41, 59, 0.78);
   --color-challenge-glow: rgba(79, 70, 229, 0.28);
+  --color-challenge-pink: #ec4899;
+  --color-challenge-amber: #f59e0b;
+  --color-challenge-amber-dark: #d97706;
+  --color-reward-gold: #ffd700;
+  --color-reward-bronze: #cd7f32;
+  --color-reward-silver: #c0c0c0;
+  --color-ai-neon: #00ff00;
   --color-ai: #059669;
   --color-ai-soft: rgba(5, 150, 105, 0.12);
 
@@ -112,10 +119,10 @@
   --duration-slow: 280ms;
   --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  /* === 後方互換（Summary/Challenge用 — Phase 5完了後に削除） === */
+  /* === 後方互換（Summary/Challenge用） === */
   --primary: var(--color-accent);
   --primary-dark: var(--color-accent-hover);
-  --secondary: #ec4899;
+  --secondary: var(--color-accent);
   --background: var(--color-bg-app);
   --surface: var(--color-surface-dark);
   --text: var(--color-text-on-dark);
@@ -837,12 +844,10 @@ button {
   margin-bottom: var(--space-lg);
 }
 
-.category-header .title {
+.category-header h1 {
   font-size: var(--font-size-h1);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-on-dark);
-  background: none;
-  -webkit-text-fill-color: unset;
 }
 
 .category-header .subtitle {
@@ -883,7 +888,7 @@ button {
    ======================================== */
 
 /* Glassmorphism — Challenge/Summary専用 */
-.glass {
+.challenge-glass {
   background: rgba(30, 41, 59, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -923,7 +928,7 @@ button {
 }
 
 /* Challenge/Summaryタイトル — 暗背景用 */
-.title {
+.challenge-title {
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(to right, #fff, #94a3b8);
@@ -933,7 +938,7 @@ button {
   margin-bottom: 1rem;
 }
 
-.fancy-title {
+.challenge-fancy-title {
   font-size: 2.5rem;
   font-weight: 800;
   background: linear-gradient(135deg, #fff 0%, #a5f3fc 100%);
@@ -945,7 +950,7 @@ button {
   letter-spacing: -0.02em;
 }
 
-.fancy-subtitle {
+.challenge-fancy-subtitle {
   color: var(--text-muted);
   font-size: 1.1rem;
   margin-bottom: 2rem;
@@ -954,7 +959,7 @@ button {
 
 /* Challenge用ボタン */
 .btn-unified {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-challenge-pink) 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -980,7 +985,7 @@ button {
 }
 
 .btn-challenge {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  background: linear-gradient(135deg, var(--color-challenge-amber) 0%, var(--color-challenge-amber-dark) 100%);
   color: white;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -998,7 +1003,7 @@ button {
 }
 
 .btn-accent {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, var(--color-challenge-amber), var(--color-challenge-amber-dark));
   color: white;
   border: none;
   box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
@@ -1011,7 +1016,7 @@ button {
 
 /* AIモードボタン */
 .btn-ai {
-  background: linear-gradient(135deg, #059669, #047857);
+  background: linear-gradient(135deg, var(--color-ai), #047857);
   color: white;
   border: 2px solid rgba(0, 255, 0, 0.3);
   animation: aiPulse 2s infinite;
@@ -1019,25 +1024,25 @@ button {
 
 /* ティア演出 */
 .summary-container.tier-2 {
-  border: 2px solid #cd7f32;
+  border: 2px solid var(--color-reward-bronze);
   box-shadow: 0 0 15px rgba(205, 127, 50, 0.3);
 }
 
 .summary-container.tier-3 {
-  border: 2px solid #c0c0c0;
+  border: 2px solid var(--color-reward-silver);
   box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(192, 192, 192, 0.05));
 }
 
 .summary-container.tier-4 {
-  border: 3px solid #ffd700;
+  border: 3px solid var(--color-reward-gold);
   box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 223, 0, 0.03));
   animation: goldPulse 3s infinite;
 }
 
 .summary-container.tier-ai {
-  border: 2px solid #00ff00;
+  border: 2px solid var(--color-ai-neon);
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
   background: linear-gradient(135deg, rgba(0, 20, 0, 0.6), rgba(0, 50, 0, 0.4));
 }
@@ -1047,7 +1052,7 @@ button {
   width: 40px;
   height: 40px;
   border: 3px solid rgba(0, 255, 0, 0.2);
-  border-top-color: #00ff00;
+  border-top-color: var(--color-ai-neon);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto;
@@ -1374,14 +1379,14 @@ button {
 .diagram-arrow::after {
   content: '→';
   font-size: 1.5rem;
-  color: var(--secondary);
+  color: var(--color-accent);
   margin-top: -5px;
 }
 
 .diagram-operator {
   font-size: 2rem;
   font-weight: bold;
-  color: var(--secondary);
+  color: var(--color-accent);
   margin: 0 0.5rem;
 }
 
@@ -1425,7 +1430,7 @@ button {
   border-radius: 0.5rem;
   text-align: center;
   font-size: 0.95rem;
-  border-left: 3px solid var(--secondary);
+  border-left: 3px solid var(--color-accent);
 }
 
 .grammar-point {

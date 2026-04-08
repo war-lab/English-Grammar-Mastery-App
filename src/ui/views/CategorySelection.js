@@ -25,7 +25,7 @@ export const CategorySelection = (categoryId) => {
   const header = document.createElement('div');
   header.className = 'category-header';
   header.innerHTML = `
-    <h1 class="title">${categoryData.title}</h1>
+    <h1>${categoryData.title}</h1>
     <p class="subtitle">${categoryData.description || ''}</p>
   `;
   container.appendChild(header);
@@ -46,13 +46,13 @@ export const CategorySelection = (categoryId) => {
     challengeContainer.style.textAlign = 'center';
     challengeContainer.style.marginBottom = '2rem';
     challengeContainer.style.padding = '1.5rem';
-    challengeContainer.style.background = 'rgba(251, 191, 36, 0.1)';
+    challengeContainer.style.background = 'var(--color-accent-soft-2)';
     challengeContainer.style.borderRadius = '1rem';
-    challengeContainer.style.border = '1px solid rgba(251, 191, 36, 0.3)';
+    challengeContainer.style.border = '1px solid rgba(79, 70, 229, 0.25)';
 
     const challengeTitle = document.createElement('h3');
     challengeTitle.textContent = '🎉 全レッスンクリア！';
-    challengeTitle.style.color = '#fbbf24';
+    challengeTitle.style.color = 'var(--color-accent)';
     challengeTitle.style.marginBottom = '1rem';
 
     const challengeBtn = document.createElement('button');

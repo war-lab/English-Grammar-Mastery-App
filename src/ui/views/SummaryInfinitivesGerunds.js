@@ -13,7 +13,7 @@ export const SummaryInfinitivesGerunds = () => {
       </div>
 
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">用法 1</span>
             <h3>名詞的用法 (〜すること)</h3>
@@ -30,7 +30,7 @@ export const SummaryInfinitivesGerunds = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">用法 2</span>
             <h3>形容詞的用法 (〜するための)</h3>
@@ -47,7 +47,7 @@ export const SummaryInfinitivesGerunds = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">用法 3</span>
             <h3>副詞的用法 (〜するために)</h3>
@@ -64,7 +64,7 @@ export const SummaryInfinitivesGerunds = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">用法 4</span>
             <h3>動名詞 (〜ing)</h3>
@@ -81,7 +81,7 @@ export const SummaryInfinitivesGerunds = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">用法 5</span>
             <h3>使い分けの語法</h3>
