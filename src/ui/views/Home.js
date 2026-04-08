@@ -10,6 +10,7 @@ import iconVarious from '../../assets/images/icon-various.png';
 import iconQuestionWords from '../../assets/images/icon-question-words.png';
 import iconComparisons from '../../assets/images/icon-comparisons.png';
 import iconInfinitivesGerunds from '../../assets/images/icon-infinitives-gerunds.png';
+import iconParticiples from '../../assets/images/icon-participles.png';
 
 // カテゴリIDとアイコンの対応表
 const iconMap = {
@@ -22,6 +23,7 @@ const iconMap = {
   'question-words': iconQuestionWords,
   'comparisons': iconComparisons,
   'infinitives-gerunds': iconInfinitivesGerunds,
+  'participles': iconParticiples,
 };
 
 // カテゴリIDとストレージキーの対応表
@@ -35,6 +37,7 @@ const streakKeyMap = {
   'question-words': 'questionWordsBestStreak',
   'comparisons': 'comparisonsBestStreak',
   'infinitives-gerunds': 'infinitivesGerundsBestStreak',
+  'participles': 'participlesBestStreak',
 };
 
 // サマリーのルート（5文型だけ特殊）

@@ -56,6 +56,12 @@ import { adverbUsage } from './infinitivesGerunds/adverbUsage.js';
 import { gerunds } from './infinitivesGerunds/gerunds.js';
 import { infinitiveVsGerund } from './infinitivesGerunds/infinitiveVsGerund.js';
 
+import { presentParticiple } from './participles/presentParticiple.js';
+import { pastParticiple } from './participles/pastParticiple.js';
+import { emotionParticiples } from './participles/emotionParticiples.js';
+import { participialConstruction } from './participles/participialConstruction.js';
+import { perceptionCausative } from './participles/perceptionCausative.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -101,6 +107,11 @@ export const curriculum = [
     id: 'infinitives-gerunds',
     title: 'to不定詞と動名詞 (Infinitives & Gerunds)',
     topics: [nounUsage, adjectiveUsage, adverbUsage, gerunds, infinitiveVsGerund]
+  },
+  {
+    id: 'participles',
+    title: '分詞 (Participles)',
+    topics: [presentParticiple, pastParticiple, emotionParticiples, participialConstruction, perceptionCausative]
   }
 ];
 
