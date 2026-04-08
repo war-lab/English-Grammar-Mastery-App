@@ -2,6 +2,7 @@
 import { navigate } from '../navigation.js';
 import { curriculum } from '../../logic/curriculum.js';
 import { getProgress, getCategoryProgress } from '../../logic/storage.js';
+import { Breadcrumb } from '../components/Breadcrumb.js';
 
 
 export const CategorySelection = (categoryId) => {
@@ -15,11 +16,15 @@ export const CategorySelection = (categoryId) => {
     return container;
   }
 
-  // Header with back button
+  // パンくずナビ
+  container.appendChild(Breadcrumb([
+    ['ホーム', '#/'],
+    [categoryData.title]
+  ]));
+
   const header = document.createElement('div');
   header.className = 'category-header';
   header.innerHTML = `
-    <button class="btn btn-secondary back-btn" id="back-to-home">← ホームに戻る</button>
     <h1 class="title">${categoryData.title}</h1>
     <p class="subtitle">${categoryData.description || ''}</p>
   `;
@@ -56,14 +61,11 @@ export const CategorySelection = (categoryId) => {
     challengeBtn.className = 'btn btn-challenge';
     challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
     challengeBtn.onclick = () => {
-      if (categoryId === 'sentence-patterns') navigate('/summary/5-sentence-patterns');
-      else if (categoryId === 'parts-of-speech') navigate('/summary/parts-of-speech');
-      else if (categoryId === 'tenses') navigate('/summary/tenses');
-      else if (categoryId === 'auxiliary-verbs') navigate('/summary/auxiliary-verbs');
-      else if (categoryId === 'passive-voice') navigate('/summary/passive-voice');
-      else if (categoryId === 'various-expressions') navigate('/summary/various-expressions');
-      else if (categoryId === 'question-words') navigate('/summary/question-words');
-      else if (categoryId === 'comparisons') navigate('/summary/comparisons');
+      // 5文型だけ特殊なルート
+      const summaryRoute = categoryId === 'sentence-patterns'
+        ? '/summary/5-sentence-patterns'
+        : `/summary/${categoryId}`;
+      navigate(summaryRoute);
     };
 
     challengeContainer.appendChild(challengeTitle);
@@ -168,13 +170,6 @@ export const CategorySelection = (categoryId) => {
   });
 
   container.appendChild(topicsGrid);
-
-  // Event Listeners
-  setTimeout(() => {
-    document.getElementById('back-to-home').addEventListener('click', () => {
-      navigate('/');
-    });
-  }, 0);
 
   return container;
 };

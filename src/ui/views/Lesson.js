@@ -1,4 +1,5 @@
 import { navigate } from '../navigation.js';
+import { Breadcrumb, getCategoryByTopicId } from '../components/Breadcrumb.js';
 
 export const Lesson = (topic) => {
   const container = document.createElement('div');
@@ -22,9 +23,7 @@ export const Lesson = (topic) => {
 
   const content = document.createElement('div');
   content.innerHTML = topic.explanation;
-  content.style.margin = '2rem 0';
-  content.style.lineHeight = '1.8';
-  content.style.fontSize = '1.1rem';
+  content.className = 'lesson-content';
 
   // Style the injected HTML content
   const styleContent = () => {
@@ -52,20 +51,34 @@ export const Lesson = (topic) => {
   buttonContainer.style.marginTop = '2rem';
   buttonContainer.style.flexWrap = 'wrap';
 
-  const quizBtn = document.createElement('button');
-  quizBtn.className = 'btn btn-primary';
-  quizBtn.textContent = 'クイズに挑戦';
-  quizBtn.onclick = () => navigate('/quiz', topic); // Pass topic data to quiz
-
-  const topBtn = document.createElement('button');
-  topBtn.className = 'btn btn-secondary';
-  topBtn.textContent = '↑ レッスントップに戻る';
-  topBtn.onclick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // カテゴリへ戻るボタン
+  const backBtn = document.createElement('button');
+  backBtn.className = 'btn btn-ghost';
+  backBtn.textContent = '← カテゴリに戻る';
+  backBtn.onclick = () => {
+    const cat = getCategoryByTopicId(topic.id);
+    if (cat) navigate(`/category/${cat.id}`);
+    else navigate('/');
   };
 
+  // クイズ開始ボタン
+  const quizBtn = document.createElement('button');
+  quizBtn.className = 'btn btn-primary';
+  quizBtn.textContent = 'クイズに挑戦 →';
+  quizBtn.onclick = () => navigate('/quiz', topic);
+
+  buttonContainer.appendChild(backBtn);
   buttonContainer.appendChild(quizBtn);
-  buttonContainer.appendChild(topBtn);
+
+  // パンくずナビ
+  const category = getCategoryByTopicId(topic.id);
+  if (category) {
+    container.appendChild(Breadcrumb([
+      ['ホーム', '#/'],
+      [category.title, `#/category/${category.id}`],
+      [topic.title]
+    ]));
+  }
 
   container.appendChild(title);
   container.appendChild(content);
@@ -73,6 +86,22 @@ export const Lesson = (topic) => {
 
   // Apply styles after creation (micro-task)
   setTimeout(styleContent, 0);
+
+  // スクロール進捗バー
+  const scrollProgress = document.createElement('div');
+  scrollProgress.className = 'scroll-progress';
+  scrollProgress.style.width = '0%';
+  container.insertBefore(scrollProgress, container.firstChild);
+
+  // スクロールイベントで進捗更新
+  const updateScrollProgress = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = `${Math.min(100, progress)}%`;
+  };
+
+  window.addEventListener('scroll', updateScrollProgress);
 
   // Scroll to top when lesson loads
   setTimeout(() => {
