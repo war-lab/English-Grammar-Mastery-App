@@ -9,6 +9,7 @@ import iconPassiveVoice from '../../assets/images/icon-passive-voice.png';
 import iconVarious from '../../assets/images/icon-various.png';
 import iconQuestionWords from '../../assets/images/icon-question-words.png';
 import iconComparisons from '../../assets/images/icon-comparisons.png';
+import iconInfinitivesGerunds from '../../assets/images/icon-infinitives-gerunds.png';
 
 export const Home = () => {
   const container = document.createElement('div');
@@ -145,6 +146,20 @@ export const Home = () => {
     onChallengeClick: () => navigate('/summary/comparisons')
   });
   courseGrid.appendChild(comparisonsCard);
+
+  // 9. Infinitives & Gerunds Card
+  const infGerData = curriculum.find(c => c.id === 'infinitives-gerunds');
+  const infGerCard = createCourseCard({
+    id: 'course-infinitives-gerunds',
+    image: iconInfinitivesGerunds,
+    title: 'Infinitives & Gerunds',
+    description: 'to不定詞の3用法と動名詞を完全理解し、使い分けの語法をマスター',
+    streakKey: 'infinitivesGerundsBestStreak',
+    topics: infGerData?.topics || [],
+    onClick: () => navigate('/category/infinitives-gerunds'),
+    onChallengeClick: () => navigate('/summary/infinitives-gerunds')
+  });
+  courseGrid.appendChild(infGerCard);
 
   container.appendChild(courseGrid);
 

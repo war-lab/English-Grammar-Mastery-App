@@ -50,6 +50,12 @@ import { comparative } from './comparisons/comparative.js';
 import { superlative } from './comparisons/superlative.js';
 import { comparativeQuestions } from './comparisons/comparativeQuestions.js';
 
+import { nounUsage } from './infinitivesGerunds/nounUsage.js';
+import { adjectiveUsage } from './infinitivesGerunds/adjectiveUsage.js';
+import { adverbUsage } from './infinitivesGerunds/adverbUsage.js';
+import { gerunds } from './infinitivesGerunds/gerunds.js';
+import { infinitiveVsGerund } from './infinitivesGerunds/infinitiveVsGerund.js';
+
 export const curriculum = [
   {
     id: 'sentence-patterns',
@@ -90,6 +96,11 @@ export const curriculum = [
     id: 'comparisons',
     title: '比較表現 (Comparisons)',
     topics: [asAs, comparative, superlative, comparativeQuestions]
+  },
+  {
+    id: 'infinitives-gerunds',
+    title: 'to不定詞と動名詞 (Infinitives & Gerunds)',
+    topics: [nounUsage, adjectiveUsage, adverbUsage, gerunds, infinitiveVsGerund]
   }
 ];
 
