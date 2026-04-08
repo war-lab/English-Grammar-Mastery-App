@@ -8,6 +8,7 @@ import * as passiveVoice from './gemini/prompts/passiveVoice.js';
 import * as variousExpressions from './gemini/prompts/variousExpressions.js';
 import * as questionWords from './gemini/prompts/questionWords.js';
 import * as comparisons from './gemini/prompts/comparisons.js';
+import * as infinitivesGerunds from './gemini/prompts/infinitivesGerunds.js';
 
 // Configuration with environment variable override support
 const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-1.5-flash';
@@ -99,6 +100,7 @@ const getPoolKey = (context) => {
   if (ctx.includes('various')) return 'various';
   if (ctx.includes('question')) return 'question_words';
   if (ctx.includes('comparison')) return 'comparisons';
+  if (ctx.includes('infinitive') || ctx.includes('gerund')) return 'infinitives_gerunds';
   return 'default';
 };
 
@@ -131,6 +133,9 @@ const selectPromptStrategy = (level, context) => {
   }
   else if (ctx.includes('comparison')) {
     return comparisons.generatePrompt(level);
+  }
+  else if (ctx.includes('infinitive') || ctx.includes('gerund')) {
+    return infinitivesGerunds.generatePrompt(level);
   }
   else {
     return `Generate 5 English grammar questions suitable for level ${level}/10. 

@@ -389,6 +389,18 @@ export const LearningPageTemplate = (config) => {
     const isCorrect = selected === currentQuiz.answer;
     submitBtn.disabled = true;
 
+    // 選択肢にフィードバックを表示
+    const allOptions = container.querySelectorAll('.quiz-radio-option');
+    allOptions.forEach(opt => {
+      const radio = opt.querySelector('input[type="radio"]');
+      opt.classList.add('option-disabled');
+      if (radio && radio.value === currentQuiz.answer) {
+        opt.classList.add('option-correct');
+      } else if (radio && radio.value === selected && !isCorrect) {
+        opt.classList.add('option-incorrect');
+      }
+    });
+
     if (isCorrect) {
       streak++;
       if (streak > bestStreak) {
@@ -401,13 +413,8 @@ export const LearningPageTemplate = (config) => {
 
       if (currentQuiz.explanation) {
         const explanationBox = document.createElement('div');
-        explanationBox.style.marginTop = '1rem';
-        explanationBox.style.padding = '1rem';
-        explanationBox.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
-        explanationBox.style.borderLeft = '4px solid var(--success)';
-        explanationBox.style.borderRadius = '0.5rem';
-        explanationBox.style.fontSize = '0.95rem';
-        explanationBox.style.lineHeight = '1.6';
+        // CSSクラスでスタイルを適用
+        explanationBox.className = 'explanation-box correct-explanation';
 
         let explanationHTML = '<strong>📝 解説:</strong><br>' + currentQuiz.explanation;
 
@@ -461,13 +468,8 @@ export const LearningPageTemplate = (config) => {
 
       if (currentQuiz.explanation) {
         const explanationBox = document.createElement('div');
-        explanationBox.style.marginTop = '1rem';
-        explanationBox.style.padding = '1rem';
-        explanationBox.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
-        explanationBox.style.borderLeft = '4px solid var(--error)';
-        explanationBox.style.borderRadius = '0.5rem';
-        explanationBox.style.fontSize = '0.95rem';
-        explanationBox.style.lineHeight = '1.6';
+        // CSSクラスでスタイルを適用
+        explanationBox.className = 'explanation-box incorrect-explanation';
 
         let explanationHTML = '<strong>📝 解説:</strong><br>' + currentQuiz.explanation;
 
@@ -479,14 +481,24 @@ export const LearningPageTemplate = (config) => {
         feedbackEl.appendChild(explanationBox);
       }
 
-      setTimeout(() => {
+      // 「結果を見る」ボタンで即座にフィードバックを提供（自動遅延なし）
+      const resultBtn = document.createElement('button');
+      resultBtn.className = 'btn btn-primary';
+      resultBtn.textContent = '結果を見る';
+      resultBtn.style.marginTop = '1.5rem';
+      resultBtn.style.fontSize = '1.1rem';
+      resultBtn.style.padding = '1rem 2rem';
+      resultBtn.style.width = '100%';
+      resultBtn.style.maxWidth = '400px';
+      resultBtn.onclick = () => {
         const modal = createResultModal(streak, () => {
           viewState = 'explanation';
           container.className = 'summary-container glass';
           render();
         });
         document.body.appendChild(modal);
-      }, 2000);
+      };
+      feedbackEl.appendChild(resultBtn);
     }
   };
 

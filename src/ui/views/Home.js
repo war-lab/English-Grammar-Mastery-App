@@ -1,6 +1,6 @@
 import { navigate } from '../navigation.js';
 import { curriculum } from '../../logic/curriculum.js';
-import { getCategoryProgress } from '../../logic/storage.js';
+import { getCategoryProgress, loadProgress } from '../../logic/storage.js';
 import iconPatterns from '../../assets/images/icon-patterns.png';
 import iconTenses from '../../assets/images/icon-tenses.png';
 import iconPos from '../../assets/images/icon-pos.png';
@@ -9,243 +9,238 @@ import iconPassiveVoice from '../../assets/images/icon-passive-voice.png';
 import iconVarious from '../../assets/images/icon-various.png';
 import iconQuestionWords from '../../assets/images/icon-question-words.png';
 import iconComparisons from '../../assets/images/icon-comparisons.png';
+import iconInfinitivesGerunds from '../../assets/images/icon-infinitives-gerunds.png';
+
+// カテゴリIDとアイコンの対応表
+const iconMap = {
+  'sentence-patterns': iconPatterns,
+  'tenses': iconTenses,
+  'auxiliary-verbs': iconAuxiliary,
+  'parts-of-speech': iconPos,
+  'passive-voice': iconPassiveVoice,
+  'various-expressions': iconVarious,
+  'question-words': iconQuestionWords,
+  'comparisons': iconComparisons,
+  'infinitives-gerunds': iconInfinitivesGerunds,
+};
+
+// カテゴリIDとストレージキーの対応表
+const streakKeyMap = {
+  'sentence-patterns': 'summaryBestStreak',
+  'tenses': 'tensesBestStreak',
+  'auxiliary-verbs': 'auxiliaryVerbsBestStreak',
+  'parts-of-speech': 'posBestStreak',
+  'passive-voice': 'passiveVoiceBestStreak',
+  'various-expressions': 'variousExpressionsBestStreak',
+  'question-words': 'questionWordsBestStreak',
+  'comparisons': 'comparisonsBestStreak',
+  'infinitives-gerunds': 'infinitivesGerundsBestStreak',
+};
+
+// サマリーのルート（5文型だけ特殊）
+const getSummaryRoute = (categoryId) => {
+  if (categoryId === 'sentence-patterns') return '/summary/5-sentence-patterns';
+  return `/summary/${categoryId}`;
+};
 
 export const Home = () => {
   const container = document.createElement('div');
   container.className = 'home-container';
 
-  // Header
+  // ヘッダー
   const header = document.createElement('div');
   header.className = 'home-header';
   header.innerHTML = `
-    <h1 class="title fancy-title" style="font-size: 3rem;">English Grammar Mastery</h1>
+    <h1 class="title fancy-title" style="font-size: 2.5rem;">English Grammar Mastery</h1>
     <p class="subtitle fancy-subtitle">体系的な学習とAI問題で英文法をマスターしよう</p>
   `;
   container.appendChild(header);
 
-  // Course section title
+  // 全体進捗バー
+  const overallProgress = calculateOverallProgress();
+  const progressSection = document.createElement('div');
+  progressSection.className = 'overall-progress';
+  progressSection.innerHTML = `
+    <div class="overall-progress-label">
+      <span>全体の進捗</span>
+      <strong>${overallProgress.completed} / ${overallProgress.total} レッスン完了 (${overallProgress.percentage}%)</strong>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" style="width: ${overallProgress.percentage}%"></div>
+    </div>
+  `;
+  container.appendChild(progressSection);
+
+  // おすすめセクション
+  const recommendation = findNextRecommendation();
+  if (recommendation) {
+    const recCard = document.createElement('div');
+    recCard.className = 'recommendation-card';
+    recCard.innerHTML = `
+      <div>
+        <div class="rec-label">▶ 次のおすすめ</div>
+        <div class="rec-title">${recommendation.topic.title}</div>
+      </div>
+    `;
+
+    const recBtn = document.createElement('button');
+    recBtn.className = 'btn btn-primary';
+    recBtn.textContent = 'すぐに学習 →';
+    recBtn.onclick = () => navigate('/lesson', recommendation.topic);
+    recCard.appendChild(recBtn);
+
+    container.appendChild(recCard);
+  }
+
+  // コースセクションタイトル
   const courseTitleEl = document.createElement('h2');
   courseTitleEl.className = 'section-title';
   courseTitleEl.textContent = '学習コース';
   container.appendChild(courseTitleEl);
 
-  // Course grid
+  // コースグリッド（データ駆動で生成）
   const courseGrid = document.createElement('div');
   courseGrid.className = 'course-grid';
-  courseGrid.style.gap = '2rem'; // Margin between cards
 
-  // 1. 5 Sentence Patterns Card
-  const patternsData = curriculum.find(c => c.id === 'sentence-patterns');
-  const patternsCard = createCourseCard({
-    id: 'course-patterns',
-    image: iconPatterns,
-    title: '5 Sentence Patterns',
-    description: '英語の基本5文型（SV, SVC, SVO, SVOO, SVOC）をマスターしよう',
-    streakKey: 'summaryBestStreak',
-    topics: patternsData?.topics || [],
-    onClick: () => navigate('/category/sentence-patterns'),
-    onChallengeClick: () => navigate('/summary/5-sentence-patterns')
+  curriculum.forEach(cat => {
+    const card = createCourseCard(cat);
+    courseGrid.appendChild(card);
   });
-  courseGrid.appendChild(patternsCard);
-
-  // 2. Verb Tenses Card
-  const tensesData = curriculum.find(c => c.id === 'tenses');
-  const tensesCard = createCourseCard({
-    id: 'course-tenses',
-    image: iconTenses,
-    title: 'Verb Tenses',
-    description: '過去、未来、進行、完了形をマスターして時制を使いこなそう',
-    streakKey: 'tensesBestStreak',
-    topics: tensesData?.topics || [],
-    onClick: () => navigate('/category/tenses'),
-    onChallengeClick: () => navigate('/summary/tenses')
-  });
-  courseGrid.appendChild(tensesCard);
-
-  // 3. Auxiliary Verbs Card
-  const auxData = curriculum.find(c => c.id === 'auxiliary-verbs');
-  const auxCard = createCourseCard({
-    id: 'course-auxiliary',
-    image: iconAuxiliary,
-    title: 'Auxiliary Verbs',
-    description: 'can, will, mustなど、動詞にニュアンスを加える助動詞をマスター',
-    streakKey: 'auxiliaryVerbsBestStreak',
-    topics: auxData?.topics || [],
-    onClick: () => navigate('/category/auxiliary-verbs'),
-    onChallengeClick: () => navigate('/summary/auxiliary-verbs')
-  });
-  courseGrid.appendChild(auxCard);
-
-  // 4. Parts of Speech Card
-  const posData = curriculum.find(c => c.id === 'parts-of-speech');
-  const posCard = createCourseCard({
-    id: 'course-pos',
-    image: iconPos,
-    title: 'Parts of Speech',
-    description: '8大品詞（名詞、動詞、形容詞など）を完全理解',
-    streakKey: 'posBestStreak',
-    topics: posData?.topics || [],
-    onClick: () => navigate('/category/parts-of-speech'),
-    onChallengeClick: () => navigate('/summary/parts-of-speech')
-  });
-  courseGrid.appendChild(posCard);
-
-  // 5. Passive Voice Card
-  const passiveData = curriculum.find(c => c.id === 'passive-voice');
-  const passiveCard = createCourseCard({
-    id: 'course-passive',
-    image: iconPassiveVoice,
-    title: 'Passive Voice',
-    description: '受動態（受け身）の表現をマスターしよう',
-    streakKey: 'passiveVoiceBestStreak',
-    topics: passiveData?.topics || [],
-    onClick: () => navigate('/category/passive-voice'),
-    onChallengeClick: () => navigate('/summary/passive-voice')
-  });
-  courseGrid.appendChild(passiveCard);
-
-  // 6. Various Expressions Card
-  const variousData = curriculum.find(c => c.id === 'various-expressions');
-  const variousCard = createCourseCard({
-    id: 'course-various',
-    image: iconVarious,
-    title: 'Various Expressions',
-    description: '命令文、There is構文、数量表現など、表現の幅を広げる構文をマスター',
-    streakKey: 'variousExpressionsBestStreak',
-    topics: variousData?.topics || [],
-    onClick: () => navigate('/category/various-expressions'),
-    onChallengeClick: () => navigate('/summary/various-expressions')
-  });
-  courseGrid.appendChild(variousCard);
-
-  // 7. Question Words Card
-  const questionWordsData = curriculum.find(c => c.id === 'question-words');
-  const questionWordsCard = createCourseCard({
-    id: 'course-question-words',
-    image: iconQuestionWords, // TODO: Replace with dedicated icon-question-words.png
-    title: 'Question Words',
-    description: '5W1Hや付加疑問など、疑問文の基本をマスターしよう',
-    streakKey: 'questionWordsBestStreak',
-    topics: questionWordsData?.topics || [],
-    onClick: () => navigate('/category/question-words'),
-    onChallengeClick: () => navigate('/summary/question-words')
-  });
-  courseGrid.appendChild(questionWordsCard);
-
-  // 8. Comparisons Card
-  const comparisonsData = curriculum.find(c => c.id === 'comparisons');
-  const comparisonsCard = createCourseCard({
-    id: 'course-comparisons',
-    image: iconComparisons,
-    title: 'Comparisons',
-    description: '原級・比較級・最上級を使いこなし、比較表現を完全マスター',
-    streakKey: 'comparisonsBestStreak',
-    topics: comparisonsData?.topics || [],
-    onClick: () => navigate('/category/comparisons'),
-    onChallengeClick: () => navigate('/summary/comparisons')
-  });
-  courseGrid.appendChild(comparisonsCard);
 
   container.appendChild(courseGrid);
 
   return container;
 };
 
-function createCourseCard({ id, image, title, description, streakKey, topics, onClick, onChallengeClick }) {
+/**
+ * 全体進捗を計算する
+ */
+function calculateOverallProgress() {
+  let totalTopics = 0;
+  let completedTopics = 0;
+
+  curriculum.forEach(cat => {
+    const progress = getCategoryProgress(cat.topics);
+    totalTopics += progress.total;
+    completedTopics += progress.completed;
+  });
+
+  const percentage = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+  return { completed: completedTopics, total: totalTopics, percentage };
+}
+
+/**
+ * 次に取り組むべきトピックを見つける
+ */
+function findNextRecommendation() {
+  const progress = loadProgress();
+
+  for (const cat of curriculum) {
+    for (const topic of cat.topics) {
+      if (topic.isEnabled && !progress.completedTopics.includes(topic.id)) {
+        return { category: cat, topic };
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * コースカード生成（データ駆動）
+ */
+function createCourseCard(cat) {
   const card = document.createElement('div');
-  card.className = 'glass topic-card-refined'; // Refined class
-  card.id = id;
+  card.className = 'glass topic-card-refined';
 
-  const iconEl = document.createElement('img');
-  iconEl.src = image;
-  iconEl.alt = title;
-  iconEl.className = 'course-icon-img'; // New class for image
-  iconEl.style.height = '20vh';
-  iconEl.style.objectFit = 'contain';
-  iconEl.style.marginBottom = '1.5rem';
-
-  const titleEl = document.createElement('h3');
-  titleEl.textContent = title;
-  titleEl.className = 'card-title';
-  titleEl.style.fontSize = '1.5rem';
-  titleEl.style.marginBottom = '0.5rem';
-
-  const descEl = document.createElement('p');
-  descEl.textContent = description;
-  descEl.className = 'card-desc';
-  descEl.style.marginBottom = '1.5rem';
-
-  // Progress Logic
-  const progress = getCategoryProgress(topics);
+  const progress = getCategoryProgress(cat.topics);
+  const streakKey = streakKeyMap[cat.id] || '';
   const streak = parseInt(localStorage.getItem(streakKey) || '0', 10);
+  const icon = iconMap[cat.id];
+  const percentage = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
 
-  // Button Container
+  // アイコン
+  if (icon) {
+    const iconEl = document.createElement('img');
+    iconEl.src = icon;
+    iconEl.alt = cat.title;
+    iconEl.className = 'course-icon-img';
+    iconEl.style.maxHeight = '100px';
+    iconEl.style.objectFit = 'contain';
+    iconEl.style.marginBottom = '1rem';
+    card.appendChild(iconEl);
+  }
+
+  // タイトル
+  const titleEl = document.createElement('h3');
+  titleEl.textContent = cat.title;
+  titleEl.className = 'card-title';
+  card.appendChild(titleEl);
+
+  // アクションエリア
   const actionsEl = document.createElement('div');
   actionsEl.className = 'card-actions';
   actionsEl.style.width = '100%';
   actionsEl.style.display = 'flex';
   actionsEl.style.flexDirection = 'column';
   actionsEl.style.alignItems = 'center';
-  actionsEl.style.gap = '1rem';
+  actionsEl.style.gap = '0.75rem';
+  actionsEl.style.marginTop = 'auto';
 
-  // Challenge Button (Visible if all completed)
-  // Request: Place Challenge Button ABOVE Streak
+  // プログレスバー
+  const progressTrack = document.createElement('div');
+  progressTrack.className = 'card-progress-track';
+  const progressFill = document.createElement('div');
+  progressFill.className = 'card-progress-fill' + (progress.allCompleted ? ' complete' : '');
+  progressFill.style.width = `${percentage}%`;
+  progressTrack.appendChild(progressFill);
+  actionsEl.appendChild(progressTrack);
+
+  // 進捗テキスト
+  const progressText = document.createElement('div');
+  progressText.style.fontSize = '0.85rem';
+  progressText.style.color = 'var(--text-muted)';
+
+  if (progress.allCompleted) {
+    progressText.innerHTML = `<span style="color: var(--success);">✓ 完了</span>`;
+    if (streak > 0) {
+      progressText.innerHTML += ` · <span style="color: #fbbf24;">🔥 ${streak}問連続正解</span>`;
+    }
+  } else {
+    progressText.textContent = `${progress.completed}/${progress.total} 完了 (${percentage}%)`;
+  }
+  actionsEl.appendChild(progressText);
+
+  // エキスパートチャレンジボタン（全完了時のみ）
   if (progress.allCompleted) {
     const challengeBtn = document.createElement('button');
-    challengeBtn.className = 'btn btn-challenge';
-    challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
+    challengeBtn.className = 'btn btn-accent';
+    challengeBtn.style.fontSize = '0.9rem';
+    challengeBtn.style.padding = '0.5rem 1.25rem';
+    challengeBtn.style.borderRadius = '2rem';
+    challengeBtn.textContent = '🏆 エキスパートチャレンジ';
     challengeBtn.onclick = (e) => {
       e.stopPropagation();
-      onChallengeClick();
+      navigate(getSummaryRoute(cat.id));
     };
     actionsEl.appendChild(challengeBtn);
   }
 
-  // Status Badge
-  const statusBadge = document.createElement('div');
-  statusBadge.className = 'status-badge';
-  statusBadge.style.background = 'rgba(0, 0, 0, 0.3)';
-  statusBadge.style.padding = '0.5rem 1rem';
-  statusBadge.style.borderRadius = '2rem';
-  statusBadge.style.display = 'inline-block';
-  statusBadge.style.marginBottom = '0.5rem'; // Reduced margin
-
-  if (progress.allCompleted) {
-    statusBadge.innerHTML = `
-      <span style="color: #fbbf24; margin-right: 0.5rem;">🔥</span>
-      <span style="font-weight: bold;">${streak}問連続正解</span>
-    `;
-    statusBadge.style.border = '1px solid #fbbf24';
-  } else {
-    const percentage = Math.round((progress.completed / progress.total) * 100);
-    statusBadge.innerHTML = `
-      <span style="color: var(--secondary); margin-right: 0.5rem;">📊</span>
-      <span>進捗: <strong>${progress.completed}/${progress.total}</strong> (${percentage}%)</span>
-    `;
-    statusBadge.style.border = '1px solid var(--secondary)';
-  }
-
-  // Add status badge to actions container instead of card body
-  actionsEl.appendChild(statusBadge);
-
+  // メインボタン
   const startBtn = document.createElement('button');
-  startBtn.className = 'btn btn-unified'; // Unified button class
-  startBtn.innerHTML = 'レッスンを開始 <span style="margin-left: 0.5rem;">→</span>';
+  startBtn.className = 'btn btn-primary';
+  startBtn.style.width = '100%';
+  startBtn.style.borderRadius = '2rem';
+  startBtn.textContent = 'レッスンを開始 →';
   startBtn.onclick = (e) => {
     e.stopPropagation();
-    onClick();
+    navigate(`/category/${cat.id}`);
   };
   actionsEl.appendChild(startBtn);
 
-  card.appendChild(iconEl);
-  card.appendChild(titleEl);
-  card.appendChild(descEl);
-  // card.appendChild(statusBadge); // Moved to actionsEl
   card.appendChild(actionsEl);
 
-  // Hover effect handled by CSS .topic-card-refined:hover
-
-  card.onclick = onClick;
+  // カード全体クリック
+  card.onclick = () => navigate(`/category/${cat.id}`);
 
   return card;
 }
