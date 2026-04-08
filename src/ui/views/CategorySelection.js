@@ -9,7 +9,7 @@ export const CategorySelection = (categoryId) => {
   const container = document.createElement('div');
   container.className = 'category-selection-view';
 
-  // Find the category data
+  // カテゴリデータの取得
   const categoryData = curriculum.find(c => c.id === categoryId);
   if (!categoryData) {
     container.innerHTML = '<p>Category not found.</p>';
@@ -30,15 +30,13 @@ export const CategorySelection = (categoryId) => {
   `;
   container.appendChild(header);
 
-  // Lessons title
+  // レッスン一覧タイトル
   const lessonsTitle = document.createElement('h2');
   lessonsTitle.textContent = 'レッスン一覧';
   lessonsTitle.className = 'section-title';
-  lessonsTitle.style.marginTop = '2rem';
-  lessonsTitle.style.marginBottom = '1rem';
   container.appendChild(lessonsTitle);
 
-  // Challenge Mode Button (if all completed or debug mode)
+  // チャレンジモードボタン（全完了 or デバッグモード時）
   const progress = getCategoryProgress(categoryData.topics);
   const debugUnlock = import.meta.env.VITE_DEBUG_UNLOCK === 'true';
   const showChallenge = debugUnlock || progress.allCompleted;
@@ -58,10 +56,9 @@ export const CategorySelection = (categoryId) => {
     challengeTitle.style.marginBottom = '1rem';
 
     const challengeBtn = document.createElement('button');
-    challengeBtn.className = 'btn btn-challenge';
+    challengeBtn.className = 'btn btn-primary';
     challengeBtn.innerHTML = '🏆 エキスパートチャレンジ';
     challengeBtn.onclick = () => {
-      // 5文型だけ特殊なルート
       const summaryRoute = categoryId === 'sentence-patterns'
         ? '/summary/5-sentence-patterns'
         : `/summary/${categoryId}`;
@@ -73,82 +70,75 @@ export const CategorySelection = (categoryId) => {
     container.appendChild(challengeContainer);
   }
 
-  // Topics grid
+  // トピックグリッド
   const topicsGrid = document.createElement('div');
   topicsGrid.className = 'topics-grid';
-  topicsGrid.style.gap = '2rem'; // Increased gap
 
   categoryData.topics.forEach(topic => {
-    if (!topic.isEnabled) return; // Skip disabled topics
+    if (!topic.isEnabled) return;
 
     const card = document.createElement('div');
-    card.className = 'glass topic-card-refined'; // Refined class
-    card.style.display = 'flex';
-    card.style.flexDirection = 'column';
+    const topicProgress = getProgress(topic.id);
+    const isCompleted = topicProgress.completed;
+    const totalCount = topic.quiz?.length || 0;
+    const clearedCount = topicProgress.score || 0;
 
-    const progress = getProgress(topic.id);
-    const isCompleted = progress.completed;
+    // カードのクラスを状態に応じて設定
+    card.className = 'card card--interactive';
+    if (isCompleted) {
+      card.classList.add('card--completed');
+    } else if (clearedCount > 0) {
+      card.classList.add('card--in-progress');
+    }
 
+    // タイトル
     const topicTitle = document.createElement('h3');
     topicTitle.textContent = topic.title;
     topicTitle.className = 'card-title';
-    topicTitle.style.marginBottom = '0.5rem';
 
+    // 説明
     const topicDesc = document.createElement('p');
     topicDesc.textContent = topic.description;
     topicDesc.className = 'card-desc';
-    topicDesc.style.marginBottom = '1rem';
 
-    // Bottom section container (status + button)
+    // ボトムセクション（ステータス + ボタン）
     const bottomSection = document.createElement('div');
-    bottomSection.style.marginTop = 'auto'; // Push to bottom
+    bottomSection.style.marginTop = 'auto';
     bottomSection.style.display = 'flex';
     bottomSection.style.flexDirection = 'column';
     bottomSection.style.gap = '1rem';
+    bottomSection.style.width = '100%';
 
-    // Status section - Fixed height for consistent positioning
+    // ステータスバッジ
     const statusContainer = document.createElement('div');
-    statusContainer.style.minHeight = '3rem'; // Fixed minimum height
     statusContainer.style.display = 'flex';
     statusContainer.style.alignItems = 'center';
     statusContainer.style.justifyContent = 'center';
 
-    const totalCount = topic.quiz?.length || 0;
-    const clearedCount = progress.score || 0;
-    const unclearedCount = Math.max(0, totalCount - clearedCount);
-
-    // Progress display
-    const progressDisplay = document.createElement('div');
-    progressDisplay.className = 'status-badge';
-    progressDisplay.style.background = 'rgba(0, 0, 0, 0.3)';
-    progressDisplay.style.padding = '0.5rem 1rem';
-    progressDisplay.style.borderRadius = '2rem';
-    progressDisplay.style.display = 'inline-block';
-    progressDisplay.style.border = '1px solid var(--text-muted)';
+    const statusBadge = document.createElement('div');
+    statusBadge.className = 'status-badge';
 
     if (isCompleted) {
-      progressDisplay.innerHTML = `
-        <span style="color: var(--success); margin-right: 0.5rem;">✓</span>
-        <span style="font-weight: bold;">COMPLETED</span>
-      `;
-      progressDisplay.style.border = '1px solid var(--success)';
-      progressDisplay.style.color = 'var(--success)';
+      statusBadge.classList.add('status-badge--completed');
+      statusBadge.textContent = '✓ 完了';
+    } else if (clearedCount > 0) {
+      statusBadge.classList.add('status-badge--in-progress');
+      statusBadge.textContent = `学習中（${clearedCount}/${totalCount}問）`;
     } else {
-      progressDisplay.innerHTML = `
-        <span style="color: var(--text-muted);">📊 未クリア: <span style="color: var(--error); font-weight: bold;">${unclearedCount}</span> / クリア: <span style="color: var(--success); font-weight: bold;">${clearedCount}</span></span>
-      `;
+      statusBadge.classList.add('status-badge--not-started');
+      statusBadge.textContent = '未着手';
     }
-    statusContainer.appendChild(progressDisplay);
+    statusContainer.appendChild(statusBadge);
 
-    // Button container
+    // ボタン
     const btnContainer = document.createElement('div');
-    btnContainer.className = 'card-actions'; // Add class for positioning
+    btnContainer.className = 'card-actions';
     btnContainer.style.textAlign = 'center';
-    btnContainer.style.width = '100%'; // Ensure full width
+    btnContainer.style.width = '100%';
 
     const startBtn = document.createElement('button');
-    startBtn.className = 'btn btn-unified'; // Unified button class
-    startBtn.innerHTML = 'レッスンを開始 <span style="margin-left: 0.5rem;">→</span>';
+    startBtn.className = 'btn btn-primary';
+    startBtn.textContent = 'レッスンを開始 →';
     startBtn.onclick = (e) => {
       e.stopPropagation();
       navigate('/lesson', topic);
@@ -156,15 +146,12 @@ export const CategorySelection = (categoryId) => {
 
     btnContainer.appendChild(startBtn);
 
-    // Assemble bottom section
     bottomSection.appendChild(statusContainer);
     bottomSection.appendChild(btnContainer);
 
     card.appendChild(topicTitle);
     card.appendChild(topicDesc);
     card.appendChild(bottomSection);
-
-    // Hover effect handled by CSS .topic-card-refined:hover
 
     topicsGrid.appendChild(card);
   });

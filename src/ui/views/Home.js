@@ -51,27 +51,12 @@ export const Home = () => {
   const header = document.createElement('div');
   header.className = 'home-header';
   header.innerHTML = `
-    <h1 class="title fancy-title" style="font-size: 2.5rem;">English Grammar Mastery</h1>
-    <p class="subtitle fancy-subtitle">体系的な学習とAI問題で英文法をマスターしよう</p>
+    <h1 class="home-title">English Grammar Mastery</h1>
+    <p class="home-subtitle">体系的な学習とAI問題で英文法をマスターしよう</p>
   `;
   container.appendChild(header);
 
-  // 全体進捗バー
-  const overallProgress = calculateOverallProgress();
-  const progressSection = document.createElement('div');
-  progressSection.className = 'overall-progress';
-  progressSection.innerHTML = `
-    <div class="overall-progress-label">
-      <span>全体の進捗</span>
-      <strong>${overallProgress.completed} / ${overallProgress.total} レッスン完了 (${overallProgress.percentage}%)</strong>
-    </div>
-    <div class="progress-bar-track">
-      <div class="progress-bar-fill" style="width: ${overallProgress.percentage}%"></div>
-    </div>
-  `;
-  container.appendChild(progressSection);
-
-  // おすすめセクション
+  // おすすめセクション（進捗の前に配置）
   const recommendation = findNextRecommendation();
   if (recommendation) {
     const recCard = document.createElement('div');
@@ -92,13 +77,28 @@ export const Home = () => {
     container.appendChild(recCard);
   }
 
+  // 全体進捗バー
+  const overallProgress = calculateOverallProgress();
+  const progressSection = document.createElement('div');
+  progressSection.className = 'overall-progress';
+  progressSection.innerHTML = `
+    <div class="overall-progress-label">
+      <span>全体の進捗</span>
+      <strong>${overallProgress.completed} / ${overallProgress.total} レッスン完了 (${overallProgress.percentage}%)</strong>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" style="width: ${overallProgress.percentage}%"></div>
+    </div>
+  `;
+  container.appendChild(progressSection);
+
   // コースセクションタイトル
   const courseTitleEl = document.createElement('h2');
   courseTitleEl.className = 'section-title';
   courseTitleEl.textContent = '学習コース';
   container.appendChild(courseTitleEl);
 
-  // コースグリッド（データ駆動で生成）
+  // コースグリッド
   const courseGrid = document.createElement('div');
   courseGrid.className = 'course-grid';
 
@@ -146,11 +146,10 @@ function findNextRecommendation() {
 }
 
 /**
- * コースカード生成（データ駆動）
+ * コースカード生成
  */
 function createCourseCard(cat) {
   const card = document.createElement('div');
-  card.className = 'glass topic-card-refined';
 
   const progress = getCategoryProgress(cat.topics);
   const streakKey = streakKeyMap[cat.id] || '';
@@ -158,15 +157,18 @@ function createCourseCard(cat) {
   const icon = iconMap[cat.id];
   const percentage = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
 
+  // カードの状態でクラスを切り替え
+  card.className = 'card card--interactive';
+  if (progress.allCompleted) {
+    card.classList.add('card--completed');
+  }
+
   // アイコン
   if (icon) {
     const iconEl = document.createElement('img');
     iconEl.src = icon;
     iconEl.alt = cat.title;
     iconEl.className = 'course-icon-img';
-    iconEl.style.maxHeight = '100px';
-    iconEl.style.objectFit = 'contain';
-    iconEl.style.marginBottom = '1rem';
     card.appendChild(iconEl);
   }
 
@@ -198,10 +200,10 @@ function createCourseCard(cat) {
   // 進捗テキスト
   const progressText = document.createElement('div');
   progressText.style.fontSize = '0.85rem';
-  progressText.style.color = 'var(--text-muted)';
+  progressText.style.color = 'var(--color-text-secondary)';
 
   if (progress.allCompleted) {
-    progressText.innerHTML = `<span style="color: var(--success);">✓ 完了</span>`;
+    progressText.innerHTML = `<span style="color: var(--color-success);">✓ 完了</span>`;
     if (streak > 0) {
       progressText.innerHTML += ` · <span style="color: #fbbf24;">🔥 ${streak}問連続正解</span>`;
     }
@@ -213,10 +215,9 @@ function createCourseCard(cat) {
   // エキスパートチャレンジボタン（全完了時のみ）
   if (progress.allCompleted) {
     const challengeBtn = document.createElement('button');
-    challengeBtn.className = 'btn btn-accent';
+    challengeBtn.className = 'btn btn-primary';
     challengeBtn.style.fontSize = '0.9rem';
     challengeBtn.style.padding = '0.5rem 1.25rem';
-    challengeBtn.style.borderRadius = '2rem';
     challengeBtn.textContent = '🏆 エキスパートチャレンジ';
     challengeBtn.onclick = (e) => {
       e.stopPropagation();
@@ -229,7 +230,6 @@ function createCourseCard(cat) {
   const startBtn = document.createElement('button');
   startBtn.className = 'btn btn-primary';
   startBtn.style.width = '100%';
-  startBtn.style.borderRadius = '2rem';
   startBtn.textContent = 'レッスンを開始 →';
   startBtn.onclick = (e) => {
     e.stopPropagation();
