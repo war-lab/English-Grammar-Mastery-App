@@ -563,6 +563,38 @@ button {
   color: var(--color-text-primary);
 }
 
+/* レッスン/クイズ内のパンくず（白背景対応） */
+.lesson-shell .breadcrumb,
+.quiz-shell .breadcrumb {
+  color: var(--color-text-tertiary);
+}
+.lesson-shell .breadcrumb a,
+.quiz-shell .breadcrumb a {
+  color: var(--color-text-tertiary);
+}
+.lesson-shell .breadcrumb a:hover,
+.quiz-shell .breadcrumb a:hover {
+  color: var(--color-accent);
+}
+.lesson-shell .breadcrumb .separator,
+.quiz-shell .breadcrumb .separator {
+  color: var(--color-border-strong);
+}
+.lesson-shell .breadcrumb .current,
+.quiz-shell .breadcrumb .current {
+  color: var(--color-text-primary);
+}
+
+/* クイズ内のセカンダリボタン（白背景対応） */
+.quiz-shell .btn-secondary {
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+.quiz-shell .btn-secondary:hover {
+  background: var(--color-surface-3);
+}
+
 /* スクロール進捗バー */
 .scroll-progress {
   position: fixed;
