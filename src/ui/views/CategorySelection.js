@@ -43,17 +43,11 @@ export const CategorySelection = (categoryId) => {
 
   if (showChallenge) {
     const challengeContainer = document.createElement('div');
-    challengeContainer.style.textAlign = 'center';
-    challengeContainer.style.marginBottom = '2rem';
-    challengeContainer.style.padding = '1.5rem';
-    challengeContainer.style.background = 'var(--color-accent-soft-2)';
-    challengeContainer.style.borderRadius = '1rem';
-    challengeContainer.style.border = '1px solid rgba(79, 70, 229, 0.25)';
+    challengeContainer.className = 'category-challenge-banner';
 
     const challengeTitle = document.createElement('h3');
+    challengeTitle.className = 'category-challenge-banner__title';
     challengeTitle.textContent = '🎉 全レッスンクリア！';
-    challengeTitle.style.color = 'var(--color-accent)';
-    challengeTitle.style.marginBottom = '1rem';
 
     const challengeBtn = document.createElement('button');
     challengeBtn.className = 'btn btn-primary';

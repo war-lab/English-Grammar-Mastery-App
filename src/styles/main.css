@@ -855,6 +855,23 @@ button {
   font-size: var(--font-size-body-lg);
 }
 
+/* カテゴリ全クリアバナー */
+.category-challenge-banner {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-accent-soft-2);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(79, 70, 229, 0.25);
+}
+
+.category-challenge-banner__title {
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+}
+
 /* ステータスバッジ */
 .status-badge {
   display: inline-block;
@@ -895,8 +912,8 @@ button {
   border-radius: 1rem;
 }
 
-/* Refined Card — Challenge/Summary専用 */
-.topic-card-refined {
+/* Challenge専用カード — ご褒美世界でのみ使用 */
+.challenge-card {
   padding: 2rem;
   border-radius: 1.5rem;
   background: rgba(30, 41, 59, 0.7);
@@ -910,13 +927,13 @@ button {
   text-align: center;
 }
 
-.topic-card-refined:hover {
+.challenge-card:hover {
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.2);
   border-color: rgba(99, 102, 241, 0.5);
   background: rgba(30, 41, 59, 0.9);
 }
 
-.topic-card-refined::before {
+.challenge-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -957,8 +974,12 @@ button {
   font-weight: 500;
 }
 
-/* Challenge用ボタン */
-.btn-unified {
+/*
+ * Challenge専用グラデーションボタン
+ * indigo → pink のグラデーションは「ご褒美世界」の色。
+ * 通常学習では btn-primary (単色indigo) を使うこと。
+ */
+.challenge-btn-gradient {
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-challenge-pink) 100%);
   color: white;
   border: none;
@@ -974,17 +995,18 @@ button {
   justify-content: center;
 }
 
-.btn-unified:hover {
+.challenge-btn-gradient:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
   filter: brightness(1.1);
 }
 
-.btn-unified:active {
+.challenge-btn-gradient:active {
   transform: scale(0.98);
 }
 
-.btn-challenge {
+/* Challenge専用amberボタン — ご褒美/チャレンジ解禁の導線にのみ使用 */
+.challenge-btn-amber {
   background: linear-gradient(135deg, var(--color-challenge-amber) 0%, var(--color-challenge-amber-dark) 100%);
   color: white;
   border: none;
@@ -997,25 +1019,13 @@ button {
   font-size: 1rem;
 }
 
-.btn-challenge:hover {
+.challenge-btn-amber:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 15px rgba(245, 158, 11, 0.5);
 }
 
-.btn-accent {
-  background: linear-gradient(135deg, var(--color-challenge-amber), var(--color-challenge-amber-dark));
-  color: white;
-  border: none;
-  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-}
-
-.btn-accent:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(245, 158, 11, 0.5);
-}
-
-/* AIモードボタン */
-.btn-ai {
+/* AIモードボタン — Challenge/Summary専用 */
+.challenge-btn-ai {
   background: linear-gradient(135deg, var(--color-ai), #047857);
   color: white;
   border: 2px solid rgba(0, 255, 0, 0.3);

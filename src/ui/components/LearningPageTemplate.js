@@ -152,7 +152,7 @@ export const LearningPageTemplate = (config) => {
       };
 
       const aiBtn = document.createElement('button');
-      aiBtn.className = 'btn btn-ai';
+      aiBtn.className = 'btn challenge-btn-ai';
       // If no AI generator provided, disable
       if (!config.aiQuizGenerator) {
         aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">未実装</span>';
