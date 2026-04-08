@@ -13,7 +13,7 @@ export const SummaryPassiveVoice = () => {
       </div>
       
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">基本</span>
             <h3>基本の受動態 (Basic)</h3>
@@ -30,7 +30,7 @@ export const SummaryPassiveVoice = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">応用</span>
             <h3>未来・助動詞の受動態</h3>

@@ -41,7 +41,7 @@ export const LearningPageTemplate = (config) => {
   wrapper.appendChild(backBtn);
 
   const container = document.createElement('div');
-  container.className = 'summary-container glass';
+  container.className = 'summary-container challenge-glass';
   container.style.padding = '2rem';
 
   wrapper.appendChild(container);
@@ -86,8 +86,8 @@ export const LearningPageTemplate = (config) => {
     const header = document.createElement('header');
     header.innerHTML = `
       <div style="text-align: center; width: 100%;">
-        <h1 class="fancy-title">${config.title}</h1>
-        <p class="fancy-subtitle">${config.subtitle}</p>
+        <h1 class="challenge-fancy-title">${config.title}</h1>
+        <p class="challenge-fancy-subtitle">${config.subtitle}</p>
       </div>
     `;
     header.style.position = 'relative';
@@ -152,7 +152,7 @@ export const LearningPageTemplate = (config) => {
       };
 
       const aiBtn = document.createElement('button');
-      aiBtn.className = 'btn btn-ai';
+      aiBtn.className = 'btn challenge-btn-ai';
       // If no AI generator provided, disable
       if (!config.aiQuizGenerator) {
         aiBtn.innerHTML = '🤖 AIチャレンジ<br><span style="font-size: 0.8em;">未実装</span>';
@@ -254,7 +254,7 @@ export const LearningPageTemplate = (config) => {
 
     if (isAIMode) tierClass = 'tier-ai';
 
-    container.className = `summary-container glass ${tierClass}`;
+    container.className = `summary-container challenge-glass ${tierClass}`;
 
     const quizSection = document.createElement('section');
     quizSection.className = 'quiz-section';
@@ -493,7 +493,7 @@ export const LearningPageTemplate = (config) => {
       resultBtn.onclick = () => {
         const modal = createResultModal(streak, () => {
           viewState = 'explanation';
-          container.className = 'summary-container glass';
+          container.className = 'summary-container challenge-glass';
           render();
         });
         document.body.appendChild(modal);
@@ -503,7 +503,7 @@ export const LearningPageTemplate = (config) => {
   };
 
   const renderCelebration = () => {
-    container.className = 'summary-container glass tier-4';
+    container.className = 'summary-container challenge-glass tier-4';
     const celebrationDiv = document.createElement('div');
     celebrationDiv.className = 'celebration-content';
     celebrationDiv.style.padding = '4rem';
@@ -530,7 +530,7 @@ export const LearningPageTemplate = (config) => {
 
     backBtn.onclick = () => {
       viewState = 'explanation';
-      container.className = 'summary-container glass';
+      container.className = 'summary-container challenge-glass';
       render();
     };
 

@@ -10,6 +10,7 @@ import { SummaryVariousExpressions } from './views/SummaryVariousExpressions.js'
 import { SummaryQuestionWords } from './views/SummaryQuestionWords.js';
 import { SummaryComparisons } from './views/SummaryComparisons.js';
 import { SummaryInfinitivesGerunds } from './views/SummaryInfinitivesGerunds.js';
+import { SummaryParticiples } from './views/SummaryParticiples.js';
 import { CategorySelection } from './views/CategorySelection.js';
 import { getNavigationState } from './navigation.js';
 
@@ -26,7 +27,8 @@ const routes = {
   '/summary/various-expressions': SummaryVariousExpressions,
   '/summary/question-words': SummaryQuestionWords,
   '/summary/comparisons': SummaryComparisons,
-  '/summary/infinitives-gerunds': SummaryInfinitivesGerunds
+  '/summary/infinitives-gerunds': SummaryInfinitivesGerunds,
+  '/summary/participles': SummaryParticiples
 };
 
 

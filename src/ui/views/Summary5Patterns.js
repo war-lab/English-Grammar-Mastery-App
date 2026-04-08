@@ -14,7 +14,7 @@ export const Summary5Patterns = () => {
       </div>
       
       <div class="patterns-grid">
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">第1文型</span>
             <h3>SV</h3>
@@ -32,7 +32,7 @@ export const Summary5Patterns = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">第2文型</span>
             <h3>SVC</h3>
@@ -50,7 +50,7 @@ export const Summary5Patterns = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">第3文型</span>
             <h3>SVO</h3>
@@ -68,7 +68,7 @@ export const Summary5Patterns = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">第4文型</span>
             <h3>SVOO</h3>
@@ -86,7 +86,7 @@ export const Summary5Patterns = () => {
           </div>
         </div>
 
-        <div class="pattern-explanation-card glass">
+        <div class="pattern-explanation-card challenge-glass">
           <div class="pattern-header">
             <span class="pattern-badge">第5文型</span>
             <h3>SVOC</h3>
