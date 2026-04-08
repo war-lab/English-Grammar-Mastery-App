@@ -1,5 +1,6 @@
 import { navigate } from '../navigation.js';
 import { loadProgress, saveProgress } from '../../logic/storage.js';
+import { curriculum } from '../../logic/curriculum.js';
 
 export const Quiz = (topic) => {
   const container = document.createElement('div');
@@ -8,7 +9,7 @@ export const Quiz = (topic) => {
   container.style.maxWidth = '700px';
   container.style.margin = '0 auto';
 
-  // Fallback for direct access
+  // トピック未選択時のフォールバック
   if (!topic || !topic.quiz) {
     const message = document.createElement('p');
     message.textContent = 'ダッシュボードからレッスンを選択してください。';
@@ -19,8 +20,7 @@ export const Quiz = (topic) => {
     backBtn.className = 'btn btn-primary';
     backBtn.textContent = 'レッスン選択に戻る';
     backBtn.style.marginTop = '2rem';
-    backBtn.onclick = () => navigate('/dashboard'); // Fallback to dashboard if no topic
-    container.appendChild(backBtn);
+    backBtn.onclick = () => navigate('/dashboard');
     container.appendChild(backBtn);
 
     return container;
@@ -31,8 +31,7 @@ export const Quiz = (topic) => {
   title.className = 'title';
   title.style.marginBottom = '2rem';
 
-  // Randomize questions and options
-  // Create a deep copy to avoid modifying the original curriculum
+  // 問題と選択肢をランダム化（元データを変更しないようディープコピー）
   const quizData = topic.quiz.map(q => ({
     ...q,
     options: [...q.options].sort(() => Math.random() - 0.5)
@@ -41,50 +40,131 @@ export const Quiz = (topic) => {
   let currentQuestion = 0;
   let score = 0;
   let selectedAnswer = null;
+  // 不正解の問題を記録する配列
+  const wrongAnswers = [];
+
+  // 合格ラインは80%（切り上げ）
+  const passThreshold = Math.ceil(quizData.length * 0.8);
+
+  /**
+   * カテゴリページへ戻るナビゲーション（動的にカリキュラムから検索）
+   */
+  const navigateBackToCategory = () => {
+    const category = curriculum.find(c => c.topics.some(t => t.id === topic.id));
+    if (category) {
+      navigate(`/category/${category.id}`);
+    } else {
+      navigate('/');
+    }
+  };
 
   const renderQuestion = () => {
-    // Clear container but keep title
+    // コンテナをクリアしてタイトルを再追加
     container.innerHTML = '';
     container.appendChild(title);
 
     if (currentQuestion >= quizData.length) {
-      // Quiz complete - save progress
+      // クイズ完了 - 進捗を保存
       const progress = loadProgress();
+      const passed = score >= passThreshold;
 
-      // Add topic to completed ONLY if perfect score and not already there
-      if (score === quizData.length && !progress.completedTopics.includes(topic.id)) {
+      // 合格時のみ完了トピックに追加（未登録の場合）
+      if (passed && !progress.completedTopics.includes(topic.id)) {
         progress.completedTopics.push(topic.id);
       }
 
-      // Save score
+      // スコアを保存
       progress.scores[topic.id] = score;
-
-      // Save to localStorage
       saveProgress(progress);
 
+      // 結果画面の構築
       const result = document.createElement('div');
-      result.style.textAlign = 'center';
+      result.className = 'quiz-result';
 
-      const scoreText = document.createElement('h3');
-      scoreText.textContent = `クイズ完了！ スコア: ${score}/${quizData.length}`;
-      scoreText.style.color = score === quizData.length ? 'var(--success)' : 'var(--secondary)';
-      scoreText.style.marginBottom = '2rem';
-
-      const backBtn = document.createElement('button');
-      backBtn.className = 'btn btn-primary';
-      backBtn.textContent = 'レッスン一覧に戻る';
-      backBtn.onclick = () => {
-        // Determine category based on topic ID
-        if (topic.id.startsWith('pattern-')) navigate('/category/sentence-patterns');
-        else if (topic.id.startsWith('pos-')) navigate('/category/parts-of-speech');
-        else if (topic.id.startsWith('tense-')) navigate('/category/tenses');
-        else if (topic.id.startsWith('aux-')) navigate('/category/auxiliary-verbs');
-        else if (topic.id.startsWith('passive-')) navigate('/category/passive-voice');
-        else navigate('/dashboard');
-      };
-
+      // スコア表示
+      const scoreText = document.createElement('div');
+      scoreText.className = `quiz-result-score ${passed ? 'pass' : 'fail'}`;
+      scoreText.textContent = `${score} / ${quizData.length}`;
       result.appendChild(scoreText);
-      result.appendChild(backBtn);
+
+      // 合格・不合格バッジ
+      const badge = document.createElement('div');
+      badge.className = `quiz-result-badge ${passed ? 'pass' : 'fail'}`;
+      badge.textContent = passed ? '合格！おめでとう！' : `不合格（${passThreshold}問以上で合格）`;
+      result.appendChild(badge);
+
+      // アクションボタン群
+      const actions = document.createElement('div');
+      actions.className = 'quiz-result-actions';
+
+      if (passed) {
+        // 合格時：カテゴリに戻るボタンのみ
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn btn-primary';
+        backBtn.textContent = 'レッスン一覧に戻る';
+        backBtn.onclick = navigateBackToCategory;
+        actions.appendChild(backBtn);
+      } else {
+        // 不合格時：再挑戦ボタンとレッスンに戻るボタン
+        const retryBtn = document.createElement('button');
+        retryBtn.className = 'btn btn-primary';
+        retryBtn.textContent = 'もう一度挑戦';
+        retryBtn.onclick = () => {
+          // クイズを再読み込み
+          navigate(`/quiz/${topic.id}`);
+        };
+        actions.appendChild(retryBtn);
+
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn btn-secondary';
+        backBtn.textContent = 'レッスンに戻って復習';
+        backBtn.onclick = navigateBackToCategory;
+        actions.appendChild(backBtn);
+      }
+
+      result.appendChild(actions);
+
+      // 不正解の問題一覧を表示
+      if (wrongAnswers.length > 0) {
+        const wrongSection = document.createElement('div');
+        wrongSection.className = 'wrong-answers-section';
+
+        const wrongTitle = document.createElement('h3');
+        wrongTitle.textContent = `間違えた問題（${wrongAnswers.length}問）`;
+        wrongSection.appendChild(wrongTitle);
+
+        wrongAnswers.forEach(wa => {
+          const item = document.createElement('div');
+          item.className = 'wrong-answer-item';
+
+          const questionEl = document.createElement('div');
+          questionEl.className = 'wa-question';
+          questionEl.textContent = wa.question;
+          item.appendChild(questionEl);
+
+          const yourAnswer = document.createElement('div');
+          yourAnswer.className = 'wa-your-answer';
+          yourAnswer.textContent = `あなたの回答: ${wa.userAnswer}`;
+          item.appendChild(yourAnswer);
+
+          const correctAnswer = document.createElement('div');
+          correctAnswer.className = 'wa-correct-answer';
+          correctAnswer.textContent = `正解: ${wa.correctAnswer}`;
+          item.appendChild(correctAnswer);
+
+          if (wa.explanation) {
+            const explanation = document.createElement('div');
+            explanation.className = 'wa-explanation';
+            explanation.textContent = wa.explanation;
+            item.appendChild(explanation);
+          }
+
+          wrongSection.appendChild(item);
+        });
+
+        result.appendChild(wrongSection);
+      }
+
       container.appendChild(result);
       return;
     }
@@ -126,7 +206,7 @@ export const Quiz = (topic) => {
       radio.style.marginRight = '0.75rem';
       radio.onchange = () => {
         selectedAnswer = option;
-        // Update label styles
+        // 選択中のラベルスタイルを更新
         document.querySelectorAll(`input[name="${radioName}"]`).forEach(r => {
           r.parentElement.style.border = '2px solid transparent';
           r.parentElement.style.backgroundColor = 'var(--surface)';
@@ -164,65 +244,61 @@ export const Quiz = (topic) => {
         score++;
         feedback.innerHTML = '✅ Correct!';
         feedback.style.color = 'var(--success)';
-
-        // Add explanation if available
-        if (q.explanation) {
-          const explanationBox = document.createElement('div');
-          explanationBox.style.marginTop = '1rem';
-          explanationBox.style.padding = '1rem';
-          explanationBox.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
-          explanationBox.style.borderLeft = '4px solid var(--success)';
-          explanationBox.style.borderRadius = '0.5rem';
-          explanationBox.style.fontSize = '0.95rem';
-          explanationBox.style.lineHeight = '1.6';
-          explanationBox.style.maxWidth = '100%';
-          explanationBox.style.wordBreak = 'break-word';
-          explanationBox.style.whiteSpace = 'normal';
-
-          let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
-
-          // Add Japanese translation if available
-          if (q.japaneseTranslation) {
-            explanationHTML += '<br><br><strong>日本語訳:</strong> ' + q.japaneseTranslation;
-          }
-
-          explanationBox.innerHTML = explanationHTML;
-          feedback.appendChild(explanationBox);
-        }
       } else {
+        // 不正解の問題を記録
+        wrongAnswers.push({
+          question: q.question,
+          userAnswer: selectedAnswer,
+          correctAnswer: q.answer,
+          explanation: q.explanation || ''
+        });
         feedback.innerHTML = `❌ Incorrect. The correct answer is: <strong>${q.answer}</strong>`;
         feedback.style.color = 'var(--error)';
+      }
 
-        // Add explanation if available
-        if (q.explanation) {
-          const explanationBox = document.createElement('div');
-          explanationBox.style.marginTop = '1rem';
-          explanationBox.style.padding = '1rem';
-          explanationBox.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
-          explanationBox.style.borderLeft = '4px solid var(--error)';
-          explanationBox.style.borderRadius = '0.5rem';
-          explanationBox.style.fontSize = '0.95rem';
-          explanationBox.style.lineHeight = '1.6';
-          explanationBox.style.maxWidth = '100%';
-          explanationBox.style.wordBreak = 'break-word';
-          explanationBox.style.whiteSpace = 'normal';
-
-          let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
-
-          // Add Japanese translation if available
-          if (q.japaneseTranslation) {
-            explanationHTML += '<br><br><strong>日本語訳:</strong> ' + q.japaneseTranslation;
-          }
-
-          explanationBox.innerHTML = explanationHTML;
-          feedback.appendChild(explanationBox);
+      // 選択肢に正誤のビジュアルフィードバックを付与
+      const allLabels = optionsContainer.querySelectorAll('label');
+      allLabels.forEach(label => {
+        const radio = label.querySelector('input');
+        label.classList.add('option-disabled');
+        if (radio.value === q.answer) {
+          label.classList.add('option-correct');
+        } else if (radio.value === selectedAnswer && !isCorrect) {
+          label.classList.add('option-incorrect');
         }
+      });
+
+      // 解説を表示（正解・不正解共通）
+      if (q.explanation) {
+        const explanationBox = document.createElement('div');
+        explanationBox.style.marginTop = '1rem';
+        explanationBox.style.padding = '1rem';
+        explanationBox.style.backgroundColor = isCorrect
+          ? 'rgba(34, 197, 94, 0.1)'
+          : 'rgba(239, 68, 68, 0.1)';
+        explanationBox.style.borderLeft = `4px solid ${isCorrect ? 'var(--success)' : 'var(--error)'}`;
+        explanationBox.style.borderRadius = '0.5rem';
+        explanationBox.style.fontSize = '0.95rem';
+        explanationBox.style.lineHeight = '1.6';
+        explanationBox.style.maxWidth = '100%';
+        explanationBox.style.wordBreak = 'break-word';
+        explanationBox.style.whiteSpace = 'normal';
+
+        let explanationHTML = '<strong>📝 解説:</strong><br>' + q.explanation;
+
+        // 日本語訳があれば追加
+        if (q.japaneseTranslation) {
+          explanationHTML += '<br><br><strong>日本語訳:</strong> ' + q.japaneseTranslation;
+        }
+
+        explanationBox.innerHTML = explanationHTML;
+        feedback.appendChild(explanationBox);
       }
 
       submitBtn.disabled = true;
       submitBtn.style.opacity = '0.5';
 
-      // Show next button
+      // 次の問題へ進むボタンを表示
       const nextBtn = document.createElement('button');
       nextBtn.className = 'btn btn-primary';
       nextBtn.textContent = currentQuestion < quizData.length - 1 ? '次の問題へ' : 'クイズを終了';
